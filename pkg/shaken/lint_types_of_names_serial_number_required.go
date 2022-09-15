@@ -20,7 +20,7 @@ The ‘serialNumber’ attribute shall be included along with the CN (to form a 
 
 func init() {
 	lint.RegisterLint(&lint.Lint{
-		Name:          "w_organization_identity",
+		Name:          "w_types_of_names_serial_number",
 		Description:   "The ‘serialNumber’ attribute shall be included along with the CN.",
 		Citation:      "ToKENs (SHAKEN) Certificate Policy / Section 3.1.1",
 		Source:        ShakenPolicy,

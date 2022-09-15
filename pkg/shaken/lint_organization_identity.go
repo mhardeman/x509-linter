@@ -20,9 +20,9 @@ that the SP has a valid SPC token.
 
 func init() {
 	lint.RegisterLint(&lint.Lint{
-		Name:          "w_types_of_names_serial_number",
+		Name:          "w_organization_identity",
 		Description:   "The certificate shall contain the ‘countryName’ field and other Subject Identity Information",
-		Citation:      "ToKENs (SHAKEN) Certificate Policy / Section 3.1.1",
+		Citation:      "ToKENs (SHAKEN) Certificate Policy / Section 3.2.2",
 		Source:        ShakenPolicy,
 		EffectiveDate: ShakenDate_1_0_Date,
 		Lint:          NewOrganizationIdentity,
