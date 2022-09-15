@@ -1,0 +1,39 @@
+package shaken
+
+import (
+	"github.com/zmap/zcrypto/x509"
+	"github.com/zmap/zlint/v3/lint"
+)
+
+type serialNumber struct{}
+
+/************************************************
+ Subsection 3.1.1 Types of names
+
+
+ ************************************************/
+
+func init() {
+	lint.RegisterLint(&lint.Lint{
+		Name:          "w_types_of_names_serial_number",
+		Description:   "The ‘serialNumber’ attribute shall be included along with the CN.",
+		Citation:      "ToKENs (SHAKEN) Certificate Policy / Section 3.2.2",
+		Source:        ShakenPolicy,
+		EffectiveDate: ShakenDate_1_0_Date,
+		Lint:          NewTypesOfNamesSerialNumberRequired,
+	})
+}
+
+func NewTypesOfNamesSerialNumberRequired() lint.LintInterface {
+	return &serialNumber{}
+}
+
+func (l *serialNumber) CheckApplies(c *x509.Certificate) bool {
+	return true
+}
+
+func (l *serialNumber) Execute(c *x509.Certificate) *lint.LintResult {
+	return &lint.LintResult{
+		Status: lint.Pass,
+	}
+}
