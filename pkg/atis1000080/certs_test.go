@@ -1,0 +1,35 @@
+package atis1000080_test
+
+import (
+	"encoding/base64"
+	"fmt"
+
+	"github.com/zmap/zcrypto/x509"
+)
+
+func checkParseCertError(err error) {
+	if err != nil {
+		panic(fmt.Sprintf("cannot parse the certificate, error: %s", err.Error()))
+	}
+}
+
+// parseCert parses Base64 encoded X509 certificate
+func ParseCert(enc string) *x509.Certificate {
+	raw, err := base64.StdEncoding.DecodeString(enc)
+	checkParseCertError(err)
+
+	cert, err := x509.ParseCertificate(raw)
+	checkParseCertError(err)
+
+	return cert
+}
+
+var (
+	TEST_CERT_CORRECT           *x509.Certificate
+	TEST_CERT_VERSION_INCORRECT *x509.Certificate
+)
+
+func init() {
+	TEST_CERT_CORRECT = ParseCert("MIIDADCCAqagAwIBAgIQU9c1dztZF+wkcab3vvy13DAKBggqhkjOPQQDAjBnMQswCQYDVQQGEwJVUzEZMBcGA1UEChMQVHJhbnNOZXh1cywgSW5jLjEPMA0GA1UECxMGU0hBS0VOMSwwKgYDVQQDEyNUcmFuc05leHVzLCBJbmMuIFNIQUtFTiBJc3N1aW5nIENBMzAeFw0yMjA2MzAwNDI2MTZaFw0yMjEwMDMwNDI2MTVaMF0xCzAJBgNVBAYTAlVTMScwJQYDVQQKEx5Mb3cgTGF0ZW5jeSBDb21tdW5pY2F0aW9ucyBMTEMxDzANBgNVBAsTBlNIQUtFTjEUMBIGA1UEAxMLU0hBS0VOIDcwOUowWTATBgcqhkjOPQIBBggqhkjOPQMBBwNCAAS64O/6oW1u+rqGG1QzbaIV8+T8n77zktdefHFM6nomucy4sXzUipul9z2dqSBpKf4MztG2aTH9B8OQDbSna8CRo4IBPDCCATgwDAYDVR0TAQH/BAIwADAOBgNVHQ8BAf8EBAMCAIAwHQYDVR0OBBYEFOJMfrlWj84knnyieRqxlAeasLQcMB8GA1UdIwQYMBaAFLuW3jESzdOWmYSkNjBgPNdSgX0nMBcGA1UdIAQQMA4wDAYKYIZIAYb/CQEBAzCBpgYDVR0fBIGeMIGbMIGYoDqgOIY2aHR0cHM6Ly9hdXRoZW50aWNhdGUtYXBpLmljb25lY3Rpdi5jb20vZG93bmxvYWQvdjEvY3JsolqkWDBWMRQwEgYDVQQHDAtCcmlkZ2V3YXRlcjELMAkGA1UECAwCTkoxEzARBgNVBAMMClNUSS1QQSBDUkwxCzAJBgNVBAYTAlVTMQ8wDQYDVQQKDAZTVEktUEEwFgYIKwYBBQUHARoECjAIoAYWBDcwOUowCgYIKoZIzj0EAwIDSAAwRQIgPhdUuEGIF06HIUE+TmZktuQQCRALo6DDkOuozbYi0kwCIQCmoOiKwxcSlLMt+wmqt9vdwbwfmqiYhHwBsy/ZbxQWzg==")
+	TEST_CERT_VERSION_INCORRECT = ParseCert("MIHvMIGXoAMCAQECAQEwCgYIKoZIzj0EAwIwADAeFw0yMjA5MTYwODU5MzJaFw0yMjA5MTcwODU5MzJaMAAwWTATBgcqhkjOPQIBBggqhkjOPQMBBwNCAARx8/OpkbEm544PA31d9rD3np+IB5q3E0kuAnQtsGVd7nNkQjH/SBI7XrurHwI/81horaSU4M+zqvVRAMpOQ/9qowIwADAKBggqhkjOPQQDAgNHADBEAiBiKbdeF7g3HIx8XxFbBuVCWY4XHHkkEpjcNcVaE7A1PwIgSiBq9K2ixFnOJFqKEsWLekwBzaRAZsCc6INjHOYa1bQ=")
+}
