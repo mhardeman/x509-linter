@@ -36,7 +36,7 @@ func Test_subjectPublicKeyIdentifier_Execute(t *testing.T) {
 	}
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
-			s := atis1000080.NewSubjectPublicKeyIdentifier()
+			s := atis1000080.NewSubjectKeyIdentifier()
 			if got := s.Execute(tt.args.c); !reflect.DeepEqual(got, tt.want) {
 				t.Errorf("subjectPublicKeyIdentifier.Execute() = %v, want %v", got, tt.want)
 			}

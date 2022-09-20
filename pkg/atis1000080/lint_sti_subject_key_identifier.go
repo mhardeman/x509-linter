@@ -5,30 +5,30 @@ import (
 	"github.com/zmap/zlint/v3/lint"
 )
 
-type subjectPublicKeyIdentifier struct{}
+type subjectKeyIdentifier struct{}
 
 func init() {
 	lint.RegisterLint(&lint.Lint{
-		Name:          "e_sti_subject_public_key_identifier",
+		Name:          "e_sti_subject_key_identifier",
 		Description:   "STI certificates shall contain a Subject Key Identifier extension",
 		Citation:      ATIS1000080_STI_Citation,
 		Source:        ATIS1000080_Source,
 		EffectiveDate: ATIS1000080_v004_Date,
-		Lint:          NewSubjectPublicKeyIdentifier,
+		Lint:          NewSubjectKeyIdentifier,
 	})
 }
 
-func NewSubjectPublicKeyIdentifier() lint.LintInterface {
-	return &subjectPublicKeyIdentifier{}
+func NewSubjectKeyIdentifier() lint.LintInterface {
+	return &subjectKeyIdentifier{}
 }
 
 // CheckApplies implements lint.LintInterface
-func (*subjectPublicKeyIdentifier) CheckApplies(c *x509.Certificate) bool {
+func (*subjectKeyIdentifier) CheckApplies(c *x509.Certificate) bool {
 	return true
 }
 
 // Execute implements lint.LintInterface
-func (*subjectPublicKeyIdentifier) Execute(c *x509.Certificate) *lint.LintResult {
+func (*subjectKeyIdentifier) Execute(c *x509.Certificate) *lint.LintResult {
 	ext := FindExtension(c, "2.5.29.14")
 	if ext != nil {
 		return &lint.LintResult{
