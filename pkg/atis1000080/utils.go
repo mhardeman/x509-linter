@@ -21,3 +21,19 @@ func FindExtension(c *x509.Certificate, id string) *pkix.Extension {
 
 	return nil
 }
+
+type ShakenPolicy = string
+
+const SHAKEN_CP_v1_1 ShakenPolicy = "2.16.840.1.114569.1.1.1"
+const SHAKEN_CP_v1_3 ShakenPolicy = "2.16.840.1.114569.1.1.3"
+
+func HasShakenPolicy(c *x509.Certificate, policy ShakenPolicy) bool {
+	for _, v := range c.PolicyIdentifiers {
+		identifier := v.String()
+		if identifier == policy {
+			return true
+		}
+	}
+
+	return false
+}
