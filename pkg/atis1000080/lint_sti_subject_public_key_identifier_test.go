@@ -9,7 +9,7 @@ import (
 	"github.com/zmap/zlint/v3/lint"
 )
 
-func Test_version_Execute(t *testing.T) {
+func Test_subjectPublicKeyIdentifier_Execute(t *testing.T) {
 	type args struct {
 		c *x509.Certificate
 	}
@@ -19,20 +19,16 @@ func Test_version_Execute(t *testing.T) {
 		want *lint.LintResult
 	}{
 		{
-			name: "incorrect certificate version",
-			args: args{
-				c: TEST_CERT_VERSION_INCORRECT,
-			},
+			name: "extension is absent",
+			args: args{c: TEST_CERT_VERSION_INCORRECT},
 			want: &lint.LintResult{
 				Status:  lint.Error,
-				Details: "STI certificates shall contain Version field specifying version 3",
+				Details: "STI certificates shall contain a Subject Key Identifier extension",
 			},
 		},
 		{
-			name: "correct certificate version",
-			args: args{
-				c: TEST_CERT_CORRECT,
-			},
+			name: "extension is correct",
+			args: args{c: TEST_CERT_CORRECT},
 			want: &lint.LintResult{
 				Status: lint.Pass,
 			},
@@ -40,9 +36,9 @@ func Test_version_Execute(t *testing.T) {
 	}
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
-			v := atis1000080.NewVersion()
-			if got := v.Execute(tt.args.c); !reflect.DeepEqual(got, tt.want) {
-				t.Errorf("version.Execute() = %v, want %v", got, tt.want)
+			s := atis1000080.NewSubjectPublicKeyIdentifier()
+			if got := s.Execute(tt.args.c); !reflect.DeepEqual(got, tt.want) {
+				t.Errorf("subjectPublicKeyIdentifier.Execute() = %v, want %v", got, tt.want)
 			}
 		})
 	}

@@ -100,5 +100,5 @@ func GetTNEntrySPC(c *x509.Certificate) (string, error) {
 		return spc, nil
 	}
 
-	return "", fmt.Errorf("TNAuthorizationList extension not found")
+	return "", fmt.Errorf("STI certificate shall contain TNAuthorizationList extension")
 }

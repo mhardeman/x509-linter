@@ -24,7 +24,7 @@ func Test_signatureAlgorithm_Execute(t *testing.T) {
 				c: TEST_CERT_SIG_ALG_INCORRECT,
 			},
 			want: &lint.LintResult{
-				Status:  lint.Warn,
+				Status:  lint.Error,
 				Details: "STI certificates shall contain a Signature Algorithm field with the value 'ecdsa-with-SHA256'",
 			},
 		},

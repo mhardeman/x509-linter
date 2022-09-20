@@ -24,8 +24,8 @@ func Test_subjectCN_Execute(t *testing.T) {
 				c: TEST_CERT_VERSION_INCORRECT,
 			},
 			want: &lint.LintResult{
-				Status:  lint.Warn,
-				Details: "The DN shall contain a Country (C=) attribute, a Common Name (CN=) attribute and an Organization (O=) attribute, but some attributes are missed (Common Name, Country, Organization)",
+				Status:  lint.Error,
+				Details: "Cannot get SPC value from the TNAuthList extension, STI certificate shall contain TNAuthorizationList extension",
 			},
 		},
 		{

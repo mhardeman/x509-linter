@@ -29,7 +29,7 @@ func (*certificatePolicies) CheckApplies(c *x509.Certificate) bool {
 
 // Execute implements lint.LintInterface
 func (*certificatePolicies) Execute(c *x509.Certificate) *lint.LintResult {
-	if len(c.PolicyIdentifiers) == 1 && c.PolicyIdentifiers[0].String() == "2.16.840.1.114569.1.1.3" {
+	if len(c.PolicyIdentifiers) == 1 && c.PolicyIdentifiers[0].String() == "2.16.840.1.114569.1.1.1" {
 		return &lint.LintResult{
 			Status: lint.Pass,
 		}

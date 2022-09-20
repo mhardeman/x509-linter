@@ -24,7 +24,7 @@ func Test_subject_Execute(t *testing.T) {
 				c: TEST_CERT_VERSION_INCORRECT,
 			},
 			want: &lint.LintResult{
-				Status:  lint.Warn,
+				Status:  lint.Error,
 				Details: "The DN shall contain a Country (C=) attribute, a Common Name (CN=) attribute and an Organization (O=) attribute, but some attributes are missed (Common Name, Country, Organization)",
 			},
 		},
