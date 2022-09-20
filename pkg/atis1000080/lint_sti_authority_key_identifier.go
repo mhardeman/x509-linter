@@ -9,7 +9,7 @@ type authorityKeyIdentifier struct{}
 
 func init() {
 	lint.RegisterLint(&lint.Lint{
-		Name:          "e_sti_authority_key_identifier",
+		Name:          "e_shaken_sti_authority_key_identifier",
 		Description:   "STI certificates shall contain an Authority Key Identifier extension",
 		Citation:      ATIS1000080_STI_Citation,
 		Source:        SHAKEN,

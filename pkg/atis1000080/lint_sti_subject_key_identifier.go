@@ -9,7 +9,7 @@ type subjectKeyIdentifier struct{}
 
 func init() {
 	lint.RegisterLint(&lint.Lint{
-		Name:          "e_sti_subject_key_identifier",
+		Name:          "e_shaken_sti_subject_key_identifier",
 		Description:   "STI certificates shall contain a Subject Key Identifier extension",
 		Citation:      ATIS1000080_STI_Citation,
 		Source:        SHAKEN,

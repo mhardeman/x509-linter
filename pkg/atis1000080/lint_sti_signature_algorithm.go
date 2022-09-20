@@ -11,7 +11,7 @@ var signatureAlgorithm_details = "STI certificates shall contain a Signature Alg
 
 func init() {
 	lint.RegisterLint(&lint.Lint{
-		Name:          "e_sti_signature_algorithm",
+		Name:          "e_shaken_sti_signature_algorithm",
 		Description:   signatureAlgorithm_details,
 		Citation:      ATIS1000080_STI_Citation,
 		Source:        SHAKEN,
