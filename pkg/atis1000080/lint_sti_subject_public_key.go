@@ -14,7 +14,7 @@ func init() {
 		Name:          "e_sti_subject_public_key",
 		Description:   subjectPublicKey_details,
 		Citation:      ATIS1000080_STI_Citation,
-		Source:        ATIS1000080_Source,
+		Source:        SHAKEN,
 		EffectiveDate: ATIS1000080_v004_Date,
 		Lint:          NewSubjectPublicKey,
 	})

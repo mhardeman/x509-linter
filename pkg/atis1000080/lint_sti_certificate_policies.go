@@ -12,7 +12,7 @@ func init() {
 		Name:          "e_sti_certificate_policies",
 		Description:   "STI intermediate and End-Entity certificates shall include a Certificate Policies extension containing a single OID value that identifies the SHAKEN Certificate Policy established by the STI-PA",
 		Citation:      ATIS1000080_STI_Citation,
-		Source:        ATIS1000080_Source,
+		Source:        SHAKEN,
 		EffectiveDate: ATIS1000080_v004_Date,
 		Lint:          NewCertificatePolicies,
 	})
@@ -29,7 +29,7 @@ func (*certificatePolicies) CheckApplies(c *x509.Certificate) bool {
 
 // Execute implements lint.LintInterface
 func (*certificatePolicies) Execute(c *x509.Certificate) *lint.LintResult {
-	if len(c.PolicyIdentifiers) == 1 && c.PolicyIdentifiers[0].String() == "2.16.840.1.114569.1.1.1" {
+	if len(c.PolicyIdentifiers) == 1 && c.PolicyIdentifiers[0].String() == "2.16.840.1.114569.1.1.3" {
 		return &lint.LintResult{
 			Status: lint.Pass,
 		}

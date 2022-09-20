@@ -19,7 +19,7 @@ func init() {
 		Name:          "e_sti_basic_constraints",
 		Description:   "STI certificates shall contain a BasicConstraints extension marked critical. For root and intermediate certificates, the BasicConstraints CA boolean shall be set to TRUE, while for End-Entity certificates, the CA boolean shall be set to FALSE.",
 		Citation:      ATIS1000080_STI_Citation,
-		Source:        ATIS1000080_Source,
+		Source:        SHAKEN,
 		EffectiveDate: ATIS1000080_v004_Date,
 		Lint:          NewBasicConstraints,
 	})

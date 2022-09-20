@@ -17,7 +17,7 @@ func init() {
 		Name:          "e_sti_subject",
 		Description:   subject_details,
 		Citation:      ATIS1000080_STI_Citation,
-		Source:        ATIS1000080_Source,
+		Source:        SHAKEN,
 		EffectiveDate: ATIS1000080_v004_Date,
 		Lint:          NewSubject,
 	})

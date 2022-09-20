@@ -12,7 +12,7 @@ func init() {
 		Name:          "e_sti_authority_key_identifier",
 		Description:   "STI certificates shall contain an Authority Key Identifier extension",
 		Citation:      ATIS1000080_STI_Citation,
-		Source:        ATIS1000080_Source,
+		Source:        SHAKEN,
 		EffectiveDate: ATIS1000080_v004_Date,
 		Lint:          NewAuthorityKeyIdentifier,
 	})

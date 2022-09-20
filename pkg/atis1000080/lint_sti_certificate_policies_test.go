@@ -44,7 +44,15 @@ func Test_certificatePolicies_Execute(t *testing.T) {
 		},
 		{
 			name: "SHAKEN policy is correct",
-			args: args{c: TEST_CERT_SHAKEN_POLICY_CORRECT},
+			args: args{c: TEST_CERT_SHAKEN_POLICY_v1_1},
+			want: &lint.LintResult{
+				Status:  lint.Error,
+				Details: "STI certificate shall include a Certificate Policies extension containing a single SHAKEN Certificate Policy",
+			},
+		},
+		{
+			name: "SHAKEN policy is correct",
+			args: args{c: TEST_CERT_CORRECT},
 			want: &lint.LintResult{
 				Status: lint.Pass,
 			},
