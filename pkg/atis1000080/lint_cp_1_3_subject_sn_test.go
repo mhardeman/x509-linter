@@ -27,6 +27,14 @@ func Test_subjectSN_Execute(t *testing.T) {
 			},
 		},
 		{
+			name: "multiple SERIALNUMBER",
+			args: args{c: TEST_CERT_SUBJECT_SERIALNUMBER_ODD},
+			want: &lint.LintResult{
+				Status:  lint.Error,
+				Details: "STI certificate shall include a ‘serialNumber’ attribute along with the CN",
+			},
+		},
+		{
 			name: "SERIALNUMBER presents",
 			args: args{c: TEST_CERT_SUBJECT_SERIALNUMBER},
 			want: &lint.LintResult{
