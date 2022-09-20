@@ -5,36 +5,35 @@ import (
 	"github.com/zmap/zlint/v3/lint"
 )
 
-type version struct{}
-
-var version_details = "STI certificates shall contain Version field specifying version 3"
+type tnAuthList struct{}
 
 func init() {
 	lint.RegisterLint(&lint.Lint{
-		Name:          "e_sti_version",
-		Description:   version_details,
+		Name:          "e_sti_tn_auth_list",
+		Description:   "STI End-Entity certificates shall contain a TNAuthList extension as specified in RFC 8226. The TNAuthList shall contain a single SPC value",
 		Citation:      "ATIS-1000080.v004 / 6.4.1 STI Certificate Requirements",
 		Source:        ATIS1000080_Source,
 		EffectiveDate: ATIS1000080_v004_Date,
-		Lint:          NewVersion,
+		Lint:          NewTnAuthList,
 	})
 }
 
-func NewVersion() lint.LintInterface {
-	return &version{}
+func NewTnAuthList() lint.LintInterface {
+	return &tnAuthList{}
 }
 
 // CheckApplies implements lint.LintInterface
-func (*version) CheckApplies(c *x509.Certificate) bool {
+func (*tnAuthList) CheckApplies(c *x509.Certificate) bool {
 	return true
 }
 
 // Execute implements lint.LintInterface
-func (*version) Execute(c *x509.Certificate) *lint.LintResult {
-	if c.Version != 3 {
+func (*tnAuthList) Execute(c *x509.Certificate) *lint.LintResult {
+	_, err := GetTNEntrySPC(c)
+	if err != nil {
 		return &lint.LintResult{
 			Status:  lint.Error,
-			Details: version_details,
+			Details: err.Error(),
 		}
 	}
 

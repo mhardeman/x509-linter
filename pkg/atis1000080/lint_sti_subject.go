@@ -14,7 +14,7 @@ var subject_details = "The DN shall contain a Country (C=) attribute, a Common N
 
 func init() {
 	lint.RegisterLint(&lint.Lint{
-		Name:          "w_sti_subject",
+		Name:          "e_sti_subject",
 		Description:   subject_details,
 		Citation:      "ATIS-1000080.v004 / 6.4.1 STI Certificate Requirements",
 		Source:        ATIS1000080_Source,
@@ -49,7 +49,7 @@ func (*subject) Execute(c *x509.Certificate) *lint.LintResult {
 
 	if len(missedAttrs) != 0 {
 		return &lint.LintResult{
-			Status:  lint.Warn,
+			Status:  lint.Error,
 			Details: fmt.Sprintf("The DN shall contain a Country (C=) attribute, a Common Name (CN=) attribute and an Organization (O=) attribute, but some attributes are missed (%s)", strings.Join(missedAttrs, ", ")),
 		}
 	}

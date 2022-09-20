@@ -11,7 +11,7 @@ var signatureAlgorithm_details = "STI certificates shall contain a Signature Alg
 
 func init() {
 	lint.RegisterLint(&lint.Lint{
-		Name:          "w_sti_signature_algorithm",
+		Name:          "e_sti_signature_algorithm",
 		Description:   signatureAlgorithm_details,
 		Citation:      "ATIS-1000080.v004 / 6.4.1 STI Certificate Requirements",
 		Source:        ATIS1000080_Source,
@@ -33,7 +33,7 @@ func (*signatureAlgorithm) CheckApplies(c *x509.Certificate) bool {
 func (*signatureAlgorithm) Execute(c *x509.Certificate) *lint.LintResult {
 	if c.SignatureAlgorithmOID.String() != "1.2.840.10045.4.3.2" {
 		return &lint.LintResult{
-			Status:  lint.Warn,
+			Status:  lint.Error,
 			Details: signatureAlgorithm_details,
 		}
 	}
