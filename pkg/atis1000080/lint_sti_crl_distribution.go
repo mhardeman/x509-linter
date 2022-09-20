@@ -11,7 +11,7 @@ func init() {
 	lint.RegisterLint(&lint.Lint{
 		Name:          "e_sti_crl_distribution",
 		Description:   "STI intermediate and End-Entity certificates shall contain a CRL Distribution Points extension containing a single DistributionPoint entry",
-		Citation:      "ATIS-1000080.v004 / 6.4.1 STI Certificate Requirements",
+		Citation:      ATIS1000080_STI_Citation,
 		Source:        ATIS1000080_Source,
 		EffectiveDate: ATIS1000080_v004_Date,
 		Lint:          NewCRLDistribution,

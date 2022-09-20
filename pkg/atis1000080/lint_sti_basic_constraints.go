@@ -18,7 +18,7 @@ func init() {
 	lint.RegisterLint(&lint.Lint{
 		Name:          "e_sti_basic_constraints",
 		Description:   "STI certificates shall contain a BasicConstraints extension marked critical. For root and intermediate certificates, the BasicConstraints CA boolean shall be set to TRUE, while for End-Entity certificates, the CA boolean shall be set to FALSE.",
-		Citation:      "ATIS-1000080.v004 / 6.4.1 STI Certificate Requirements",
+		Citation:      ATIS1000080_STI_Citation,
 		Source:        ATIS1000080_Source,
 		EffectiveDate: ATIS1000080_v004_Date,
 		Lint:          NewBasicConstraints,

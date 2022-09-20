@@ -13,7 +13,7 @@ func init() {
 	lint.RegisterLint(&lint.Lint{
 		Name:          "e_sti_signature_algorithm",
 		Description:   signatureAlgorithm_details,
-		Citation:      "ATIS-1000080.v004 / 6.4.1 STI Certificate Requirements",
+		Citation:      ATIS1000080_STI_Citation,
 		Source:        ATIS1000080_Source,
 		EffectiveDate: ATIS1000080_v004_Date,
 		Lint:          NewSignatureAlgorithm,

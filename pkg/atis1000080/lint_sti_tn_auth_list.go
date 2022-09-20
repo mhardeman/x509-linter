@@ -11,7 +11,7 @@ func init() {
 	lint.RegisterLint(&lint.Lint{
 		Name:          "e_sti_tn_auth_list",
 		Description:   "STI End-Entity certificates shall contain a TNAuthList extension as specified in RFC 8226. The TNAuthList shall contain a single SPC value",
-		Citation:      "ATIS-1000080.v004 / 6.4.1 STI Certificate Requirements",
+		Citation:      ATIS1000080_STI_Citation,
 		Source:        ATIS1000080_Source,
 		EffectiveDate: ATIS1000080_v004_Date,
 		Lint:          NewTnAuthList,
