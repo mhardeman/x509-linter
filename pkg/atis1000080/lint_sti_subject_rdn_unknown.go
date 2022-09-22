@@ -27,7 +27,7 @@ func isShakenRdn(id string) bool {
 
 func init() {
 	lint.RegisterLint(&lint.Lint{
-		Name:          "e_shaken_sti_subject_rdn_unknown",
+		Name:          "w_shaken_sti_subject_rdn_unknown",
 		Description:   "STI certificate shall not include RDNs that are not specified",
 		Citation:      "Citation",
 		Source:        SHAKEN,
@@ -59,7 +59,7 @@ func (*subjectRdnUnknown) Execute(c *x509.Certificate) *lint.LintResult {
 
 	if len(unknownRdn) != 0 {
 		return &lint.LintResult{
-			Status:  lint.Error,
+			Status:  lint.Warn,
 			Details: "STI certificate shall not include RDNs that are not specified",
 		}
 	}

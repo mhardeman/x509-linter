@@ -33,7 +33,7 @@ func Test_subjectRdnUnknown_Execute(t *testing.T) {
 				c: ParseCert("MIIBajCCARGgAwIBAgIBATAKBggqhkjOPQQDAjA9MQkwBwYDVQQDEwAxCTAHBgNVBAYTADEJMAcGA1UEChMAMQkwBwYDVQQFEwAxDzANBgkqhkiG9w0BCQEWADAeFw0yMjA5MjIxNTIwMThaFw0yMjA5MjMxNTIwMThaMD0xCTAHBgNVBAMTADEJMAcGA1UEBhMAMQkwBwYDVQQKEwAxCTAHBgNVBAUTADEPMA0GCSqGSIb3DQEJARYAMFkwEwYHKoZIzj0CAQYIKoZIzj0DAQcDQgAEpSYq7tSPXviGrfyjCipqZg0WMw0ANqT1xPkiEW7hGBwaOttK2ho0iy0Tx9L7lKdDs6PsAnSLS0aDjI09kyGwX6MCMAAwCgYIKoZIzj0EAwIDRwAwRAIgR26G4dVBJa8IOnxTzSpTcN58bRwEGisbBDJvYsG7jcsCIHJSwLW10+sEs+iBayN8UjyFXoiI/BPwo+b3ZuEPlpUF"),
 			},
 			want: &lint.LintResult{
-				Status:  lint.Error,
+				Status:  lint.Warn,
 				Details: "STI certificate shall not include RDNs that are not specified",
 			},
 		},
