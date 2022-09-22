@@ -33,7 +33,7 @@ func init() {
 		Name:          "e_shaken_sti_extension_unknown",
 		Description:   "STI certificate shall not include extensions that are not specified",
 		Citation:      "Citation",
-		Source:        "Source",
+		Source:        SHAKEN,
 		EffectiveDate: time.Date(2019, time.October, 22, 0, 0, 0, 0, time.UTC),
 		Lint:          NewExtensionUnknown,
 	})
