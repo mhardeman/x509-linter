@@ -1,77 +1,45 @@
 package main
 
 import (
-	"encoding/pem"
 	"flag"
-	"log"
+	"fmt"
 	"os"
-
-	"github.com/peculiarventures/x509-linter/pkg/shaken"
-	"github.com/zmap/zcrypto/x509"
-	"github.com/zmap/zlint/v3"
-	"github.com/zmap/zlint/v3/lint"
 )
 
 func main() {
-	flag.Parse()
-
-	// Read certPath
-	var certPath = flag.Arg(0)
-	if certPath == "" {
-		log.Fatalf("cannot get certificate path, variable 'certPath' is empty")
+	if len(os.Args) < 2 {
+		fmt.Println("expected 'lint' or 'download' subcommands")
+		os.Exit(1)
 	}
 
-	result := doLint(certPath)
-	printLintResult(result)
-}
+	var err error
 
-func printLine(code string, status string, description string) {
-	log.Printf("%s;%s;%s\n", code, status, description)
-}
+	switch os.Args[1] {
+	case "lint":
+		// cmd args
+		lintCmd := flag.NewFlagSet("lint", flag.ExitOnError)
+		lintCmd.Parse(os.Args[2:])
+		certPath := lintCmd.Arg(0)
 
-func printLintResult(result *zlint.ResultSet) {
-	log.Default().SetFlags(0)
-	log.Default().SetOutput(os.Stdout)
-	printLine("Code", "Status", "Description")
-	for i, v := range result.Results {
-		switch v.Status {
-		case lint.Error:
-		case lint.Warn:
-			{
-				printLine(i, v.Status.String(), v.Details)
-				break
-			}
-		}
+		// run command
+		err = RunLintCommand(certPath)
+	case "download":
+		// cmd args
+		downloadCmd := flag.NewFlagSet("download", flag.ExitOnError)
+		var outDir string
+		downloadCmd.StringVar(&outDir, "outDir", "certs", "output folder for downloading certificates")
+
+		downloadCmd.Parse(os.Args[2:])
+		listPath := downloadCmd.Arg(0)
+
+		// run command
+		err = RunDownloadCommand(listPath, outDir)
+	default:
+		fmt.Println("expected 'lint' or 'download' subcommands")
+		os.Exit(1)
 	}
-}
 
-func doLint(certPath string) *zlint.ResultSet {
-	raw, err := os.ReadFile(certPath)
 	if err != nil {
-		log.Fatalf("cannot read the certificate file %s, %s", certPath, err.Error())
+		fmt.Printf("error on %s command running, %s\n", os.Args[1], err.Error())
 	}
-
-	// Parse cert
-	p, _ := pem.Decode(raw)
-	if len(p.Bytes) > 0 {
-		// try parse pem and if it's ok replace raw to bytes from the pem
-		if p.Type != "CERTIFICATE" {
-			log.Fatalf("incorrect PEM data, tag value is %s, but should be 'CERTIFICATE'", p.Type)
-		}
-		raw = p.Bytes
-	}
-	cert, err := x509.ParseCertificate(raw)
-	if err != nil {
-		log.Fatalf("cannot parse the certificate %s, %s", certPath, err.Error())
-	}
-
-	// Initialize lint registry
-	registry, err := lint.GlobalRegistry().Filter(lint.FilterOptions{
-		IncludeSources: lint.SourceList{shaken.ShakenPolicy},
-	})
-	if err != nil {
-		log.Fatalf("cannot initialize the lint registry, %s", err.Error())
-	}
-
-	return zlint.LintCertificateEx(cert, registry)
 }
