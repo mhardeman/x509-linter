@@ -26,7 +26,7 @@ func NewSubjectPublicKey() lint.LintInterface {
 
 // CheckApplies implements lint.LintInterface
 func (*subjectPublicKey) CheckApplies(c *x509.Certificate) bool {
-	return true
+	return IsDateATIS1000080(c)
 }
 
 // Execute implements lint.LintInterface

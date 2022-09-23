@@ -5,42 +5,40 @@ import (
 	"github.com/zmap/zlint/v3/lint"
 )
 
-type subject struct{}
-
-var subject_details = "The DN shall contain a Country (C=) attribute, a Common Name (CN=) attribute and an Organization (O=) attribute. Other DN attributes are optional"
+type issuer struct{}
 
 func init() {
 	lint.RegisterLint(&lint.Lint{
-		Name:          "e_shaken_sti_subject",
+		Name:          "e_shaken_sti_issuer",
 		Description:   subject_details,
 		Citation:      ATIS1000080_STI_Citation,
 		Source:        SHAKEN,
 		EffectiveDate: ATIS1000080_v004_Date,
-		Lint:          NewSubject,
+		Lint:          NewIssuer,
 	})
 }
 
-func NewSubject() lint.LintInterface {
-	return &subject{}
+func NewIssuer() lint.LintInterface {
+	return &issuer{}
 }
 
 // CheckApplies implements lint.LintInterface
-func (*subject) CheckApplies(c *x509.Certificate) bool {
+func (*issuer) CheckApplies(c *x509.Certificate) bool {
 	return IsDateATIS1000080(c)
 }
 
 // Execute implements lint.LintInterface
-func (*subject) Execute(c *x509.Certificate) *lint.LintResult {
+func (*issuer) Execute(c *x509.Certificate) *lint.LintResult {
 	missedAttrs := make([]string, 0)
 
 	// check names
-	if len(c.Subject.CommonNames) == 0 {
+	if len(c.Issuer.CommonNames) == 0 {
 		missedAttrs = append(missedAttrs, "Common Name")
 	}
-	if len(c.Subject.Country) == 0 {
+	if len(c.Issuer.Country) == 0 {
 		missedAttrs = append(missedAttrs, "Country")
 	}
-	if len(c.Subject.Organization) == 0 {
+	if len(c.Issuer.Organization) == 0 {
 		missedAttrs = append(missedAttrs, "Organization")
 	}
 

@@ -42,7 +42,7 @@ func NewSubjectRdnUnknown() lint.LintInterface {
 
 // CheckApplies implements lint.LintInterface
 func (*subjectRdnUnknown) CheckApplies(c *x509.Certificate) bool {
-	return true
+	return IsDateATIS1000080(c)
 }
 
 // Execute implements lint.LintInterface

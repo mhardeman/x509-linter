@@ -26,7 +26,7 @@ func NewAmbiguousIdentifiers() lint.LintInterface {
 
 // CheckApplies implements lint.LintInterface
 func (*ambiguousIdentifiers) CheckApplies(c *x509.Certificate) bool {
-	return true
+	return IsDateCP1_3(c)
 }
 
 // Execute implements lint.LintInterface

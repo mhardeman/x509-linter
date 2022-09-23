@@ -25,7 +25,7 @@ func Test_subject_Execute(t *testing.T) {
 			},
 			want: &lint.LintResult{
 				Status:  lint.Error,
-				Details: "The DN shall contain a Country (C=) attribute, a Common Name (CN=) attribute and an Organization (O=) attribute, but some attributes are missed (Common Name, Country, Organization)",
+				Details: "The DN shall contain a Country (C=) attribute, a Common Name (CN=) attribute and an Organization (O=) attribute",
 			},
 		},
 		{
