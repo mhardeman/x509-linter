@@ -18,11 +18,14 @@ func main() {
 	case "lint":
 		// cmd args
 		lintCmd := flag.NewFlagSet("lint", flag.ExitOnError)
+		var summary bool
+		lintCmd.BoolVar(&summary, "summary", false, "enables summary reporting")
+
 		lintCmd.Parse(os.Args[2:])
 		certPath := lintCmd.Arg(0)
 
 		// run command
-		err = RunLintCommand(certPath)
+		err = RunLintCommand(certPath, summary)
 	case "download":
 		// cmd args
 		downloadCmd := flag.NewFlagSet("download", flag.ExitOnError)
