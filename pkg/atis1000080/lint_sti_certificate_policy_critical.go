@@ -9,7 +9,7 @@ type certificatePolicyCritical struct{}
 
 func init() {
 	lint.RegisterLint(&lint.Lint{
-		Name:          "n_sti_certificate_policy_critical",
+		Name:          "n_shaken_sti_certificate_policy_critical",
 		Description:   "STI certificates should contain a CertificatePolicies extension marked uncritical",
 		Citation:      ATIS1000080_STI_Citation,
 		Source:        SHAKEN,
