@@ -24,7 +24,7 @@ func NewKeyUsage() lint.LintInterface {
 
 // CheckApplies implements lint.LintInterface
 func (*keyUsage) CheckApplies(c *x509.Certificate) bool {
-	return IsDateATIS1000080(c)
+	return !c.IsCA && IsDateATIS1000080(c)
 }
 
 // Execute implements lint.LintInterface
