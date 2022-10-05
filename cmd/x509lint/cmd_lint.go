@@ -387,6 +387,15 @@ func SaveTotalReport(r *LintCertificatesResult, outDir string) error {
 	fmt.Fprintln(file, "\\*\\* The percent of errors, warnings and notices is calculated against total observed certificates from the specified issuer\\")
 	fmt.Fprintln(file, "\\*\\*\\* Tests do not report on certificates with issues that predate the currently required ATIS 1000080 and Certificate Policy versions")
 
+	fmt.Fprintln(file, "")
+	fmt.Fprintln(file, "## Key")
+	fmt.Fprintln(file, "")
+	fmt.Fprintln(file, "| Type | Description |")
+	fmt.Fprintln(file, "|------|-------------|")
+	fmt.Fprintln(file, "| Error | Tests in which the specifications are unambiguous on what the expected behavior must be. |")
+	fmt.Fprintln(file, "| Warning	| Tests in which the specifications are ambiguous or are provide only a recommendation. |")
+	fmt.Fprintln(file, "| Notice | Tests in which industry best practices are not followed. |")
+
 	return nil
 }
 
