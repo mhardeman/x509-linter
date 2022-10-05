@@ -240,6 +240,10 @@ func (t *LintCertificatesResult) AppendCertificate(c *LintCertificateResult) {
 	organization := "Unknown"
 	if len(c.Cert.Issuer.Organization) > 0 {
 		organization = c.Cert.Issuer.Organization[0]
+	} else if len(c.Cert.Subject.Organization) > 0 {
+		organization = c.Cert.Subject.Organization[0]
+	} else if len(c.Cert.Subject.CommonName) > 0 {
+		organization = c.Cert.Subject.CommonName
 	}
 
 	issuer := t.Issuers[organization]
