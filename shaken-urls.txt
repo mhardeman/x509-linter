@@ -324,7 +324,10 @@ https://crs.sti.uscellular.com/certs/uscc_shaken_CA.crt
 https://customer.questblue.com/assets/questblue_shaken.cer
 https://dial.maqssolution.live/255K.pem
 https://ecms.securetransit.net/certs/410bad9e05a57353f0d8739a421be619.cer
+https://p.mtsec.me/2dd5/HANi-8RbpIVe.pem
 https://p.mtsec.me/2dd5/KGooOP8qrCkY.pem
+https://p.mtsec.me/2dd5/O5Ul22ujxF_m.pem
+https://p.mtsec.me/2dd5/U-o0Vt0ZT1yl.pem
 https://pki.tncp.textnow.com/stir-shaken-textnow-cert.pem
 https://prod001-cr.rbbnidhub.com/8ZJdVFg7gz/2
 https://prod001-cr.rbbnidhub.com/Jx6yR-yMgz/620J202204-2c7d5c55a20834b031681dbd3e2eb9f0
