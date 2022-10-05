@@ -291,6 +291,7 @@ func LintCertificates(dirPath string) (*LintCertificatesResult, error) {
 	return res, nil
 }
 
+// SaveOrganizationReport writes report for each organization
 func SaveOrganizationReport(r *LintCertificatesResult, outDir string) error {
 
 	for name, issuer := range r.Issuers {
