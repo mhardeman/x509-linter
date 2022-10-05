@@ -156,8 +156,8 @@ func computeCertThumbprint(c *x509.Certificate) string {
 
 func printResultMarkDown(w io.Writer, info *LintCertificateResult) {
 	fmt.Fprintf(w, "### Certificate %s\n", info.Thumbprint)
-	fmt.Fprintf(w, "Tested At: %s\n\n", time.Unix(info.Result.Timestamp, 0).String())
-	fmt.Fprintf(w, "Subject: %s\n\n", info.Cert.Subject.String())
+	fmt.Fprintf(w, "Tested At: %s\\\n", time.Unix(info.Result.Timestamp, 0).String())
+	fmt.Fprintf(w, "Subject: %s\\\n", info.Cert.Subject.String())
 	fmt.Fprintf(w, "Issuer: %s\n\n", info.Cert.Issuer.String())
 	fmt.Fprintf(w, "Link: %s\n\n", info.Link)
 	fmt.Fprintf(w, "View: [Click to view](https://understandingwebpki.com/?cert=%s)\n\n", url.QueryEscape(base64.StdEncoding.EncodeToString(info.Cert.Raw)))
@@ -176,8 +176,8 @@ func printResultMarkDown(w io.Writer, info *LintCertificateResult) {
 	}
 
 	fmt.Fprintln(w, "")
-	fmt.Fprintln(w, "* The percent of certificates per issuer is calculated against total certificates from all issuers")
-	fmt.Fprintln(w, "** The percent of errors, warnings and notices is calculated against total observed certificates from the specified issuer")
+	fmt.Fprintln(w, "\\* The percent of certificates per issuer is calculated against total certificates from all issuers\\")
+	fmt.Fprintln(w, "\\*\\* The percent of errors, warnings and notices is calculated against total observed certificates from the specified issuer")
 }
 
 func percent(a uint, b uint) float64 {
@@ -311,8 +311,7 @@ func SaveOrganizationReport(r *LintCertificatesResult, outDir string) error {
 		fmt.Fprintln(file, "")
 		fmt.Fprintf(file, "### %s\n", name)
 		fmt.Fprintln(file, "")
-		fmt.Fprintf(file, "Errors: %d\n", issuer.Errors)
-		fmt.Fprintln(file, "")
+		fmt.Fprintf(file, "Errors: %d\\\n", issuer.Errors)
 		fmt.Fprintf(file, "Warnings: %d\n", issuer.Warnings)
 		fmt.Fprintln(file, "")
 		fmt.Fprintln(file, "| Status | Code | Amount |")
