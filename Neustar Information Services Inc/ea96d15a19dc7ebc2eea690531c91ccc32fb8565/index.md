@@ -1,0 +1,22 @@
+# SHAKEN COMPLIANCE
+## Certificate
+
+### Certificate ea96d15a19dc7ebc2eea690531c91ccc32fb8565
+Tested At: 2022-10-05 08:12:04 +0000 UTC
+
+Subject: C=US, ST=MA, L=Quincy, O=Granite Telecom, OU=Granite, CN=Granite
+
+Issuer: C=US, O=Neustar Information Services Inc, OU=www.ccid.neustar, CN=Neustar Certified Caller ID CA-1
+
+Link: https://cr.ccid.neustar.biz/ccid/authn/v2/certs/11282.10179
+
+View: [Click to view](https://understandingwebpki.com/?cert=MIID9DCCAtygAwIBAgIUZ3adBkhZzYjmASzaR8i7uxEY0%2BEwDQYJKoZIhvcNAQELBQAwfjEpMCcGA1UEAwwgTmV1c3RhciBDZXJ0aWZpZWQgQ2FsbGVyIElEIENBLTExGTAXBgNVBAsMEHd3dy5jY2lkLm5ldXN0YXIxKTAnBgNVBAoMIE5ldXN0YXIgSW5mb3JtYXRpb24gU2VydmljZXMgSW5jMQswCQYDVQQGEwJVUzAeFw0yMTA1MTgxNTA3NTdaFw0yNDA1MTgxNTA3NTdaMGkxEDAOBgNVBAMMB0dyYW5pdGUxEDAOBgNVBAsMB0dyYW5pdGUxGDAWBgNVBAoMD0dyYW5pdGUgVGVsZWNvbTEPMA0GA1UEBwwGUXVpbmN5MQswCQYDVQQIDAJNQTELMAkGA1UEBhMCVVMwWTATBgcqhkjOPQIBBggqhkjOPQMBBwNCAARqqQGioPs1kCJ1RX8yWBVr93ctdO5V4vXPMbL7Kj26A6X1jmTDV74QMLMe4qbXUJvuJLmB06Wu%2BujBUFnQ7cY9o4IBSDCCAUQwDAYDVR0TAQH%2FBAIwADAfBgNVHSMEGDAWgBQ7uVzLMRecSM%2FU2mbrjbao1eEJ9zCBgQYIKwYBBQUHAQEEdTBzMEcGCCsGAQUFBzAChjtodHRwOi8vY2FjZXJ0cy5jY2lkLm5ldXN0YXIvTmV1c3RhckNlcnRpZmllZENhbGxlcklkQ0ExLmNydDAoBggrBgEFBQcwAYYcaHR0cDovL29jc3AtY2ExLmNjaWQubmV1c3RhcjBIBgNVHR8EQTA%2FMD2gO6A5hjdodHRwOi8vY3JsLmNjaWQubmV1c3Rhci9OZXVzdGFyQ2VydGlmaWVkQ2FsbGVySWRDQTEuY3JsMB0GA1UdDgQWBBQ8QlTR9YgoF1qaJQmrilI%2FeUOSpDAOBgNVHQ8BAf8EBAMCB4AwFgYIKwYBBQUHARoECjAIoAYWBDgwNTIwDQYJKoZIhvcNAQELBQADggEBAAv3VuZ7GIWqVovRTp58gexwcVqB0CG1ewVi4ouUa0BYCOCWOladI0%2F9Wgobs3AnOc4%2BeFc33oEG6Mhps5lNKI7KfYGULSYJaaqLGBLdvwyyGCYBX87zhsgN7zkV66VK1lnqHILIkDfaCBkkxlQ4wUYY%2BvPLivT9H95s7Nwso3BZuBRmcdpyhPJT9I7a%2F%2BvRrMK5kmCaR%2FToUbsilRYslXABw3p%2BSWC8D0FcxWuuXKfbEm3flKzjYrG9fv%2B8bpqsJbsMRRK9AD21vW9mzFIvPeO26rw2cJWTRo7cIidLltL0BKXugUxYrDNKsP23%2BZ8KS7F3Z8JFhBgEH6UCV%2BuqSdc%3D)
+
+
+| Code | Type | Details |
+|------|------|---------|
+
+129 tests were ran and no issues were found
+
+* The percent of certificates per issuer is calculated against total certificates from all issuers
+** The percent of errors, warnings and notices is calculated against total observed certificates from the specified issuer
