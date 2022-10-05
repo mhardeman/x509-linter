@@ -165,7 +165,7 @@ func printResultMarkDown(w io.Writer, info *LintCertificateResult) {
 	fmt.Fprintf(w, "| Code | Type | Details |\n")
 	fmt.Fprintf(w, "|------|------|---------|\n")
 	for code, result := range info.Result.Results {
-		if result.Status == lint.Error || result.Status == lint.Warn {
+		if result.Status == lint.Error || result.Status == lint.Warn || result.Status == lint.Notice {
 			fmt.Fprintf(w, "| %s | %s | %s |\n", code, result.Status, result.Details)
 		}
 	}
@@ -174,11 +174,6 @@ func printResultMarkDown(w io.Writer, info *LintCertificateResult) {
 		fmt.Fprintln(w, "")
 		fmt.Fprintf(w, "%d tests were ran and no issues were found\n", len(info.Result.Results))
 	}
-
-	fmt.Fprintln(w, "")
-	fmt.Fprintln(w, "\\* The percent of certificates per issuer is calculated against total certificates from all issuers\\")
-	fmt.Fprintln(w, "\\*\\* The percent of errors, warnings and notices is calculated against total observed certificates from the specified issuer")
-	fmt.Fprintln(w, "\\*\\*\\* Tests do not report on certificates with issues that predate the currently required ATIS 1000080 and Certificate Policy versions")
 }
 
 func percent(a uint, b uint) float64 {
@@ -189,6 +184,7 @@ type LintResult struct {
 	Amount   uint
 	Errors   uint
 	Warnings uint
+	Notices  uint
 }
 
 type LintIssue struct {
@@ -207,7 +203,7 @@ func (t *LintOrganizationResult) AppendCertificate(c *LintCertificateResult) {
 
 	// Update Issues
 	for code, result := range c.Result.Results {
-		if result.Status != lint.Error && result.Status != lint.Warn {
+		if !(result.Status == lint.Error || result.Status == lint.Warn || result.Status == lint.Notice) {
 			continue
 		}
 		issue := t.Issues[code]
@@ -229,6 +225,9 @@ func (t *LintOrganizationResult) AppendCertificate(c *LintCertificateResult) {
 	if c.Result.WarningsPresent {
 		t.Warnings += 1
 	}
+	if c.Result.NoticesPresent {
+		t.Notices += 1
+	}
 }
 
 type LintCertificatesResult struct {
@@ -237,6 +236,11 @@ type LintCertificatesResult struct {
 }
 
 func (t *LintCertificatesResult) AppendCertificate(c *LintCertificateResult) {
+	// TODO implement using SHAKEN Notice rule
+	if !(atis1000080.IsDateATIS1000080(c.Cert) || atis1000080.IsDateCP1_3(c.Cert)) {
+		return
+	}
+
 	organization := "Unknown"
 	if len(c.Cert.Issuer.Organization) > 0 {
 		organization = c.Cert.Issuer.Organization[0]
@@ -263,6 +267,9 @@ func (t *LintCertificatesResult) AppendCertificate(c *LintCertificateResult) {
 	}
 	if c.Result.WarningsPresent {
 		t.Warnings += 1
+	}
+	if c.Result.NoticesPresent {
+		t.Notices += 1
 	}
 }
 
@@ -318,6 +325,7 @@ func SaveOrganizationReport(r *LintCertificatesResult, outDir string) error {
 		fmt.Fprintln(file, "")
 		fmt.Fprintf(file, "Errors: %d\\\n", issuer.Errors)
 		fmt.Fprintf(file, "Warnings: %d\n", issuer.Warnings)
+		fmt.Fprintf(file, "Notices: %d\n", issuer.Notices)
 		fmt.Fprintln(file, "")
 		fmt.Fprintln(file, "| Status | Code | Amount |")
 		fmt.Fprintln(file, "|--------|------|--------|")
@@ -366,13 +374,18 @@ func SaveTotalReport(r *LintCertificatesResult, outDir string) error {
 	fmt.Fprintln(file, "")
 	fmt.Fprintln(file, "## Summary")
 	fmt.Fprintln(file, "")
-	fmt.Fprintln(file, "| Issuers | Certificates | Errors | Warnings |")
-	fmt.Fprintln(file, "|---------|--------------|--------|----------|")
+	fmt.Fprintln(file, "| Issuers | Certificates | Errors | Warnings | Notices |")
+	fmt.Fprintln(file, "|---------|--------------|--------|----------|---------|")
 	for issuerName, issuer := range r.Issuers {
 		issuerNameLink := fmt.Sprintf("[%s](%s)", issuerName, url.PathEscape(path.Join(issuerName, "README.md")))
-		fmt.Fprintf(file, "| %s | %d (%0.2f%%) | %d (%0.2f%%) | %d (%0.2f%%) |\n", issuerNameLink, issuer.Amount, percent(issuer.Amount, r.Amount), issuer.Errors, percent(issuer.Errors, issuer.Amount), issuer.Warnings, percent(issuer.Warnings, issuer.Amount))
+		fmt.Fprintf(file, "| %s | %d (%0.2f%%) | %d (%0.2f%%) | %d (%0.2f%%) | %d (%0.2f%%) |\n", issuerNameLink, issuer.Amount, percent(issuer.Amount, r.Amount), issuer.Errors, percent(issuer.Errors, issuer.Amount), issuer.Warnings, percent(issuer.Warnings, issuer.Amount), issuer.Notices, percent(issuer.Notices, issuer.Amount))
 	}
-	fmt.Fprintf(file, "| **Total** | %d (100%%) | %d (%0.2f%%) | %d (%0.2f%%) |\n", r.Amount, r.Errors, percent(r.Errors, r.Amount), r.Warnings, percent(r.Warnings, r.Amount))
+	fmt.Fprintf(file, "| **Total** | %d (100%%) | %d (%0.2f%%) | %d (%0.2f%%) | %d (%0.2f%%) |\n", r.Amount, r.Errors, percent(r.Errors, r.Amount), r.Warnings, percent(r.Warnings, r.Amount), r.Notices, percent(r.Notices, r.Amount))
+
+	fmt.Fprintln(file, "")
+	fmt.Fprintln(file, "\\* The percent of certificates per issuer is calculated against total certificates from all issuers\\")
+	fmt.Fprintln(file, "\\*\\* The percent of errors, warnings and notices is calculated against total observed certificates from the specified issuer\\")
+	fmt.Fprintln(file, "\\*\\*\\* Tests do not report on certificates with issues that predate the currently required ATIS 1000080 and Certificate Policy versions")
 
 	return nil
 }
