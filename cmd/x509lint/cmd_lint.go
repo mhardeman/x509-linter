@@ -178,6 +178,7 @@ func printResultMarkDown(w io.Writer, info *LintCertificateResult) {
 	fmt.Fprintln(w, "")
 	fmt.Fprintln(w, "\\* The percent of certificates per issuer is calculated against total certificates from all issuers\\")
 	fmt.Fprintln(w, "\\*\\* The percent of errors, warnings and notices is calculated against total observed certificates from the specified issuer")
+	fmt.Fprintln(w, "\\*\\*\\* Tests do not report on certificates with issues that predate the currently required ATIS 1000080 and Certificate Policy versions")
 }
 
 func percent(a uint, b uint) float64 {
@@ -336,6 +337,10 @@ func SaveOrganizationReport(r *LintCertificatesResult, outDir string) error {
 				fmt.Sprintf("[view](%s)", url.PathEscape(path.Join(certReport.Thumbprint, "README.md"))), // link
 			)
 		}
+
+		// footer
+		fmt.Fprintln(file, "")
+		fmt.Fprintln(file, "\\* Tests do not report on certificates with issues that predate the currently required ATIS 1000080 and Certificate Policy versions")
 	}
 
 	return nil
