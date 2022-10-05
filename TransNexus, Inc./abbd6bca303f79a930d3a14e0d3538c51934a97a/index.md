@@ -2,10 +2,8 @@
 ## Certificate
 
 ### Certificate abbd6bca303f79a930d3a14e0d3538c51934a97a
-Tested At: 2022-10-05 08:12:03 +0000 UTC
-
-Subject: CN=Charter Communications Inc SHAKEN 5606, OU=Charter Communications Inc, O=TransNexus, C=US
-
+Tested At: 2022-10-05 08:40:22 +0000 UTC\
+Subject: CN=Charter Communications Inc SHAKEN 5606, OU=Charter Communications Inc, O=TransNexus, C=US\
 Issuer: CN=TransNexus\, Inc. SHAKEN Issuing CA1, OU=SHAKEN, O=TransNexus\, Inc., C=US
 
 Link: https://shaken.spectrum.com/cf1b3d3d-7f2b-42fd-a161-ebe61cd6565a.pem
@@ -17,5 +15,5 @@ View: [Click to view](https://understandingwebpki.com/?cert=MIICuTCCAl%2BgAwIBAg
 |------|------|---------|
 | e_incorrect_ku_encoding | error | KeyUsage contains an inefficient encoding wherein the number of 'unused bits' is declared to be 0, but it should be 7. Raw Bytes: [3 2 0 128], Raw Binary: [00000011 00000010 00000000 10000000] |
 
-* The percent of certificates per issuer is calculated against total certificates from all issuers
-** The percent of errors, warnings and notices is calculated against total observed certificates from the specified issuer
+\* The percent of certificates per issuer is calculated against total certificates from all issuers\
+\*\* The percent of errors, warnings and notices is calculated against total observed certificates from the specified issuer

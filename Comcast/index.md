@@ -3,19 +3,18 @@
 
 ### Comcast
 
-Errors: 6
-
+Errors: 6\
 Warnings: 6
 
 | Status | Code | Amount |
 |--------|------|--------|
-| error | e_shaken_sti_subject_key_identifier | 6 |
-| error | e_shaken_cp1_3_subject_sn | 6 |
 | error | e_shaken_sti_certificate_policies | 6 |
-| warn | w_ext_subject_key_identifier_missing_sub_cert | 6 |
 | error | e_shaken_cp1_3_ambiguous_identifier | 6 |
-| error | e_shaken_sti_subject_cn | 6 |
 | warn | w_shaken_sti_subject_rdn_unknown | 6 |
+| warn | w_ext_subject_key_identifier_missing_sub_cert | 6 |
+| error | e_shaken_sti_subject_cn | 6 |
+| error | e_shaken_cp1_3_subject_sn | 6 |
+| error | e_shaken_sti_subject_key_identifier | 6 |
 
 ### Issued certificates
 

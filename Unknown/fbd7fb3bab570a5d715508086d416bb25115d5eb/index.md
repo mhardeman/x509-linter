@@ -2,10 +2,8 @@
 ## Certificate
 
 ### Certificate fbd7fb3bab570a5d715508086d416bb25115d5eb
-Tested At: 2022-10-05 08:12:04 +0000 UTC
-
-Subject: CN=Call48 SHAKEN Cert 505J, O=Call48, C=US
-
+Tested At: 2022-10-05 08:40:23 +0000 UTC\
+Subject: CN=Call48 SHAKEN Cert 505J, O=Call48, C=US\
 Issuer: CN=Metaswitch STI-CA SHAKEN Issuing 1
 
 Link: https://sti-cr.cgah.tnsi.com/certs/27619989593575ff99cddfc6b207ba73fed5de1e
@@ -18,5 +16,5 @@ View: [Click to view](https://understandingwebpki.com/?cert=MIICRzCCAe2gAwIBAgIQ
 
 129 tests were ran and no issues were found
 
-* The percent of certificates per issuer is calculated against total certificates from all issuers
-** The percent of errors, warnings and notices is calculated against total observed certificates from the specified issuer
+\* The percent of certificates per issuer is calculated against total certificates from all issuers\
+\*\* The percent of errors, warnings and notices is calculated against total observed certificates from the specified issuer

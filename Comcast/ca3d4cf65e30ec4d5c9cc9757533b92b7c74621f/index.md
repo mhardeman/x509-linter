@@ -2,10 +2,8 @@
 ## Certificate
 
 ### Certificate ca3d4cf65e30ec4d5c9cc9757533b92b7c74621f
-Tested At: 2022-10-05 08:12:03 +0000 UTC
-
-Subject: CN=SHAKEN, O=Comcast, L=Philadelphia, ST=Pennsylvania, C=US
-
+Tested At: 2022-10-05 08:40:23 +0000 UTC\
+Subject: CN=SHAKEN, O=Comcast, L=Philadelphia, ST=Pennsylvania, C=US\
 Issuer: CN=Comcast SHAKEN Intermediate CA, O=Comcast, ST=Pennsylvania, C=US
 
 Link: https://sticr.stir.comcast.com/49241c1a-4e4a-4bf8-9a6a-3de6850c21ac.cer
@@ -15,13 +13,13 @@ View: [Click to view](https://understandingwebpki.com/?cert=MIICVzCCAf2gAwIBAgII
 
 | Code | Type | Details |
 |------|------|---------|
-| e_shaken_cp1_3_subject_sn | error | STI certificate shall include a ‘serialNumber’ attribute along with the CN |
 | e_shaken_sti_subject_key_identifier | error | STI certificates shall contain a Subject Key Identifier extension |
-| e_shaken_cp1_3_ambiguous_identifier | error | Names used in the STI certificates shall represent an unambiguous identifier for the SP Subject |
-| w_shaken_sti_subject_rdn_unknown | warn | STI certificate shall not include RDNs that are not specified |
 | e_shaken_sti_subject_cn | error | Common name shall contain the text string 'SHAKEN 7610' |
+| e_shaken_cp1_3_subject_sn | error | STI certificate shall include a ‘serialNumber’ attribute along with the CN |
+| e_shaken_cp1_3_ambiguous_identifier | error | Names used in the STI certificates shall represent an unambiguous identifier for the SP Subject |
 | e_shaken_sti_certificate_policies | error | STI certificate shall include a Certificate Policies extension containing a single SHAKEN Certificate Policy |
+| w_shaken_sti_subject_rdn_unknown | warn | STI certificate shall not include RDNs that are not specified |
 | w_ext_subject_key_identifier_missing_sub_cert | warn |  |
 
-* The percent of certificates per issuer is calculated against total certificates from all issuers
-** The percent of errors, warnings and notices is calculated against total observed certificates from the specified issuer
+\* The percent of certificates per issuer is calculated against total certificates from all issuers\
+\*\* The percent of errors, warnings and notices is calculated against total observed certificates from the specified issuer

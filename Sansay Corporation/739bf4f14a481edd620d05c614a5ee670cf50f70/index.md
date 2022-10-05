@@ -2,10 +2,8 @@
 ## Certificate
 
 ### Certificate 739bf4f14a481edd620d05c614a5ee670cf50f70
-Tested At: 2022-10-05 08:12:02 +0000 UTC
-
-Subject: CN=SHAKEN Sangoma 777G, OU=Network Engineering, O=Sangoma, ST=Georgia, C=US
-
+Tested At: 2022-10-05 08:40:22 +0000 UTC\
+Subject: CN=SHAKEN Sangoma 777G, OU=Network Engineering, O=Sangoma, ST=Georgia, C=US\
 Issuer: CN=SHAKEN Sansay Intermediate CA US WEST 1, OU=Sansay CA, O=Sansay Corporation, ST=California, C=US
 
 Link: https://cr.sansay.com/Sangoma_777G
@@ -16,10 +14,10 @@ View: [Click to view](https://understandingwebpki.com/?cert=MIIDfzCCAyWgAwIBAgIU
 | Code | Type | Details |
 |------|------|---------|
 | e_shaken_sti_certificate_policies | error | STI certificate shall include a Certificate Policies extension containing a single SHAKEN Certificate Policy |
-| e_shaken_sti_subject_cn | error | Common name shall contain the text string 'SHAKEN 777G' |
-| w_shaken_sti_subject_rdn_unknown | warn | STI certificate shall not include RDNs that are not specified |
 | e_shaken_cp1_3_ambiguous_identifier | error | Names used in the STI certificates shall represent an unambiguous identifier for the SP Subject |
+| w_shaken_sti_subject_rdn_unknown | warn | STI certificate shall not include RDNs that are not specified |
+| e_shaken_sti_subject_cn | error | Common name shall contain the text string 'SHAKEN 777G' |
 | e_shaken_cp1_3_subject_sn | error | STI certificate shall include a ‘serialNumber’ attribute along with the CN |
 
-* The percent of certificates per issuer is calculated against total certificates from all issuers
-** The percent of errors, warnings and notices is calculated against total observed certificates from the specified issuer
+\* The percent of certificates per issuer is calculated against total certificates from all issuers\
+\*\* The percent of errors, warnings and notices is calculated against total observed certificates from the specified issuer

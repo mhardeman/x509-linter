@@ -2,10 +2,8 @@
 ## Certificate
 
 ### Certificate a881aae2fc7dd6564a1312648512419a08a4dcd3
-Tested At: 2022-10-05 08:12:03 +0000 UTC
-
-Subject: CN=SHAKEN 813J, O=Rscom LTD, C=CA
-
+Tested At: 2022-10-05 08:40:22 +0000 UTC\
+Subject: CN=SHAKEN 813J, O=Rscom LTD, C=CA\
 Issuer: CN=Neustar Certified Caller ID SHAKEN CA-1, OU=www.ccid.neustar, O=Neustar Information Services Inc, C=US
 
 Link: https://ssc.getsipnav.com/certs/9588bd2711f79fb29c88000ca03c5001d22e3d4d
@@ -18,5 +16,5 @@ View: [Click to view](https://understandingwebpki.com/?cert=MIIC%2BjCCAqCgAwIBAg
 
 129 tests were ran and no issues were found
 
-* The percent of certificates per issuer is calculated against total certificates from all issuers
-** The percent of errors, warnings and notices is calculated against total observed certificates from the specified issuer
+\* The percent of certificates per issuer is calculated against total certificates from all issuers\
+\*\* The percent of errors, warnings and notices is calculated against total observed certificates from the specified issuer

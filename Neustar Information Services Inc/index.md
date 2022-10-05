@@ -3,19 +3,18 @@
 
 ### Neustar Information Services Inc
 
-Errors: 42
-
+Errors: 42\
 Warnings: 2
 
 | Status | Code | Amount |
 |--------|------|--------|
+| error | e_shaken_sti_certificate_policies | 41 |
+| error | e_shaken_sti_extension_unknown | 41 |
+| error | e_shaken_cp1_3_subject_sn | 42 |
 | warn | w_shaken_sti_subject_rdn_unknown | 2 |
-| error | e_shaken_sti_subject_cn | 1 |
 | error | e_shaken_sti_crl_distribution | 1 |
 | error | e_shaken_cp1_3_ambiguous_identifier | 1 |
-| error | e_shaken_sti_extension_unknown | 41 |
-| error | e_shaken_sti_certificate_policies | 41 |
-| error | e_shaken_cp1_3_subject_sn | 42 |
+| error | e_shaken_sti_subject_cn | 1 |
 
 ### Issued certificates
 

@@ -2,10 +2,8 @@
 ## Certificate
 
 ### Certificate 3b1c3489397ddc9a5230cf79df2a68616e19f2fe
-Tested At: 2022-10-05 08:12:01 +0000 UTC
-
-Subject: C=US, ST=MO, L=Girardeau, O=Big River Telephone Company, OU=BRCNG, CN=BigRiverTelephoneCompany
-
+Tested At: 2022-10-05 08:40:21 +0000 UTC\
+Subject: C=US, ST=MO, L=Girardeau, O=Big River Telephone Company, OU=BRCNG, CN=BigRiverTelephoneCompany\
 Issuer: C=US, O=Neustar Information Services Inc, OU=www.ccid.neustar, CN=Neustar Certified Caller ID CA-1
 
 Link: https://cr.ccid.neustar.biz/ccid/authn/v2/certs/11133.10171.pem
@@ -18,5 +16,5 @@ View: [Click to view](https://understandingwebpki.com/?cert=MIIEEzCCAvugAwIBAgIU
 
 129 tests were ran and no issues were found
 
-* The percent of certificates per issuer is calculated against total certificates from all issuers
-** The percent of errors, warnings and notices is calculated against total observed certificates from the specified issuer
+\* The percent of certificates per issuer is calculated against total certificates from all issuers\
+\*\* The percent of errors, warnings and notices is calculated against total observed certificates from the specified issuer

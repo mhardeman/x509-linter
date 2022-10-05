@@ -2,10 +2,8 @@
 ## Certificate
 
 ### Certificate 8bc020a691adf8cddf209205d987e9e9d7cdf467
-Tested At: 2022-10-05 08:12:02 +0000 UTC
-
-Subject: C=US, ST=FL, L=Tampa, O=Digital IP Voice, OU=Service Division, CN=digitalipvoice.com
-
+Tested At: 2022-10-05 08:40:22 +0000 UTC\
+Subject: C=US, ST=FL, L=Tampa, O=Digital IP Voice, OU=Service Division, CN=digitalipvoice.com\
 Issuer: C=US, O=Neustar Information Services Inc, OU=www.ccid.neustar, CN=Neustar Certified Caller ID CA-1
 
 Link: https://az.tax/1
@@ -18,5 +16,5 @@ View: [Click to view](https://understandingwebpki.com/?cert=MIIECDCCAvCgAwIBAgIU
 
 129 tests were ran and no issues were found
 
-* The percent of certificates per issuer is calculated against total certificates from all issuers
-** The percent of errors, warnings and notices is calculated against total observed certificates from the specified issuer
+\* The percent of certificates per issuer is calculated against total certificates from all issuers\
+\*\* The percent of errors, warnings and notices is calculated against total observed certificates from the specified issuer

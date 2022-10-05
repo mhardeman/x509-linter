@@ -2,10 +2,8 @@
 ## Certificate
 
 ### Certificate 1a059b1bd612bc230679687a7040def8c7358549
-Tested At: 2022-10-05 08:12:00 +0000 UTC
-
-Subject: C=US, ST=CO, L=Denver, O=Teliax Inc., OU=Teliax Inc., CN=Shaken
-
+Tested At: 2022-10-05 08:40:21 +0000 UTC\
+Subject: C=US, ST=CO, L=Denver, O=Teliax Inc., OU=Teliax Inc., CN=Shaken\
 Issuer: C=US, O=Neustar Information Services Inc, OU=www.ccid.neustar, CN=Neustar Certified Caller ID CA-1
 
 Link: https://cr.ccid.neustar.biz/ccid/authn/v2/certs/11316.10181
@@ -18,5 +16,5 @@ View: [Click to view](https://understandingwebpki.com/?cert=MIID8zCCAtugAwIBAgIU
 
 129 tests were ran and no issues were found
 
-* The percent of certificates per issuer is calculated against total certificates from all issuers
-** The percent of errors, warnings and notices is calculated against total observed certificates from the specified issuer
+\* The percent of certificates per issuer is calculated against total certificates from all issuers\
+\*\* The percent of errors, warnings and notices is calculated against total observed certificates from the specified issuer

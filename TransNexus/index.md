@@ -3,8 +3,7 @@
 
 ### TransNexus
 
-Errors: 0
-
+Errors: 0\
 Warnings: 0
 
 | Status | Code | Amount |

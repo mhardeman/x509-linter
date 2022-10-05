@@ -2,10 +2,8 @@
 ## Certificate
 
 ### Certificate a7560fcc8fd4338d5df9b8a9f0f3981722ef1913
-Tested At: 2022-10-05 08:12:03 +0000 UTC
-
-Subject: CN=Telesystem SHAKEN Cert 786E, O=Telesystem, C=US
-
+Tested At: 2022-10-05 08:40:22 +0000 UTC\
+Subject: CN=Telesystem SHAKEN Cert 786E, O=Telesystem, C=US\
 Issuer: CN=Metaswitch STI-CA SHAKEN Issuing 1
 
 Link: https://sti-cr.cgah.tnsi.com/certs/1cb5524539bfa481384ff17da116fd8eed39952f
@@ -18,5 +16,5 @@ View: [Click to view](https://understandingwebpki.com/?cert=MIICTjCCAfWgAwIBAgIQ
 
 129 tests were ran and no issues were found
 
-* The percent of certificates per issuer is calculated against total certificates from all issuers
-** The percent of errors, warnings and notices is calculated against total observed certificates from the specified issuer
+\* The percent of certificates per issuer is calculated against total certificates from all issuers\
+\*\* The percent of errors, warnings and notices is calculated against total observed certificates from the specified issuer

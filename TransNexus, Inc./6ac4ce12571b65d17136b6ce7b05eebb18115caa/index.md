@@ -2,10 +2,8 @@
 ## Certificate
 
 ### Certificate 6ac4ce12571b65d17136b6ce7b05eebb18115caa
-Tested At: 2022-10-05 08:12:02 +0000 UTC
-
-Subject: CN=SHAKEN 8526, OU=SHAKEN, O=MetTel, C=US
-
+Tested At: 2022-10-05 08:40:22 +0000 UTC\
+Subject: CN=SHAKEN 8526, OU=SHAKEN, O=MetTel, C=US\
 Issuer: CN=TransNexus\, Inc. SHAKEN Issuing CA3, OU=SHAKEN, O=TransNexus\, Inc., C=US
 
 Link: https://certificates.transnexus.com/8526/88a92c6f-973b-4d14-9221-4c577d177131.pem
@@ -19,5 +17,5 @@ View: [Click to view](https://understandingwebpki.com/?cert=MIIC6TCCAo6gAwIBAgIQ
 | e_shaken_cp1_3_subject_sn | error | STI certificate shall include a ‘serialNumber’ attribute along with the CN |
 | e_incorrect_ku_encoding | error | KeyUsage contains an inefficient encoding wherein the number of 'unused bits' is declared to be 0, but it should be 7. Raw Bytes: [3 2 0 128], Raw Binary: [00000011 00000010 00000000 10000000] |
 
-* The percent of certificates per issuer is calculated against total certificates from all issuers
-** The percent of errors, warnings and notices is calculated against total observed certificates from the specified issuer
+\* The percent of certificates per issuer is calculated against total certificates from all issuers\
+\*\* The percent of errors, warnings and notices is calculated against total observed certificates from the specified issuer

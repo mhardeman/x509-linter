@@ -2,10 +2,8 @@
 ## Certificate
 
 ### Certificate ea96d15a19dc7ebc2eea690531c91ccc32fb8565
-Tested At: 2022-10-05 08:12:04 +0000 UTC
-
-Subject: C=US, ST=MA, L=Quincy, O=Granite Telecom, OU=Granite, CN=Granite
-
+Tested At: 2022-10-05 08:40:23 +0000 UTC\
+Subject: C=US, ST=MA, L=Quincy, O=Granite Telecom, OU=Granite, CN=Granite\
 Issuer: C=US, O=Neustar Information Services Inc, OU=www.ccid.neustar, CN=Neustar Certified Caller ID CA-1
 
 Link: https://cr.ccid.neustar.biz/ccid/authn/v2/certs/11282.10179
@@ -18,5 +16,5 @@ View: [Click to view](https://understandingwebpki.com/?cert=MIID9DCCAtygAwIBAgIU
 
 129 tests were ran and no issues were found
 
-* The percent of certificates per issuer is calculated against total certificates from all issuers
-** The percent of errors, warnings and notices is calculated against total observed certificates from the specified issuer
+\* The percent of certificates per issuer is calculated against total certificates from all issuers\
+\*\* The percent of errors, warnings and notices is calculated against total observed certificates from the specified issuer

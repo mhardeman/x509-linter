@@ -3,17 +3,16 @@
 
 ### NetNumber Inc
 
-Errors: 3
-
+Errors: 3\
 Warnings: 1
 
 | Status | Code | Amount |
 |--------|------|--------|
-| error | e_shaken_cp1_3_ambiguous_identifier | 3 |
 | warn | w_shaken_sti_subject_rdn_unknown | 1 |
-| error | e_shaken_sti_subject_cn | 3 |
+| error | e_shaken_cp1_3_ambiguous_identifier | 3 |
 | error | e_shaken_sti_certificate_policies | 3 |
 | error | e_shaken_cp1_3_subject_sn | 3 |
+| error | e_shaken_sti_subject_cn | 3 |
 | error | e_shaken_sti_crl_distribution | 1 |
 
 ### Issued certificates

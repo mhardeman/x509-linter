@@ -3,16 +3,15 @@
 
 ### Peeringhub Inc
 
-Errors: 2
-
+Errors: 2\
 Warnings: 2
 
 | Status | Code | Amount |
 |--------|------|--------|
-| error | e_shaken_cp1_3_ambiguous_identifier | 2 |
-| error | e_shaken_cp1_3_subject_sn | 2 |
 | warn | w_shaken_sti_subject_rdn_unknown | 2 |
 | error | e_shaken_sti_certificate_policies | 2 |
+| error | e_shaken_cp1_3_ambiguous_identifier | 2 |
+| error | e_shaken_cp1_3_subject_sn | 2 |
 
 ### Issued certificates
 

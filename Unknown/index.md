@@ -3,17 +3,16 @@
 
 ### Unknown
 
-Errors: 1
-
+Errors: 1\
 Warnings: 0
 
 | Status | Code | Amount |
 |--------|------|--------|
-| error | e_shaken_sti_subject_cn | 1 |
-| error | e_shaken_cp1_3_ambiguous_identifier | 1 |
 | error | e_shaken_sti_issuer | 1 |
-| error | e_shaken_cp1_3_subject_sn | 1 |
+| error | e_shaken_cp1_3_ambiguous_identifier | 1 |
 | error | e_shaken_sti_key_usage | 1 |
+| error | e_shaken_sti_subject_cn | 1 |
+| error | e_shaken_cp1_3_subject_sn | 1 |
 
 ### Issued certificates
 

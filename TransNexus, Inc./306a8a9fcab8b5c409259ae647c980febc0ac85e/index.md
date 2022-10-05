@@ -2,10 +2,8 @@
 ## Certificate
 
 ### Certificate 306a8a9fcab8b5c409259ae647c980febc0ac85e
-Tested At: 2022-10-05 08:12:01 +0000 UTC
-
-Subject: CN=SHAKEN 819H, OU=SHAKEN, O=BluIP Inc., C=US
-
+Tested At: 2022-10-05 08:40:21 +0000 UTC\
+Subject: CN=SHAKEN 819H, OU=SHAKEN, O=BluIP Inc., C=US\
 Issuer: CN=TransNexus\, Inc. SHAKEN Issuing CA3, OU=SHAKEN, O=TransNexus\, Inc., C=US
 
 Link: https://certificates.clearip.com/3c4ce448-386b-4d47-a276-7fe32e380a83/99c1391d889020cdb4cee8e62aa80825.pem
@@ -15,9 +13,9 @@ View: [Click to view](https://understandingwebpki.com/?cert=MIIC7DCCApKgAwIBAgIQ
 
 | Code | Type | Details |
 |------|------|---------|
-| w_shaken_sti_subject_rdn_unknown | warn | STI certificate shall not include RDNs that are not specified |
 | e_shaken_cp1_3_subject_sn | error | STI certificate shall include a ‘serialNumber’ attribute along with the CN |
+| w_shaken_sti_subject_rdn_unknown | warn | STI certificate shall not include RDNs that are not specified |
 | e_incorrect_ku_encoding | error | KeyUsage contains an inefficient encoding wherein the number of 'unused bits' is declared to be 0, but it should be 7. Raw Bytes: [3 2 0 128], Raw Binary: [00000011 00000010 00000000 10000000] |
 
-* The percent of certificates per issuer is calculated against total certificates from all issuers
-** The percent of errors, warnings and notices is calculated against total observed certificates from the specified issuer
+\* The percent of certificates per issuer is calculated against total certificates from all issuers\
+\*\* The percent of errors, warnings and notices is calculated against total observed certificates from the specified issuer

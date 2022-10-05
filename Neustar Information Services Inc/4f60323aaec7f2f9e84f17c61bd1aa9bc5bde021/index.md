@@ -2,10 +2,8 @@
 ## Certificate
 
 ### Certificate 4f60323aaec7f2f9e84f17c61bd1aa9bc5bde021
-Tested At: 2022-10-05 08:12:01 +0000 UTC
-
-Subject: CN=SHAKEN 553J, OU=VOIP, O=Whitesky Communications LLC, L=Northport, ST=AL, C=US
-
+Tested At: 2022-10-05 08:40:22 +0000 UTC\
+Subject: CN=SHAKEN 553J, OU=VOIP, O=Whitesky Communications LLC, L=Northport, ST=AL, C=US\
 Issuer: CN=Neustar Certified Caller ID SHAKEN CA-1, OU=www.ccid.neustar, O=Neustar Information Services Inc, C=US
 
 Link: https://certs.sip.wtsky.net/prod/shaken-6-2023.cer
@@ -16,9 +14,9 @@ View: [Click to view](https://understandingwebpki.com/?cert=MIIDPDCCAuKgAwIBAgIU
 | Code | Type | Details |
 |------|------|---------|
 | e_shaken_sti_certificate_policies | error | STI certificate shall include a Certificate Policies extension containing a single SHAKEN Certificate Policy |
-| e_shaken_sti_extension_unknown | error | STI certificate shall not include extensions that are not specified |
-| e_shaken_cp1_3_subject_sn | error | STI certificate shall include a ‘serialNumber’ attribute along with the CN |
 | w_shaken_sti_subject_rdn_unknown | warn | STI certificate shall not include RDNs that are not specified |
+| e_shaken_cp1_3_subject_sn | error | STI certificate shall include a ‘serialNumber’ attribute along with the CN |
+| e_shaken_sti_extension_unknown | error | STI certificate shall not include extensions that are not specified |
 
-* The percent of certificates per issuer is calculated against total certificates from all issuers
-** The percent of errors, warnings and notices is calculated against total observed certificates from the specified issuer
+\* The percent of certificates per issuer is calculated against total certificates from all issuers\
+\*\* The percent of errors, warnings and notices is calculated against total observed certificates from the specified issuer

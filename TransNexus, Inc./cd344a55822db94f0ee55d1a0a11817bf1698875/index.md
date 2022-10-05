@@ -2,10 +2,8 @@
 ## Certificate
 
 ### Certificate cd344a55822db94f0ee55d1a0a11817bf1698875
-Tested At: 2022-10-05 08:12:04 +0000 UTC
-
-Subject: CN=SHAKEN 849J, OU=SHAKEN, O=Fuse.Cloud, C=US
-
+Tested At: 2022-10-05 08:40:23 +0000 UTC\
+Subject: CN=SHAKEN 849J, OU=SHAKEN, O=Fuse.Cloud, C=US\
 Issuer: CN=TransNexus\, Inc. SHAKEN Issuing CA3, OU=SHAKEN, O=TransNexus\, Inc., C=US
 
 Link: https://certificates.clearip.com/86e241b8-9c8e-4431-b35f-4d92844a1da9/918ccaa29f74fe641254c97bed028f13.pem
@@ -15,9 +13,9 @@ View: [Click to view](https://understandingwebpki.com/?cert=MIIC6zCCApKgAwIBAgIQ
 
 | Code | Type | Details |
 |------|------|---------|
-| e_shaken_cp1_3_subject_sn | error | STI certificate shall include a ‘serialNumber’ attribute along with the CN |
-| w_shaken_sti_subject_rdn_unknown | warn | STI certificate shall not include RDNs that are not specified |
 | e_incorrect_ku_encoding | error | KeyUsage contains an inefficient encoding wherein the number of 'unused bits' is declared to be 0, but it should be 7. Raw Bytes: [3 2 0 128], Raw Binary: [00000011 00000010 00000000 10000000] |
+| w_shaken_sti_subject_rdn_unknown | warn | STI certificate shall not include RDNs that are not specified |
+| e_shaken_cp1_3_subject_sn | error | STI certificate shall include a ‘serialNumber’ attribute along with the CN |
 
-* The percent of certificates per issuer is calculated against total certificates from all issuers
-** The percent of errors, warnings and notices is calculated against total observed certificates from the specified issuer
+\* The percent of certificates per issuer is calculated against total certificates from all issuers\
+\*\* The percent of errors, warnings and notices is calculated against total observed certificates from the specified issuer

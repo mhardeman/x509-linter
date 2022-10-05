@@ -2,10 +2,8 @@
 ## Certificate
 
 ### Certificate 9320f7adbea7bb821422b21b229baaef4ef47c11
-Tested At: 2022-10-05 08:12:02 +0000 UTC
-
-Subject: CN=Cspire SHAKEN Cert 6581, O=Cspire, C=US
-
+Tested At: 2022-10-05 08:40:22 +0000 UTC\
+Subject: CN=Cspire SHAKEN Cert 6581, O=Cspire, C=US\
 Issuer: CN=Metaswitch STI-CA SHAKEN Issuing 1
 
 Link: https://sti-cr.cgah.tnsi.com/certs/6c54d88f5669c28848983d4572f11c0b896342ac
@@ -18,5 +16,5 @@ View: [Click to view](https://understandingwebpki.com/?cert=MIICRjCCAe2gAwIBAgIQ
 
 129 tests were ran and no issues were found
 
-* The percent of certificates per issuer is calculated against total certificates from all issuers
-** The percent of errors, warnings and notices is calculated against total observed certificates from the specified issuer
+\* The percent of certificates per issuer is calculated against total certificates from all issuers\
+\*\* The percent of errors, warnings and notices is calculated against total observed certificates from the specified issuer

@@ -2,10 +2,8 @@
 ## Certificate
 
 ### Certificate 692820bcc2789fc6920925c16b59e6e34f1978a4
-Tested At: 2022-10-05 08:12:02 +0000 UTC
-
-Subject: CN=SHAKEN, O=Comcast, L=Philadelphia, ST=Pennsylvania, C=US
-
+Tested At: 2022-10-05 08:40:22 +0000 UTC\
+Subject: CN=SHAKEN, O=Comcast, L=Philadelphia, ST=Pennsylvania, C=US\
 Issuer: CN=Comcast SHAKEN Intermediate CA, O=Comcast, ST=Pennsylvania, C=US
 
 Link: https://sticr.stir.comcast.com/dbc5ffd2-998d-4701-8be4-a10ff69ce097.cer
@@ -17,11 +15,11 @@ View: [Click to view](https://understandingwebpki.com/?cert=MIICWDCCAf2gAwIBAgII
 |------|------|---------|
 | e_shaken_sti_subject_key_identifier | error | STI certificates shall contain a Subject Key Identifier extension |
 | e_shaken_cp1_3_subject_sn | error | STI certificate shall include a ‘serialNumber’ attribute along with the CN |
-| w_shaken_sti_subject_rdn_unknown | warn | STI certificate shall not include RDNs that are not specified |
-| e_shaken_sti_subject_cn | error | Common name shall contain the text string 'SHAKEN 7610' |
 | e_shaken_sti_certificate_policies | error | STI certificate shall include a Certificate Policies extension containing a single SHAKEN Certificate Policy |
 | w_ext_subject_key_identifier_missing_sub_cert | warn |  |
 | e_shaken_cp1_3_ambiguous_identifier | error | Names used in the STI certificates shall represent an unambiguous identifier for the SP Subject |
+| e_shaken_sti_subject_cn | error | Common name shall contain the text string 'SHAKEN 7610' |
+| w_shaken_sti_subject_rdn_unknown | warn | STI certificate shall not include RDNs that are not specified |
 
-* The percent of certificates per issuer is calculated against total certificates from all issuers
-** The percent of errors, warnings and notices is calculated against total observed certificates from the specified issuer
+\* The percent of certificates per issuer is calculated against total certificates from all issuers\
+\*\* The percent of errors, warnings and notices is calculated against total observed certificates from the specified issuer

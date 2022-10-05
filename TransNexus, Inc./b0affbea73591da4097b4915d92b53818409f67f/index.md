@@ -2,10 +2,8 @@
 ## Certificate
 
 ### Certificate b0affbea73591da4097b4915d92b53818409f67f
-Tested At: 2022-10-05 08:12:03 +0000 UTC
-
-Subject: CN=SHAKEN 578J, OU=SHAKEN, O=Call Tools Inc, C=US
-
+Tested At: 2022-10-05 08:40:22 +0000 UTC\
+Subject: CN=SHAKEN 578J, OU=SHAKEN, O=Call Tools Inc, C=US\
 Issuer: CN=TransNexus\, Inc. SHAKEN Issuing CA3, OU=SHAKEN, O=TransNexus\, Inc., C=US
 
 Link: https://certificates.transnexus.com/578J/8e374e10-eba0-45b0-b09a-b7086947dd7c.pem
@@ -19,5 +17,5 @@ View: [Click to view](https://understandingwebpki.com/?cert=MIIC8DCCApagAwIBAgIQ
 | e_incorrect_ku_encoding | error | KeyUsage contains an inefficient encoding wherein the number of 'unused bits' is declared to be 0, but it should be 7. Raw Bytes: [3 2 0 128], Raw Binary: [00000011 00000010 00000000 10000000] |
 | w_shaken_sti_subject_rdn_unknown | warn | STI certificate shall not include RDNs that are not specified |
 
-* The percent of certificates per issuer is calculated against total certificates from all issuers
-** The percent of errors, warnings and notices is calculated against total observed certificates from the specified issuer
+\* The percent of certificates per issuer is calculated against total certificates from all issuers\
+\*\* The percent of errors, warnings and notices is calculated against total observed certificates from the specified issuer

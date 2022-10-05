@@ -2,10 +2,8 @@
 ## Certificate
 
 ### Certificate b9fc91972f86a60e6b515cb176b9616851ffb0ab
-Tested At: 2022-10-05 08:12:03 +0000 UTC
-
-Subject: CN=***SHAKEN***464D, OU=VOIP, O=Fibernetics, L=Cambridge, ST=ON, C=CA
-
+Tested At: 2022-10-05 08:40:23 +0000 UTC\
+Subject: CN=***SHAKEN***464D, OU=VOIP, O=Fibernetics, L=Cambridge, ST=ON, C=CA\
 Issuer: CN=Neustar Canada Certified Caller ID SHAKEN CA-1, OU=www.ca.ccid.neustar, O=Neustar Information Services Inc, C=CA
 
 Link: https://stir.fibernetics.ca/prod-cert2022.pem
@@ -16,12 +14,12 @@ View: [Click to view](https://understandingwebpki.com/?cert=MIIDNzCCAt2gAwIBAgIU
 | Code | Type | Details |
 |------|------|---------|
 | e_shaken_cp1_3_ambiguous_identifier | error | Names used in the STI certificates shall represent an unambiguous identifier for the SP Subject |
-| e_shaken_cp1_3_subject_sn | error | STI certificate shall include a ‘serialNumber’ attribute along with the CN |
-| e_shaken_sti_extension_unknown | error | STI certificate shall not include extensions that are not specified |
-| w_shaken_sti_subject_rdn_unknown | warn | STI certificate shall not include RDNs that are not specified |
 | e_shaken_sti_certificate_policies | error | STI certificate shall include a Certificate Policies extension containing a single SHAKEN Certificate Policy |
+| w_shaken_sti_subject_rdn_unknown | warn | STI certificate shall not include RDNs that are not specified |
 | e_shaken_sti_subject_cn | error | Common name shall contain the text string 'SHAKEN 464D' |
+| e_shaken_cp1_3_subject_sn | error | STI certificate shall include a ‘serialNumber’ attribute along with the CN |
 | e_shaken_sti_crl_distribution | error | CRL Distribution Point shall be reachable if the requesting IP address within the program ACLs |
+| e_shaken_sti_extension_unknown | error | STI certificate shall not include extensions that are not specified |
 
-* The percent of certificates per issuer is calculated against total certificates from all issuers
-** The percent of errors, warnings and notices is calculated against total observed certificates from the specified issuer
+\* The percent of certificates per issuer is calculated against total certificates from all issuers\
+\*\* The percent of errors, warnings and notices is calculated against total observed certificates from the specified issuer

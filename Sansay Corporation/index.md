@@ -3,16 +3,15 @@
 
 ### Sansay Corporation
 
-Errors: 40
-
+Errors: 40\
 Warnings: 40
 
 | Status | Code | Amount |
 |--------|------|--------|
 | error | e_shaken_sti_subject_cn | 40 |
-| error | e_shaken_sti_certificate_policies | 40 |
-| warn | w_shaken_sti_subject_rdn_unknown | 40 |
 | error | e_shaken_cp1_3_ambiguous_identifier | 40 |
+| warn | w_shaken_sti_subject_rdn_unknown | 40 |
+| error | e_shaken_sti_certificate_policies | 40 |
 | error | e_shaken_cp1_3_subject_sn | 40 |
 
 ### Issued certificates

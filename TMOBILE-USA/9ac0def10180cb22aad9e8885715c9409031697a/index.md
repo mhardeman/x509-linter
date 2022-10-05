@@ -2,10 +2,8 @@
 ## Certificate
 
 ### Certificate 9ac0def10180cb22aad9e8885715c9409031697a
-Tested At: 2022-10-05 08:12:02 +0000 UTC
-
-Subject: CN=cert.stir.t-mobile.com, OU=T-Mobile USA\, Inc, O=T-Mobile USA\, Inc., L=Bothell, ST=Washington, C=US
-
+Tested At: 2022-10-05 08:40:22 +0000 UTC\
+Subject: CN=cert.stir.t-mobile.com, OU=T-Mobile USA\, Inc, O=T-Mobile USA\, Inc., L=Bothell, ST=Washington, C=US\
 Issuer: CN=TMOBILE-PROD-SUB-STIRSHAKEN-EC, O=TMOBILE-USA, C=US
 
 Link: https://t-mobile-sticr.fosrvt.com/88a8e33055e725475530660e5d6c40d6adbe37ab7ae0ecc64b50205629548ae9.pem
@@ -15,13 +13,13 @@ View: [Click to view](https://understandingwebpki.com/?cert=MIICyTCCAm%2BgAwIBAg
 
 | Code | Type | Details |
 |------|------|---------|
-| e_shaken_sti_extension_unknown | error | STI certificate shall not include extensions that are not specified |
+| e_shaken_cp1_3_ambiguous_identifier | error | Names used in the STI certificates shall represent an unambiguous identifier for the SP Subject |
 | e_shaken_sti_subject_cn | error | Common name shall contain the text string 'SHAKEN 6529' |
+| w_shaken_sti_subject_rdn_unknown | warn | STI certificate shall not include RDNs that are not specified |
 | e_shaken_sti_certificate_policies | error | STI certificate shall include a Certificate Policies extension containing a single SHAKEN Certificate Policy |
 | e_shaken_cp1_3_subject_sn | error | STI certificate shall include a ‘serialNumber’ attribute along with the CN |
-| w_shaken_sti_subject_rdn_unknown | warn | STI certificate shall not include RDNs that are not specified |
-| e_shaken_cp1_3_ambiguous_identifier | error | Names used in the STI certificates shall represent an unambiguous identifier for the SP Subject |
 | e_shaken_sti_basic_constraints | error | STI certificates shall contain a BasicConstraints extension marked critical |
+| e_shaken_sti_extension_unknown | error | STI certificate shall not include extensions that are not specified |
 
-* The percent of certificates per issuer is calculated against total certificates from all issuers
-** The percent of errors, warnings and notices is calculated against total observed certificates from the specified issuer
+\* The percent of certificates per issuer is calculated against total certificates from all issuers\
+\*\* The percent of errors, warnings and notices is calculated against total observed certificates from the specified issuer

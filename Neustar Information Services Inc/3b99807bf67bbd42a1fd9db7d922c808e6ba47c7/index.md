@@ -2,10 +2,8 @@
 ## Certificate
 
 ### Certificate 3b99807bf67bbd42a1fd9db7d922c808e6ba47c7
-Tested At: 2022-10-05 08:12:01 +0000 UTC
-
-Subject: CN=SHAKEN 5447, O=Access One Inc, C=US
-
+Tested At: 2022-10-05 08:40:21 +0000 UTC\
+Subject: CN=SHAKEN 5447, O=Access One Inc, C=US\
 Issuer: CN=Neustar Certified Caller ID SHAKEN CA-1, OU=www.ccid.neustar, O=Neustar Information Services Inc, C=US
 
 Link: https://cr.ccid.neustar.biz/ccid/authn/v2/certs/11528.10146
@@ -19,5 +17,5 @@ View: [Click to view](https://understandingwebpki.com/?cert=MIIC%2FzCCAqWgAwIBAg
 | e_shaken_cp1_3_subject_sn | error | STI certificate shall include a ‘serialNumber’ attribute along with the CN |
 | e_shaken_sti_certificate_policies | error | STI certificate shall include a Certificate Policies extension containing a single SHAKEN Certificate Policy |
 
-* The percent of certificates per issuer is calculated against total certificates from all issuers
-** The percent of errors, warnings and notices is calculated against total observed certificates from the specified issuer
+\* The percent of certificates per issuer is calculated against total certificates from all issuers\
+\*\* The percent of errors, warnings and notices is calculated against total observed certificates from the specified issuer

@@ -2,10 +2,8 @@
 ## Certificate
 
 ### Certificate ae5ecd4815b5f6173076a0f16e3abb2091254210
-Tested At: 2022-10-05 08:12:03 +0000 UTC
-
-Subject: CN=Avid Communication SHAKEN Cert 742D, O=Avid Communication, C=US
-
+Tested At: 2022-10-05 08:40:22 +0000 UTC\
+Subject: CN=Avid Communication SHAKEN Cert 742D, O=Avid Communication, C=US\
 Issuer: CN=Metaswitch STI-CA SHAKEN Issuing 1
 
 Link: https://sti-cr.cgah.tnsi.com/certs/1b0b321bad320b960a4f0fc8f2408d0daa110730
@@ -16,10 +14,10 @@ View: [Click to view](https://understandingwebpki.com/?cert=MIICXzCCAgWgAwIBAgIQ
 | Code | Type | Details |
 |------|------|---------|
 | e_shaken_cp1_3_ambiguous_identifier | error | Names used in the STI certificates shall represent an unambiguous identifier for the SP Subject |
-| e_shaken_sti_issuer | error | The DN shall contain a Country (C=) attribute, a Common Name (CN=) attribute and an Organization (O=) attribute |
-| e_shaken_cp1_3_subject_sn | error | STI certificate shall include a ‘serialNumber’ attribute along with the CN |
 | e_shaken_sti_key_usage | error | The Key Usage extension shall contain a single key usage value of digitalSignature |
 | e_shaken_sti_subject_cn | error | Common name shall contain the text string 'SHAKEN 742D' |
+| e_shaken_cp1_3_subject_sn | error | STI certificate shall include a ‘serialNumber’ attribute along with the CN |
+| e_shaken_sti_issuer | error | The DN shall contain a Country (C=) attribute, a Common Name (CN=) attribute and an Organization (O=) attribute |
 
-* The percent of certificates per issuer is calculated against total certificates from all issuers
-** The percent of errors, warnings and notices is calculated against total observed certificates from the specified issuer
+\* The percent of certificates per issuer is calculated against total certificates from all issuers\
+\*\* The percent of errors, warnings and notices is calculated against total observed certificates from the specified issuer

@@ -2,10 +2,8 @@
 ## Certificate
 
 ### Certificate eaa33c30a7def67c3c9acd4e19eaadb6b0f73ed1
-Tested At: 2022-10-05 08:12:04 +0000 UTC
-
-Subject: CN=Veracity SHAKEN 716D, OU=Voice, O=Veracity Networks LLC, C=US
-
+Tested At: 2022-10-05 08:40:23 +0000 UTC\
+Subject: CN=Veracity SHAKEN 716D, OU=Voice, O=Veracity Networks LLC, C=US\
 Issuer: CN=SHAKEN Ribbon Issuing CA, OU=Certification Authorities, O=Ribbon Communications, C=US
 
 Link: https://prod001-cr.rbbnidhub.com/VaMEsVjGRz/May20222023-7f9cc6dca255376339d3370091b2fdde
@@ -15,11 +13,11 @@ View: [Click to view](https://understandingwebpki.com/?cert=MIIC8jCCApmgAwIBAgIQ
 
 | Code | Type | Details |
 |------|------|---------|
-| e_shaken_sti_certificate_policies | error | STI certificate shall include a Certificate Policies extension containing a single SHAKEN Certificate Policy |
+| e_shaken_cp1_3_ambiguous_identifier | error | Names used in the STI certificates shall represent an unambiguous identifier for the SP Subject |
 | e_shaken_cp1_3_subject_sn | error | STI certificate shall include a ‘serialNumber’ attribute along with the CN |
 | e_shaken_sti_extension_unknown | error | STI certificate shall not include extensions that are not specified |
-| e_shaken_cp1_3_ambiguous_identifier | error | Names used in the STI certificates shall represent an unambiguous identifier for the SP Subject |
+| e_shaken_sti_certificate_policies | error | STI certificate shall include a Certificate Policies extension containing a single SHAKEN Certificate Policy |
 | w_shaken_sti_subject_rdn_unknown | warn | STI certificate shall not include RDNs that are not specified |
 
-* The percent of certificates per issuer is calculated against total certificates from all issuers
-** The percent of errors, warnings and notices is calculated against total observed certificates from the specified issuer
+\* The percent of certificates per issuer is calculated against total certificates from all issuers\
+\*\* The percent of errors, warnings and notices is calculated against total observed certificates from the specified issuer

@@ -2,10 +2,8 @@
 ## Certificate
 
 ### Certificate 7891a28e469d3f3c0d837296a9a90a3389f445c1
-Tested At: 2022-10-05 08:12:02 +0000 UTC
-
-Subject: emailAddress=jfindley@interactivetel.com, CN=SHAKEN InteractiveTel\, LLC 920J, OU=NOC, O=InteractiveTel\, LLC, ST=Texas, C=US, emailAddress=jfindley@interactivetel.com
-
+Tested At: 2022-10-05 08:40:22 +0000 UTC\
+Subject: emailAddress=jfindley@interactivetel.com, CN=SHAKEN InteractiveTel\, LLC 920J, OU=NOC, O=InteractiveTel\, LLC, ST=Texas, C=US, emailAddress=jfindley@interactivetel.com\
 Issuer: CN=SHAKEN Sansay Intermediate CA US WEST 1, OU=Sansay CA, O=Sansay Corporation, ST=California, C=US
 
 Link: https://cr.sansay.com/920J/order/89_920J_66
@@ -15,11 +13,11 @@ View: [Click to view](https://understandingwebpki.com/?cert=MIIDszCCA1igAwIBAgIU
 
 | Code | Type | Details |
 |------|------|---------|
+| w_shaken_sti_subject_rdn_unknown | warn | STI certificate shall not include RDNs that are not specified |
 | e_shaken_sti_subject_cn | error | Common name shall contain the text string 'SHAKEN 920J' |
 | e_shaken_cp1_3_subject_sn | error | STI certificate shall include a ‘serialNumber’ attribute along with the CN |
-| e_shaken_cp1_3_ambiguous_identifier | error | Names used in the STI certificates shall represent an unambiguous identifier for the SP Subject |
-| w_shaken_sti_subject_rdn_unknown | warn | STI certificate shall not include RDNs that are not specified |
 | e_shaken_sti_certificate_policies | error | STI certificate shall include a Certificate Policies extension containing a single SHAKEN Certificate Policy |
+| e_shaken_cp1_3_ambiguous_identifier | error | Names used in the STI certificates shall represent an unambiguous identifier for the SP Subject |
 
-* The percent of certificates per issuer is calculated against total certificates from all issuers
-** The percent of errors, warnings and notices is calculated against total observed certificates from the specified issuer
+\* The percent of certificates per issuer is calculated against total certificates from all issuers\
+\*\* The percent of errors, warnings and notices is calculated against total observed certificates from the specified issuer

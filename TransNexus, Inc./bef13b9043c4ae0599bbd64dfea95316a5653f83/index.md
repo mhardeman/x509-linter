@@ -2,10 +2,8 @@
 ## Certificate
 
 ### Certificate bef13b9043c4ae0599bbd64dfea95316a5653f83
-Tested At: 2022-10-05 08:12:03 +0000 UTC
-
-Subject: CN=SHAKEN 983J, OU=SHAKEN, O=ESI, C=US
-
+Tested At: 2022-10-05 08:40:23 +0000 UTC\
+Subject: CN=SHAKEN 983J, OU=SHAKEN, O=ESI, C=US\
 Issuer: CN=TransNexus\, Inc. SHAKEN Issuing CA3, OU=SHAKEN, O=TransNexus\, Inc., C=US
 
 Link: https://certificates.clearip.com/59ebb7c1-25bd-4dfc-9794-fcb104b2f66a/37b8f7d06e9f6057267cbaa49b927ca7.pem
@@ -19,5 +17,5 @@ View: [Click to view](https://understandingwebpki.com/?cert=MIIC5DCCAougAwIBAgIQ
 | w_shaken_sti_subject_rdn_unknown | warn | STI certificate shall not include RDNs that are not specified |
 | e_incorrect_ku_encoding | error | KeyUsage contains an inefficient encoding wherein the number of 'unused bits' is declared to be 0, but it should be 7. Raw Bytes: [3 2 0 128], Raw Binary: [00000011 00000010 00000000 10000000] |
 
-* The percent of certificates per issuer is calculated against total certificates from all issuers
-** The percent of errors, warnings and notices is calculated against total observed certificates from the specified issuer
+\* The percent of certificates per issuer is calculated against total certificates from all issuers\
+\*\* The percent of errors, warnings and notices is calculated against total observed certificates from the specified issuer

@@ -2,10 +2,8 @@
 ## Certificate
 
 ### Certificate 75927bceda0cdfe72dfa85d3437a170549361bac
-Tested At: 2022-10-05 08:12:02 +0000 UTC
-
-Subject: C=US, ST=Texas, L=Hallsville, O=Tim Ron Enterprises\, LLC, OU=SHAKEN, CN=846B
-
+Tested At: 2022-10-05 08:40:22 +0000 UTC\
+Subject: C=US, ST=Texas, L=Hallsville, O=Tim Ron Enterprises\, LLC, OU=SHAKEN, CN=846B\
 Issuer: C=US, O=Neustar Information Services Inc, OU=www.ccid.neustar, CN=Neustar Certified Caller ID CA-1
 
 Link: https://prod001-cr.rbbnidhub.com/OaPccQ6Mgz/sign-cert2
@@ -18,5 +16,5 @@ View: [Click to view](https://understandingwebpki.com/?cert=MIIEADCCAuigAwIBAgIU
 
 129 tests were ran and no issues were found
 
-* The percent of certificates per issuer is calculated against total certificates from all issuers
-** The percent of errors, warnings and notices is calculated against total observed certificates from the specified issuer
+\* The percent of certificates per issuer is calculated against total certificates from all issuers\
+\*\* The percent of errors, warnings and notices is calculated against total observed certificates from the specified issuer

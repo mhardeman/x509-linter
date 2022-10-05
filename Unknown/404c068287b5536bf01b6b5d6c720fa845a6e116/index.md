@@ -2,10 +2,8 @@
 ## Certificate
 
 ### Certificate 404c068287b5536bf01b6b5d6c720fa845a6e116
-Tested At: 2022-10-05 08:12:01 +0000 UTC
-
-Subject: CN=WOW Internet Cable and Phone SHAKEN Cert 665E, O=WOW Internet Cable and Phone, C=US
-
+Tested At: 2022-10-05 08:40:21 +0000 UTC\
+Subject: CN=WOW Internet Cable and Phone SHAKEN Cert 665E, O=WOW Internet Cable and Phone, C=US\
 Issuer: CN=Metaswitch STI-CA SHAKEN Issuing 1
 
 Link: https://sti-cr.cgah.tnsi.com/certs/786c2c44c5fcfd1ed973607e3ac560ee3425d030
@@ -18,5 +16,5 @@ View: [Click to view](https://understandingwebpki.com/?cert=MIICczCCAhmgAwIBAgIQ
 
 129 tests were ran and no issues were found
 
-* The percent of certificates per issuer is calculated against total certificates from all issuers
-** The percent of errors, warnings and notices is calculated against total observed certificates from the specified issuer
+\* The percent of certificates per issuer is calculated against total certificates from all issuers\
+\*\* The percent of errors, warnings and notices is calculated against total observed certificates from the specified issuer

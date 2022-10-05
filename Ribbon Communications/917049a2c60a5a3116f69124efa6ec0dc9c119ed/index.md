@@ -2,10 +2,8 @@
 ## Certificate
 
 ### Certificate 917049a2c60a5a3116f69124efa6ec0dc9c119ed
-Tested At: 2022-10-05 08:12:02 +0000 UTC
-
-Subject: CN=Netfortris SHAKEN 8886, OU=VOIP, O=Netfortris, C=US
-
+Tested At: 2022-10-05 08:40:22 +0000 UTC\
+Subject: CN=Netfortris SHAKEN 8886, OU=VOIP, O=Netfortris, C=US\
 Issuer: CN=SHAKEN Ribbon Issuing CA, OU=Certification Authorities, O=Ribbon Communications, C=US
 
 Link: https://prod001-prod011-cr.rbbnidhub.com/t0CiOIjnRz/NFJune102022-26092b2abd3c6bbfc676d98623fc1b25
@@ -16,10 +14,10 @@ View: [Click to view](https://understandingwebpki.com/?cert=MIIC6DCCAo%2BgAwIBAg
 | Code | Type | Details |
 |------|------|---------|
 | e_shaken_sti_certificate_policies | error | STI certificate shall include a Certificate Policies extension containing a single SHAKEN Certificate Policy |
-| w_shaken_sti_subject_rdn_unknown | warn | STI certificate shall not include RDNs that are not specified |
 | e_shaken_cp1_3_subject_sn | error | STI certificate shall include a ‘serialNumber’ attribute along with the CN |
+| w_shaken_sti_subject_rdn_unknown | warn | STI certificate shall not include RDNs that are not specified |
 | e_shaken_cp1_3_ambiguous_identifier | error | Names used in the STI certificates shall represent an unambiguous identifier for the SP Subject |
 | e_shaken_sti_extension_unknown | error | STI certificate shall not include extensions that are not specified |
 
-* The percent of certificates per issuer is calculated against total certificates from all issuers
-** The percent of errors, warnings and notices is calculated against total observed certificates from the specified issuer
+\* The percent of certificates per issuer is calculated against total certificates from all issuers\
+\*\* The percent of errors, warnings and notices is calculated against total observed certificates from the specified issuer

@@ -2,10 +2,8 @@
 ## Certificate
 
 ### Certificate d0321a392243cdd5e8b2749e4e3883555e2da0cd
-Tested At: 2022-10-05 08:12:04 +0000 UTC
-
-Subject: CN=SHAKEN 715J, O=Coredial LLC, C=US
-
+Tested At: 2022-10-05 08:40:23 +0000 UTC\
+Subject: CN=SHAKEN 715J, O=Coredial LLC, C=US\
 Issuer: CN=Neustar Certified Caller ID SHAKEN CA-1, OU=www.ccid.neustar, O=Neustar Information Services Inc, C=US
 
 Link: https://cr.ccid.neustar.biz/ccid/authn/v2/certs/11430.10198
@@ -19,5 +17,5 @@ View: [Click to view](https://understandingwebpki.com/?cert=MIIC%2FTCCAqOgAwIBAg
 | e_shaken_cp1_3_subject_sn | error | STI certificate shall include a ‘serialNumber’ attribute along with the CN |
 | e_shaken_sti_certificate_policies | error | STI certificate shall include a Certificate Policies extension containing a single SHAKEN Certificate Policy |
 
-* The percent of certificates per issuer is calculated against total certificates from all issuers
-** The percent of errors, warnings and notices is calculated against total observed certificates from the specified issuer
+\* The percent of certificates per issuer is calculated against total certificates from all issuers\
+\*\* The percent of errors, warnings and notices is calculated against total observed certificates from the specified issuer

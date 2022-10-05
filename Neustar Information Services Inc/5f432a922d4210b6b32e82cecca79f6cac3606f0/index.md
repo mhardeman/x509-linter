@@ -2,10 +2,8 @@
 ## Certificate
 
 ### Certificate 5f432a922d4210b6b32e82cecca79f6cac3606f0
-Tested At: 2022-10-05 08:12:01 +0000 UTC
-
-Subject: CN=SHAKEN 939H, O=Commio, C=US
-
+Tested At: 2022-10-05 08:40:22 +0000 UTC\
+Subject: CN=SHAKEN 939H, O=Commio, C=US\
 Issuer: CN=Neustar Certified Caller ID SHAKEN CA-1, OU=www.ccid.neustar, O=Neustar Information Services Inc, C=US
 
 Link: https://storage.googleapis.com/stirshaken/ShakeNBakeCert.pem
@@ -16,8 +14,8 @@ View: [Click to view](https://understandingwebpki.com/?cert=MIIC9zCCAp2gAwIBAgIU
 | Code | Type | Details |
 |------|------|---------|
 | e_shaken_cp1_3_subject_sn | error | STI certificate shall include a ‘serialNumber’ attribute along with the CN |
-| e_shaken_sti_extension_unknown | error | STI certificate shall not include extensions that are not specified |
 | e_shaken_sti_certificate_policies | error | STI certificate shall include a Certificate Policies extension containing a single SHAKEN Certificate Policy |
+| e_shaken_sti_extension_unknown | error | STI certificate shall not include extensions that are not specified |
 
-* The percent of certificates per issuer is calculated against total certificates from all issuers
-** The percent of errors, warnings and notices is calculated against total observed certificates from the specified issuer
+\* The percent of certificates per issuer is calculated against total certificates from all issuers\
+\*\* The percent of errors, warnings and notices is calculated against total observed certificates from the specified issuer

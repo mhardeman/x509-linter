@@ -2,10 +2,8 @@
 ## Certificate
 
 ### Certificate 20623088d786b6aae3f3606451a98aaae817b2f6
-Tested At: 2022-10-05 08:12:00 +0000 UTC
-
-Subject: CN=SHAKEN 863J, O=Contact Center Specialists LLC, C=US
-
+Tested At: 2022-10-05 08:40:21 +0000 UTC\
+Subject: CN=SHAKEN 863J, O=Contact Center Specialists LLC, C=US\
 Issuer: CN=Neustar Certified Caller ID SHAKEN CA-1, OU=www.ccid.neustar, O=Neustar Information Services Inc, C=US
 
 Link: https://ssc.getsipnav.com/certs/16de0926d65be10547c26ed3417d6ffd26e3a7f3
@@ -19,5 +17,5 @@ View: [Click to view](https://understandingwebpki.com/?cert=MIIDDjCCArWgAwIBAgIU
 | e_shaken_cp1_3_subject_sn | error | STI certificate shall include a ‘serialNumber’ attribute along with the CN |
 | e_shaken_sti_extension_unknown | error | STI certificate shall not include extensions that are not specified |
 
-* The percent of certificates per issuer is calculated against total certificates from all issuers
-** The percent of errors, warnings and notices is calculated against total observed certificates from the specified issuer
+\* The percent of certificates per issuer is calculated against total certificates from all issuers\
+\*\* The percent of errors, warnings and notices is calculated against total observed certificates from the specified issuer

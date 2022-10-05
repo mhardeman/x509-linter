@@ -2,10 +2,8 @@
 ## Certificate
 
 ### Certificate e312112cb4d4e4f7e166acc5cf7bee068d770e13
-Tested At: 2022-10-05 08:12:04 +0000 UTC
-
-Subject: C=US, ST=GA, L=Atlanta, O=Communications, OU=Cox Communications, CN=cox.com
-
+Tested At: 2022-10-05 08:40:23 +0000 UTC\
+Subject: C=US, ST=GA, L=Atlanta, O=Communications, OU=Cox Communications, CN=cox.com\
 Issuer: C=US, O=Neustar Information Services Inc, OU=www.ccid.neustar, CN=Neustar Certified Caller ID CA-1
 
 Link: https://cr.ccid.neustar.biz/ccid/authn/v2/certs/11126.10191
@@ -18,5 +16,5 @@ View: [Click to view](https://understandingwebpki.com/?cert=MIID%2FzCCAuegAwIBAg
 
 129 tests were ran and no issues were found
 
-* The percent of certificates per issuer is calculated against total certificates from all issuers
-** The percent of errors, warnings and notices is calculated against total observed certificates from the specified issuer
+\* The percent of certificates per issuer is calculated against total certificates from all issuers\
+\*\* The percent of errors, warnings and notices is calculated against total observed certificates from the specified issuer

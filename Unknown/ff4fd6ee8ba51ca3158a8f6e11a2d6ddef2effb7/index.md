@@ -2,10 +2,8 @@
 ## Certificate
 
 ### Certificate ff4fd6ee8ba51ca3158a8f6e11a2d6ddef2effb7
-Tested At: 2022-10-05 08:12:04 +0000 UTC
-
-Subject: CN=Allstream SHAKEN cert 4130, O=Allstream Business US\, LLC, L=Vancouver, ST=WA, C=US
-
+Tested At: 2022-10-05 08:40:23 +0000 UTC\
+Subject: CN=Allstream SHAKEN cert 4130, O=Allstream Business US\, LLC, L=Vancouver, ST=WA, C=US\
 Issuer: CN=Metaswitch STI-CA SHAKEN Issuing 1
 
 Link: https://cert-stir-us.allstream.com/certs/allstreamcertchain.crt
@@ -18,5 +16,5 @@ View: [Click to view](https://understandingwebpki.com/?cert=MIICgDCCAiWgAwIBAgIQ
 
 129 tests were ran and no issues were found
 
-* The percent of certificates per issuer is calculated against total certificates from all issuers
-** The percent of errors, warnings and notices is calculated against total observed certificates from the specified issuer
+\* The percent of certificates per issuer is calculated against total certificates from all issuers\
+\*\* The percent of errors, warnings and notices is calculated against total observed certificates from the specified issuer

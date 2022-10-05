@@ -2,10 +2,8 @@
 ## Certificate
 
 ### Certificate 695d60b1ca357aa9e5a5fedc8df9b0dd2d46f7ff
-Tested At: 2022-10-05 08:12:02 +0000 UTC
-
-Subject: CN=SHAKEN Nobelbiz\, Inc. 596J, OU=NOC, O=Nobelbiz\, Inc., ST=California, C=US
-
+Tested At: 2022-10-05 08:40:22 +0000 UTC\
+Subject: CN=SHAKEN Nobelbiz\, Inc. 596J, OU=NOC, O=Nobelbiz\, Inc., ST=California, C=US\
 Issuer: CN=SHAKEN Sansay Intermediate CA US WEST 1, OU=Sansay CA, O=Sansay Corporation, ST=California, C=US
 
 Link: https://cr.sansay.com/NobelBiz_596J
@@ -15,11 +13,11 @@ View: [Click to view](https://understandingwebpki.com/?cert=MIIDfzCCAyagAwIBAgIU
 
 | Code | Type | Details |
 |------|------|---------|
-| w_shaken_sti_subject_rdn_unknown | warn | STI certificate shall not include RDNs that are not specified |
-| e_shaken_cp1_3_ambiguous_identifier | error | Names used in the STI certificates shall represent an unambiguous identifier for the SP Subject |
 | e_shaken_cp1_3_subject_sn | error | STI certificate shall include a ‘serialNumber’ attribute along with the CN |
-| e_shaken_sti_certificate_policies | error | STI certificate shall include a Certificate Policies extension containing a single SHAKEN Certificate Policy |
 | e_shaken_sti_subject_cn | error | Common name shall contain the text string 'SHAKEN 596J' |
+| e_shaken_sti_certificate_policies | error | STI certificate shall include a Certificate Policies extension containing a single SHAKEN Certificate Policy |
+| e_shaken_cp1_3_ambiguous_identifier | error | Names used in the STI certificates shall represent an unambiguous identifier for the SP Subject |
+| w_shaken_sti_subject_rdn_unknown | warn | STI certificate shall not include RDNs that are not specified |
 
-* The percent of certificates per issuer is calculated against total certificates from all issuers
-** The percent of errors, warnings and notices is calculated against total observed certificates from the specified issuer
+\* The percent of certificates per issuer is calculated against total certificates from all issuers\
+\*\* The percent of errors, warnings and notices is calculated against total observed certificates from the specified issuer

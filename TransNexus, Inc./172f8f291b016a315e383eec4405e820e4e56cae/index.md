@@ -2,10 +2,8 @@
 ## Certificate
 
 ### Certificate 172f8f291b016a315e383eec4405e820e4e56cae
-Tested At: 2022-10-05 08:12:00 +0000 UTC
-
-Subject: CN=SHAKEN 2550, OU=SHAKEN, O=123.Net\, Inc, C=US
-
+Tested At: 2022-10-05 08:40:21 +0000 UTC\
+Subject: CN=SHAKEN 2550, OU=SHAKEN, O=123.Net\, Inc, C=US\
 Issuer: CN=TransNexus\, Inc. SHAKEN Issuing CA3, OU=SHAKEN, O=TransNexus\, Inc., C=US
 
 Link: https://certificates.clearip.com/2e3276e5-a5c5-43c7-ae11-3a226bf1b5ed/d38a887b938c075009dc4051928ecefb.pem
@@ -19,5 +17,5 @@ View: [Click to view](https://understandingwebpki.com/?cert=MIIC7jCCApSgAwIBAgIQ
 | e_shaken_cp1_3_subject_sn | error | STI certificate shall include a ‘serialNumber’ attribute along with the CN |
 | w_shaken_sti_subject_rdn_unknown | warn | STI certificate shall not include RDNs that are not specified |
 
-* The percent of certificates per issuer is calculated against total certificates from all issuers
-** The percent of errors, warnings and notices is calculated against total observed certificates from the specified issuer
+\* The percent of certificates per issuer is calculated against total certificates from all issuers\
+\*\* The percent of errors, warnings and notices is calculated against total observed certificates from the specified issuer

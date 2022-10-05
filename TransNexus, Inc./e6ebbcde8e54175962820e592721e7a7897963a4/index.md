@@ -2,10 +2,8 @@
 ## Certificate
 
 ### Certificate e6ebbcde8e54175962820e592721e7a7897963a4
-Tested At: 2022-10-05 08:12:04 +0000 UTC
-
-Subject: CN=SHAKEN 0226, OU=SHAKEN, O=Lumos Networks, C=US
-
+Tested At: 2022-10-05 08:40:23 +0000 UTC\
+Subject: CN=SHAKEN 0226, OU=SHAKEN, O=Lumos Networks, C=US\
 Issuer: CN=TransNexus\, Inc. SHAKEN Issuing CA3, OU=SHAKEN, O=TransNexus\, Inc., C=US
 
 Link: https://certificates.clearip.com/f8a68e44-8fb0-4f28-b533-c4df27ed8e1b/0b76cb34c9170502d9a00a59220461a4.pem
@@ -19,5 +17,5 @@ View: [Click to view](https://understandingwebpki.com/?cert=MIIC8TCCApagAwIBAgIQ
 | w_shaken_sti_subject_rdn_unknown | warn | STI certificate shall not include RDNs that are not specified |
 | e_shaken_cp1_3_subject_sn | error | STI certificate shall include a ‘serialNumber’ attribute along with the CN |
 
-* The percent of certificates per issuer is calculated against total certificates from all issuers
-** The percent of errors, warnings and notices is calculated against total observed certificates from the specified issuer
+\* The percent of certificates per issuer is calculated against total certificates from all issuers\
+\*\* The percent of errors, warnings and notices is calculated against total observed certificates from the specified issuer

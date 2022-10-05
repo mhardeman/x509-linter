@@ -2,10 +2,8 @@
 ## Certificate
 
 ### Certificate 918940f013f2d053c5de3c9767df40ad6ff0d3ac
-Tested At: 2022-10-05 08:12:02 +0000 UTC
-
-Subject: C=US, ST=AZ, L=Scottsdale, O=ReInvent Telecom, OU=ReInvent, CN=ReInvent
-
+Tested At: 2022-10-05 08:40:22 +0000 UTC\
+Subject: C=US, ST=AZ, L=Scottsdale, O=ReInvent Telecom, OU=ReInvent, CN=ReInvent\
 Issuer: C=US, O=Neustar Information Services Inc, OU=www.ccid.neustar, CN=Neustar Certified Caller ID CA-1
 
 Link: https://cr.ccid.neustar.biz/ccid/authn/v2/certs/11292.10180
@@ -18,5 +16,5 @@ View: [Click to view](https://understandingwebpki.com/?cert=MIID%2BzCCAuOgAwIBAg
 
 129 tests were ran and no issues were found
 
-* The percent of certificates per issuer is calculated against total certificates from all issuers
-** The percent of errors, warnings and notices is calculated against total observed certificates from the specified issuer
+\* The percent of certificates per issuer is calculated against total certificates from all issuers\
+\*\* The percent of errors, warnings and notices is calculated against total observed certificates from the specified issuer

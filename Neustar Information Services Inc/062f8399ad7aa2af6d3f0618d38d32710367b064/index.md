@@ -2,10 +2,8 @@
 ## Certificate
 
 ### Certificate 062f8399ad7aa2af6d3f0618d38d32710367b064
-Tested At: 2022-10-05 08:12:00 +0000 UTC
-
-Subject: C=US, ST=IL, L=Oakbrook, O=Firstcomm, OU=Firstcomm.com, CN=Firstcomm5917
-
+Tested At: 2022-10-05 08:40:21 +0000 UTC\
+Subject: C=US, ST=IL, L=Oakbrook, O=Firstcomm, OU=Firstcomm.com, CN=Firstcomm5917\
 Issuer: C=US, O=Neustar Information Services Inc, OU=www.ccid.neustar, CN=Neustar Certified Caller ID CA-1
 
 Link: https://cr.ccid.neustar.biz/ccid/authn/v2/certs/11414.10183
@@ -18,5 +16,5 @@ View: [Click to view](https://understandingwebpki.com/?cert=MIID%2FDCCAuSgAwIBAg
 
 129 tests were ran and no issues were found
 
-* The percent of certificates per issuer is calculated against total certificates from all issuers
-** The percent of errors, warnings and notices is calculated against total observed certificates from the specified issuer
+\* The percent of certificates per issuer is calculated against total certificates from all issuers\
+\*\* The percent of errors, warnings and notices is calculated against total observed certificates from the specified issuer

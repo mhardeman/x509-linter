@@ -3,17 +3,16 @@
 
 ### TransNexus, Inc.
 
-Errors: 71
-
+Errors: 71\
 Warnings: 70
 
 | Status | Code | Amount |
 |--------|------|--------|
+| error | e_shaken_cp1_3_subject_sn | 70 |
 | error | e_incorrect_ku_encoding | 71 |
 | warn | w_shaken_sti_subject_rdn_unknown | 70 |
-| error | e_shaken_cp1_3_subject_sn | 70 |
-| error | e_shaken_cp1_3_ambiguous_identifier | 2 |
 | error | e_shaken_sti_certificate_policies | 2 |
+| error | e_shaken_cp1_3_ambiguous_identifier | 2 |
 
 ### Issued certificates
 

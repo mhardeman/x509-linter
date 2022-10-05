@@ -2,10 +2,8 @@
 ## Certificate
 
 ### Certificate eea65b03e54d9f208f4e9e2498857e324d874141
-Tested At: 2022-10-05 08:12:04 +0000 UTC
-
-Subject: C=US, ST=NE, L=Omaha, O=Intrado Corporation, OU=Intrado Communications, CN=intrado.com
-
+Tested At: 2022-10-05 08:40:23 +0000 UTC\
+Subject: C=US, ST=NE, L=Omaha, O=Intrado Corporation, OU=Intrado Communications, CN=intrado.com\
 Issuer: C=US, O=Neustar Information Services Inc, OU=www.ccid.neustar, CN=Neustar Certified Caller ID CA-1
 
 Link: https://cr.ccid.neustar.biz/ccid/authn/v2/certs/11125.10033
@@ -18,5 +16,5 @@ View: [Click to view](https://understandingwebpki.com/?cert=MIIECjCCAvKgAwIBAgIU
 
 129 tests were ran and no issues were found
 
-* The percent of certificates per issuer is calculated against total certificates from all issuers
-** The percent of errors, warnings and notices is calculated against total observed certificates from the specified issuer
+\* The percent of certificates per issuer is calculated against total certificates from all issuers\
+\*\* The percent of errors, warnings and notices is calculated against total observed certificates from the specified issuer

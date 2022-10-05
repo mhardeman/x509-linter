@@ -2,10 +2,8 @@
 ## Certificate
 
 ### Certificate 7deaf409e0c7859925f43a64b96cdd8b0eb1be89
-Tested At: 2022-10-05 08:12:02 +0000 UTC
-
-Subject: CN=U. S. Telepacific Corp SHAKEN 7453, O=U. S. Telepacific Corp, L=Los Angeles, ST=California, C=US
-
+Tested At: 2022-10-05 08:40:22 +0000 UTC\
+Subject: CN=U. S. Telepacific Corp SHAKEN 7453, O=U. S. Telepacific Corp, L=Los Angeles, ST=California, C=US\
 Issuer: CN=Metaswitch STI-CA SHAKEN Issuing 1
 
 Link: https://qcall.meta.tpx.net/certs/shaken_cacert.crt
@@ -18,5 +16,5 @@ View: [Click to view](https://understandingwebpki.com/?cert=MIICjjCCAjSgAwIBAgIQ
 
 129 tests were ran and no issues were found
 
-* The percent of certificates per issuer is calculated against total certificates from all issuers
-** The percent of errors, warnings and notices is calculated against total observed certificates from the specified issuer
+\* The percent of certificates per issuer is calculated against total certificates from all issuers\
+\*\* The percent of errors, warnings and notices is calculated against total observed certificates from the specified issuer

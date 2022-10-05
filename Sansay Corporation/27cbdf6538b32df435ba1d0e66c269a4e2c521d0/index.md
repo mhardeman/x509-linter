@@ -2,10 +2,8 @@
 ## Certificate
 
 ### Certificate 27cbdf6538b32df435ba1d0e66c269a4e2c521d0
-Tested At: 2022-10-05 08:12:00 +0000 UTC
-
-Subject: CN=SHAKEN Ytel Inc. 703J, OU=Carrier, O=Ytel\, inc, ST=California, C=US
-
+Tested At: 2022-10-05 08:40:21 +0000 UTC\
+Subject: CN=SHAKEN Ytel Inc. 703J, OU=Carrier, O=Ytel\, inc, ST=California, C=US\
 Issuer: CN=SHAKEN Sansay Intermediate CA US WEST 1, OU=Sansay CA, O=Sansay Corporation, ST=California, C=US
 
 Link: https://cr.sansay.com/Ytel_Inc._703J
@@ -18,5 +16,5 @@ View: [Click to view](https://understandingwebpki.com/?cert=MIIDezCCAyCgAwIBAgIU
 
 129 tests were ran and no issues were found
 
-* The percent of certificates per issuer is calculated against total certificates from all issuers
-** The percent of errors, warnings and notices is calculated against total observed certificates from the specified issuer
+\* The percent of certificates per issuer is calculated against total certificates from all issuers\
+\*\* The percent of errors, warnings and notices is calculated against total observed certificates from the specified issuer

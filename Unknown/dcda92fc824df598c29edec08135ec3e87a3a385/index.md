@@ -2,10 +2,8 @@
 ## Certificate
 
 ### Certificate dcda92fc824df598c29edec08135ec3e87a3a385
-Tested At: 2022-10-05 08:12:04 +0000 UTC
-
-Subject: CN=CBTS Technology Solutions SHAKEN Cert 600F, O=CBTS Technology Solutions LLC, C=US
-
+Tested At: 2022-10-05 08:40:23 +0000 UTC\
+Subject: CN=CBTS Technology Solutions SHAKEN Cert 600F, O=CBTS Technology Solutions LLC, C=US\
 Issuer: CN=Metaswitch STI-CA SHAKEN Issuing 1
 
 Link: https://sti-cr.cgah.tnsi.com/certs/de39b976c7549358da256530d81cfb1f446a2583
@@ -18,5 +16,5 @@ View: [Click to view](https://understandingwebpki.com/?cert=MIICcDCCAhegAwIBAgIQ
 
 129 tests were ran and no issues were found
 
-* The percent of certificates per issuer is calculated against total certificates from all issuers
-** The percent of errors, warnings and notices is calculated against total observed certificates from the specified issuer
+\* The percent of certificates per issuer is calculated against total certificates from all issuers\
+\*\* The percent of errors, warnings and notices is calculated against total observed certificates from the specified issuer

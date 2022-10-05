@@ -2,10 +2,8 @@
 ## Certificate
 
 ### Certificate f8c902cd9b98752b438cd813d9ea611882ca935d
-Tested At: 2022-10-05 08:12:04 +0000 UTC
-
-Subject: CN=New Horizon SHAKEN Cert 127E, O=New Horizon Communications, C=US
-
+Tested At: 2022-10-05 08:40:23 +0000 UTC\
+Subject: CN=New Horizon SHAKEN Cert 127E, O=New Horizon Communications, C=US\
 Issuer: CN=Metaswitch STI-CA SHAKEN Issuing 1
 
 Link: https://sti-cr.cgah.tnsi.com/certs/934dd1fd3cc80f18d4322f0336a0dab2e9d7998d
@@ -18,5 +16,5 @@ View: [Click to view](https://understandingwebpki.com/?cert=MIICYTCCAgagAwIBAgIQ
 
 129 tests were ran and no issues were found
 
-* The percent of certificates per issuer is calculated against total certificates from all issuers
-** The percent of errors, warnings and notices is calculated against total observed certificates from the specified issuer
+\* The percent of certificates per issuer is calculated against total certificates from all issuers\
+\*\* The percent of errors, warnings and notices is calculated against total observed certificates from the specified issuer

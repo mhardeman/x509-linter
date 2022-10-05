@@ -3,17 +3,16 @@
 
 ### Ribbon Communications
 
-Errors: 3
-
+Errors: 3\
 Warnings: 3
 
 | Status | Code | Amount |
 |--------|------|--------|
-| warn | w_shaken_sti_subject_rdn_unknown | 3 |
-| error | e_shaken_cp1_3_subject_sn | 3 |
 | error | e_shaken_cp1_3_ambiguous_identifier | 3 |
 | error | e_shaken_sti_extension_unknown | 3 |
 | error | e_shaken_sti_certificate_policies | 3 |
+| error | e_shaken_cp1_3_subject_sn | 3 |
+| warn | w_shaken_sti_subject_rdn_unknown | 3 |
 
 ### Issued certificates
 

@@ -2,10 +2,8 @@
 ## Certificate
 
 ### Certificate 2bed8a9246c78dfdf1cbac12bd20316ad5892163
-Tested At: 2022-10-05 08:12:01 +0000 UTC
-
-Subject: CN=RCN SHAKEN Cert 7615, O=RCN, C=US
-
+Tested At: 2022-10-05 08:40:21 +0000 UTC\
+Subject: CN=RCN SHAKEN Cert 7615, O=RCN, C=US\
 Issuer: CN=Metaswitch STI-CA SHAKEN Issuing 1
 
 Link: https://sti-cr.cgah.tnsi.com/certs/11d9e0e06eeaaf56fb9be54eec6aae5a8b3461fe
@@ -18,5 +16,5 @@ View: [Click to view](https://understandingwebpki.com/?cert=MIICQTCCAeegAwIBAgIQ
 
 129 tests were ran and no issues were found
 
-* The percent of certificates per issuer is calculated against total certificates from all issuers
-** The percent of errors, warnings and notices is calculated against total observed certificates from the specified issuer
+\* The percent of certificates per issuer is calculated against total certificates from all issuers\
+\*\* The percent of errors, warnings and notices is calculated against total observed certificates from the specified issuer

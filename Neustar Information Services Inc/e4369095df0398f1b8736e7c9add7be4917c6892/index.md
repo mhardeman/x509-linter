@@ -2,10 +2,8 @@
 ## Certificate
 
 ### Certificate e4369095df0398f1b8736e7c9add7be4917c6892
-Tested At: 2022-10-05 08:12:04 +0000 UTC
-
-Subject: CN=SHAKEN 707J, O=TextNow Inc., C=CA
-
+Tested At: 2022-10-05 08:40:23 +0000 UTC\
+Subject: CN=SHAKEN 707J, O=TextNow Inc., C=CA\
 Issuer: CN=Neustar Certified Caller ID SHAKEN CA-1, OU=www.ccid.neustar, O=Neustar Information Services Inc, C=US
 
 Link: https://pki.tncp.textnow.com/stir-shaken-textnow-cert.pem
@@ -18,5 +16,5 @@ View: [Click to view](https://understandingwebpki.com/?cert=MIIC%2FjCCAqOgAwIBAg
 
 129 tests were ran and no issues were found
 
-* The percent of certificates per issuer is calculated against total certificates from all issuers
-** The percent of errors, warnings and notices is calculated against total observed certificates from the specified issuer
+\* The percent of certificates per issuer is calculated against total certificates from all issuers\
+\*\* The percent of errors, warnings and notices is calculated against total observed certificates from the specified issuer

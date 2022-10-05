@@ -2,10 +2,8 @@
 ## Certificate
 
 ### Certificate d80ee0078e6df50ca885cf15a72f1c8a0c7d1c9b
-Tested At: 2022-10-05 08:12:04 +0000 UTC
-
-Subject: CN=SHAKEN 743J, O=Whisl Telecom LLC, C=US
-
+Tested At: 2022-10-05 08:40:23 +0000 UTC\
+Subject: CN=SHAKEN 743J, O=Whisl Telecom LLC, C=US\
 Issuer: CN=Neustar Certified Caller ID SHAKEN CA-1, OU=www.ccid.neustar, O=Neustar Information Services Inc, C=US
 
 Link: https://ssc.getsipnav.com/certs/8edc7b58944d44dd597d88ceae74ae41fa544d2e
@@ -19,5 +17,5 @@ View: [Click to view](https://understandingwebpki.com/?cert=MIIDAzCCAqigAwIBAgIU
 | e_shaken_sti_certificate_policies | error | STI certificate shall include a Certificate Policies extension containing a single SHAKEN Certificate Policy |
 | e_shaken_sti_extension_unknown | error | STI certificate shall not include extensions that are not specified |
 
-* The percent of certificates per issuer is calculated against total certificates from all issuers
-** The percent of errors, warnings and notices is calculated against total observed certificates from the specified issuer
+\* The percent of certificates per issuer is calculated against total certificates from all issuers\
+\*\* The percent of errors, warnings and notices is calculated against total observed certificates from the specified issuer

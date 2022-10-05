@@ -2,10 +2,8 @@
 ## Certificate
 
 ### Certificate 6939e275e2c74c70d168ac1d3fc03e3da422b7ab
-Tested At: 2022-10-05 08:12:02 +0000 UTC
-
-Subject: CN=SHAKEN 770J, O=Fuze Inc, C=US
-
+Tested At: 2022-10-05 08:40:22 +0000 UTC\
+Subject: CN=SHAKEN 770J, O=Fuze Inc, C=US\
 Issuer: CN=Neustar Certified Caller ID SHAKEN CA-2, OU=www.ccid.neustar, O=Neustar Inc a TransUnion company, C=US
 
 Link: https://cr.ccid.neustar.biz/ccid/authn/v2/certs/11484.10112
@@ -17,5 +15,5 @@ View: [Click to view](https://understandingwebpki.com/?cert=MIIC%2FTCCAqKgAwIBAg
 |------|------|---------|
 | e_shaken_cp1_3_subject_sn | error | STI certificate shall include a ‘serialNumber’ attribute along with the CN |
 
-* The percent of certificates per issuer is calculated against total certificates from all issuers
-** The percent of errors, warnings and notices is calculated against total observed certificates from the specified issuer
+\* The percent of certificates per issuer is calculated against total certificates from all issuers\
+\*\* The percent of errors, warnings and notices is calculated against total observed certificates from the specified issuer

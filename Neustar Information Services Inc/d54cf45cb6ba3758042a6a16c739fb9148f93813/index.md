@@ -2,10 +2,8 @@
 ## Certificate
 
 ### Certificate d54cf45cb6ba3758042a6a16c739fb9148f93813
-Tested At: 2022-10-05 08:12:04 +0000 UTC
-
-Subject: CN=SHAKEN 775J, O=Voip Stir PR LLC, C=US
-
+Tested At: 2022-10-05 08:40:23 +0000 UTC\
+Subject: CN=SHAKEN 775J, O=Voip Stir PR LLC, C=US\
 Issuer: CN=Neustar Certified Caller ID SHAKEN CA-1, OU=www.ccid.neustar, O=Neustar Information Services Inc, C=US
 
 Link: https://ssc.getsipnav.com/certs/ffad5de97793861e660be844cf52d740aa256d7d
@@ -18,5 +16,5 @@ View: [Click to view](https://understandingwebpki.com/?cert=MIIDATCCAqegAwIBAgIU
 
 129 tests were ran and no issues were found
 
-* The percent of certificates per issuer is calculated against total certificates from all issuers
-** The percent of errors, warnings and notices is calculated against total observed certificates from the specified issuer
+\* The percent of certificates per issuer is calculated against total certificates from all issuers\
+\*\* The percent of errors, warnings and notices is calculated against total observed certificates from the specified issuer

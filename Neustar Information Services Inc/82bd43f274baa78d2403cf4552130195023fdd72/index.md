@@ -2,10 +2,8 @@
 ## Certificate
 
 ### Certificate 82bd43f274baa78d2403cf4552130195023fdd72
-Tested At: 2022-10-05 08:12:02 +0000 UTC
-
-Subject: C=US, ST=GA, L=Atlanta, O=Southern Linc, OU=Voice and Signaling, CN=SHAKEN-6744
-
+Tested At: 2022-10-05 08:40:22 +0000 UTC\
+Subject: C=US, ST=GA, L=Atlanta, O=Southern Linc, OU=Voice and Signaling, CN=SHAKEN-6744\
 Issuer: C=US, O=Neustar Information Services Inc, OU=www.ccid.neustar, CN=Neustar Certified Caller ID CA-1
 
 Link: https://prod001-cr.rbbnidhub.com/frvFJbsMgz/sign-cert3
@@ -18,5 +16,5 @@ View: [Click to view](https://understandingwebpki.com/?cert=MIIEAzCCAuugAwIBAgIU
 
 129 tests were ran and no issues were found
 
-* The percent of certificates per issuer is calculated against total certificates from all issuers
-** The percent of errors, warnings and notices is calculated against total observed certificates from the specified issuer
+\* The percent of certificates per issuer is calculated against total certificates from all issuers\
+\*\* The percent of errors, warnings and notices is calculated against total observed certificates from the specified issuer
