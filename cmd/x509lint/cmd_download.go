@@ -15,7 +15,7 @@ import (
 	"github.com/peculiarventures/x509-linter/cmd/internal"
 )
 
-func RunDownloadCommand(listPath string, outDir string) error {
+func RunDownloadCommand(listPath string, outDir string, includeCa bool) error {
 	if listPath == "" {
 		return fmt.Errorf("cannot get file path, variable 'listPath' is empty")
 	}
@@ -62,6 +62,11 @@ func RunDownloadCommand(listPath string, outDir string) error {
 			certs := internal.ParseCertificates(certRaw)
 			files := []string{}
 			for _, cert := range certs {
+				if cert.IsCA && !includeCa {
+					// skip CA cert if includeCa is false
+					continue
+				}
+
 				// compute cert sha1 thumbprint
 				sha1 := crypto.SHA1.New()
 				sha1.Write(cert.Raw)
