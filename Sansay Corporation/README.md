@@ -7,10 +7,10 @@ Warnings: 40
 
 | Status | Code | Amount |
 |--------|------|--------|
-| error | e_shaken_cp1_3_subject_sn | 40 |
-| error | e_shaken_sti_subject_cn | 40 |
 | warn | w_shaken_sti_subject_rdn_unknown | 40 |
 | error | e_shaken_cp1_3_ambiguous_identifier | 40 |
+| error | e_shaken_sti_subject_cn | 40 |
+| error | e_shaken_cp1_3_subject_sn | 40 |
 | error | e_shaken_sti_certificate_policies | 40 |
 
 ### Issued certificates
@@ -62,3 +62,5 @@ Warnings: 40
 | 05 Oct 22 15:32 UTC | SHAKEN Magna5, LLC 3849 | true | [view](17599bafbe0c44b8ec89c36eea809196b551d725%2FREADME.md) |
 | 05 Oct 22 15:37 UTC | SHAKEN Sangoma 777G | true | [view](6c522eee20ed1de05d72a475e892003d31b2d9c2%2FREADME.md) |
 | 10 Oct 22 00:00 UTC | SHAKEN Asia Pacific Network 988J | true | [view](8fb71997a13c7eff35c8cd8ce93595e8c9e45924%2FREADME.md) |
+
+\* Tests do not report on certificates with issues that predate the currently required ATIS 1000080 and Certificate Policy versions

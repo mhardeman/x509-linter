@@ -2,7 +2,7 @@
 ## Neustar Information Services Inc
 
 ### Certificate 9d0d8e4e7eb4b53ea96c66b2a431eb685747f632
-Tested At: 2022-10-05 17:08:38 +0000 UTC\
+Tested At: 2022-10-05 17:17:22 +0000 UTC\
 Subject: C=US, ST=NJ, L=Holmdel, O=Vonage Eng, OU=Vonage Eng, CN=vonage\
 Issuer: C=US, O=Neustar Information Services Inc, OU=www.ccid.neustar, CN=Neustar Certified Caller ID CA-1
 
@@ -18,3 +18,4 @@ View: [Click to view](https://understandingwebpki.com/?cert=MIID8jCCAtqgAwIBAgIU
 
 \* The percent of certificates per issuer is calculated against total certificates from all issuers\
 \*\* The percent of errors, warnings and notices is calculated against total observed certificates from the specified issuer
+\*\*\* Tests do not report on certificates with issues that predate the currently required ATIS 1000080 and Certificate Policy versions

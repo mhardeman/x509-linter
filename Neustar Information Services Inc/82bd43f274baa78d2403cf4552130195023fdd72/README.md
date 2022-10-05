@@ -2,7 +2,7 @@
 ## Neustar Information Services Inc
 
 ### Certificate 82bd43f274baa78d2403cf4552130195023fdd72
-Tested At: 2022-10-05 17:08:38 +0000 UTC\
+Tested At: 2022-10-05 17:17:20 +0000 UTC\
 Subject: C=US, ST=GA, L=Atlanta, O=Southern Linc, OU=Voice and Signaling, CN=SHAKEN-6744\
 Issuer: C=US, O=Neustar Information Services Inc, OU=www.ccid.neustar, CN=Neustar Certified Caller ID CA-1
 
@@ -18,3 +18,4 @@ View: [Click to view](https://understandingwebpki.com/?cert=MIIEAzCCAuugAwIBAgIU
 
 \* The percent of certificates per issuer is calculated against total certificates from all issuers\
 \*\* The percent of errors, warnings and notices is calculated against total observed certificates from the specified issuer
+\*\*\* Tests do not report on certificates with issues that predate the currently required ATIS 1000080 and Certificate Policy versions

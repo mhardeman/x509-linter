@@ -2,7 +2,7 @@
 ## TransNexus, Inc.
 
 ### Certificate abbd6bca303f79a930d3a14e0d3538c51934a97a
-Tested At: 2022-10-05 17:08:38 +0000 UTC\
+Tested At: 2022-10-05 17:17:23 +0000 UTC\
 Subject: CN=Charter Communications Inc SHAKEN 5606, OU=Charter Communications Inc, O=TransNexus, C=US\
 Issuer: CN=TransNexus\, Inc. SHAKEN Issuing CA1, OU=SHAKEN, O=TransNexus\, Inc., C=US
 
@@ -17,3 +17,4 @@ View: [Click to view](https://understandingwebpki.com/?cert=MIICuTCCAl%2BgAwIBAg
 
 \* The percent of certificates per issuer is calculated against total certificates from all issuers\
 \*\* The percent of errors, warnings and notices is calculated against total observed certificates from the specified issuer
+\*\*\* Tests do not report on certificates with issues that predate the currently required ATIS 1000080 and Certificate Policy versions

@@ -2,7 +2,7 @@
 ## NetNumber Inc
 
 ### Certificate b5a226a626d2ee5eedc73de4d0164d30c9b4cc59
-Tested At: 2022-10-05 17:08:38 +0000 UTC\
+Tested At: 2022-10-05 17:17:24 +0000 UTC\
 Subject: O=Baltimore-Washington Telephone Company, C=US, CN=Baltimore-Washington Telephone Company SHAKEN cert 8697\
 Issuer: L=Lowell, ST=Massachusettes, OU=US, O=NetNumber Inc, C=US, CN=NetNumber SHAKEN Root Intermediate CA 1
 
@@ -13,11 +13,12 @@ View: [Click to view](https://understandingwebpki.com/?cert=MIICvTCCAkOgAwIBAgIJ
 
 | Code | Type | Details |
 |------|------|---------|
-| e_shaken_cp1_3_subject_sn | error | STI certificate shall include a ‘serialNumber’ attribute along with the CN |
 | e_shaken_sti_crl_distribution | error | STI intermediate and End-Entity certificates shall contain a CRL Distribution Points extension |
-| e_shaken_sti_certificate_policies | error | STI certificate shall include a Certificate Policies extension containing a single SHAKEN Certificate Policy |
+| e_shaken_cp1_3_subject_sn | error | STI certificate shall include a ‘serialNumber’ attribute along with the CN |
 | e_shaken_sti_subject_cn | error | Common name shall contain the text string 'SHAKEN 8697' |
+| e_shaken_sti_certificate_policies | error | STI certificate shall include a Certificate Policies extension containing a single SHAKEN Certificate Policy |
 | e_shaken_cp1_3_ambiguous_identifier | error | Names used in the STI certificates shall represent an unambiguous identifier for the SP Subject |
 
 \* The percent of certificates per issuer is calculated against total certificates from all issuers\
 \*\* The percent of errors, warnings and notices is calculated against total observed certificates from the specified issuer
+\*\*\* Tests do not report on certificates with issues that predate the currently required ATIS 1000080 and Certificate Policy versions

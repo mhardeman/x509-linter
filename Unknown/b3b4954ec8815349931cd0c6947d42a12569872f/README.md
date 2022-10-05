@@ -2,7 +2,7 @@
 ## Unknown
 
 ### Certificate b3b4954ec8815349931cd0c6947d42a12569872f
-Tested At: 2022-10-05 17:08:38 +0000 UTC\
+Tested At: 2022-10-05 17:17:24 +0000 UTC\
 Subject: CN=Verizon SHAKEN cert 5807, OU=NNO CDS, O=Verizon Data Services LLC, L=Southlake, ST=Texas, C=US\
 Issuer: CN=Metaswitch STI-CA SHAKEN Issuing 1
 
@@ -18,3 +18,4 @@ View: [Click to view](https://understandingwebpki.com/?cert=MIICkzCCAjigAwIBAgIQ
 
 \* The percent of certificates per issuer is calculated against total certificates from all issuers\
 \*\* The percent of errors, warnings and notices is calculated against total observed certificates from the specified issuer
+\*\*\* Tests do not report on certificates with issues that predate the currently required ATIS 1000080 and Certificate Policy versions

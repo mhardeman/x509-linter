@@ -2,7 +2,7 @@
 ## Peeringhub Inc
 
 ### Certificate 417122a7bf47730e788f52241d189a83b05cedc9
-Tested At: 2022-10-05 17:08:38 +0000 UTC\
+Tested At: 2022-10-05 17:17:15 +0000 UTC\
 Subject: CN=Teleinx SHAKEN 744J, O=Teleinx LLC, L=Chicago, ST=IL, C=US\
 Issuer: CN=Peeringhub Inc SHAKEN Intermediate CA 2, OU=Certification Authorities, O=Peeringhub Inc, C=US
 
@@ -13,10 +13,11 @@ View: [Click to view](https://understandingwebpki.com/?cert=MIIDGTCCAr6gAwIBAgIQ
 
 | Code | Type | Details |
 |------|------|---------|
-| e_shaken_cp1_3_subject_sn | error | STI certificate shall include a ‘serialNumber’ attribute along with the CN |
+| e_shaken_sti_certificate_policies | error | STI certificate shall include a Certificate Policies extension containing a single SHAKEN Certificate Policy |
 | e_shaken_cp1_3_ambiguous_identifier | error | Names used in the STI certificates shall represent an unambiguous identifier for the SP Subject |
 | w_shaken_sti_subject_rdn_unknown | warn | STI certificate shall not include RDNs that are not specified |
-| e_shaken_sti_certificate_policies | error | STI certificate shall include a Certificate Policies extension containing a single SHAKEN Certificate Policy |
+| e_shaken_cp1_3_subject_sn | error | STI certificate shall include a ‘serialNumber’ attribute along with the CN |
 
 \* The percent of certificates per issuer is calculated against total certificates from all issuers\
 \*\* The percent of errors, warnings and notices is calculated against total observed certificates from the specified issuer
+\*\*\* Tests do not report on certificates with issues that predate the currently required ATIS 1000080 and Certificate Policy versions

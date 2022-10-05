@@ -2,7 +2,7 @@
 ## Neustar Information Services Inc
 
 ### Certificate 9d5c774d9afe17e1749201abcd597a5760e26d65
-Tested At: 2022-10-05 17:08:38 +0000 UTC\
+Tested At: 2022-10-05 17:17:22 +0000 UTC\
 Subject: CN=SHAKEN 049K, O=Dialpad Inc., C=US\
 Issuer: CN=Neustar Certified Caller ID SHAKEN CA-1, OU=www.ccid.neustar, O=Neustar Information Services Inc, C=US
 
@@ -19,3 +19,4 @@ View: [Click to view](https://understandingwebpki.com/?cert=MIIC%2FDCCAqOgAwIBAg
 
 \* The percent of certificates per issuer is calculated against total certificates from all issuers\
 \*\* The percent of errors, warnings and notices is calculated against total observed certificates from the specified issuer
+\*\*\* Tests do not report on certificates with issues that predate the currently required ATIS 1000080 and Certificate Policy versions

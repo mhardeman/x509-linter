@@ -2,7 +2,7 @@
 ## Sansay Corporation
 
 ### Certificate 185bc69c70d13d44d68c6d0bb8863e4b263a3385
-Tested At: 2022-10-05 17:08:38 +0000 UTC\
+Tested At: 2022-10-05 17:17:12 +0000 UTC\
 Subject: CN=SHAKEN Matrix 9451, OU=Engineering, O=Matrix, ST=Texas, C=US\
 Issuer: CN=SHAKEN Sansay Intermediate CA US WEST 1, OU=Sansay CA, O=Sansay Corporation, ST=California, C=US
 
@@ -14,10 +14,11 @@ View: [Click to view](https://understandingwebpki.com/?cert=MIIDcjCCAxmgAwIBAgIU
 | Code | Type | Details |
 |------|------|---------|
 | e_shaken_sti_certificate_policies | error | STI certificate shall include a Certificate Policies extension containing a single SHAKEN Certificate Policy |
-| e_shaken_cp1_3_ambiguous_identifier | error | Names used in the STI certificates shall represent an unambiguous identifier for the SP Subject |
-| w_shaken_sti_subject_rdn_unknown | warn | STI certificate shall not include RDNs that are not specified |
-| e_shaken_sti_subject_cn | error | Common name shall contain the text string 'SHAKEN 9451' |
 | e_shaken_cp1_3_subject_sn | error | STI certificate shall include a ‘serialNumber’ attribute along with the CN |
+| e_shaken_sti_subject_cn | error | Common name shall contain the text string 'SHAKEN 9451' |
+| w_shaken_sti_subject_rdn_unknown | warn | STI certificate shall not include RDNs that are not specified |
+| e_shaken_cp1_3_ambiguous_identifier | error | Names used in the STI certificates shall represent an unambiguous identifier for the SP Subject |
 
 \* The percent of certificates per issuer is calculated against total certificates from all issuers\
 \*\* The percent of errors, warnings and notices is calculated against total observed certificates from the specified issuer
+\*\*\* Tests do not report on certificates with issues that predate the currently required ATIS 1000080 and Certificate Policy versions

@@ -7,13 +7,13 @@ Warnings: 2
 
 | Status | Code | Amount |
 |--------|------|--------|
-| error | e_shaken_sti_crl_distribution | 1 |
-| error | e_shaken_cp1_3_ambiguous_identifier | 1 |
-| error | e_shaken_cp1_3_subject_sn | 42 |
-| error | e_shaken_sti_certificate_policies | 41 |
-| error | e_shaken_sti_extension_unknown | 41 |
 | warn | w_shaken_sti_subject_rdn_unknown | 2 |
+| error | e_shaken_sti_crl_distribution | 1 |
 | error | e_shaken_sti_subject_cn | 1 |
+| error | e_shaken_cp1_3_ambiguous_identifier | 1 |
+| error | e_shaken_sti_certificate_policies | 41 |
+| error | e_shaken_cp1_3_subject_sn | 42 |
+| error | e_shaken_sti_extension_unknown | 41 |
 
 ### Issued certificates
 
@@ -92,3 +92,5 @@ Warnings: 2
 | 18 Jul 22 17:33 UTC | SHAKEN 715J | true | [view](d0321a392243cdd5e8b2749e4e3883555e2da0cd%2FREADME.md) |
 | 08 Aug 22 12:58 UTC | SHAKEN 150K | true | [view](fd83902c0d4196a2464451447f9ccb736378c1ea%2FREADME.md) |
 | 18 Aug 22 18:07 UTC | SHAKEN 219K | true | [view](d0133e1ece3d41e56d288b90eb8c9335ec24142e%2FREADME.md) |
+
+\* Tests do not report on certificates with issues that predate the currently required ATIS 1000080 and Certificate Policy versions

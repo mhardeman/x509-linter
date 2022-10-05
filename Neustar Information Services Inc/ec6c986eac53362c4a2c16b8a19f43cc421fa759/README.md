@@ -2,7 +2,7 @@
 ## Neustar Information Services Inc
 
 ### Certificate ec6c986eac53362c4a2c16b8a19f43cc421fa759
-Tested At: 2022-10-05 17:08:39 +0000 UTC\
+Tested At: 2022-10-05 17:17:29 +0000 UTC\
 Subject: C=US, ST=VA, L=Courbevoie, O=Orange, OU=Orange Business Services, CN=Orange\
 Issuer: C=US, O=Neustar Information Services Inc, OU=www.ccid.neustar, CN=Neustar Certified Caller ID CA-1
 
@@ -18,3 +18,4 @@ View: [Click to view](https://understandingwebpki.com/?cert=MIID%2FzCCAuegAwIBAg
 
 \* The percent of certificates per issuer is calculated against total certificates from all issuers\
 \*\* The percent of errors, warnings and notices is calculated against total observed certificates from the specified issuer
+\*\*\* Tests do not report on certificates with issues that predate the currently required ATIS 1000080 and Certificate Policy versions

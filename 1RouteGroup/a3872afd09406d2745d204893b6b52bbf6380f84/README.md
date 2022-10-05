@@ -2,7 +2,7 @@
 ## 1RouteGroup
 
 ### Certificate a3872afd09406d2745d204893b6b52bbf6380f84
-Tested At: 2022-10-05 17:08:38 +0000 UTC\
+Tested At: 2022-10-05 17:17:23 +0000 UTC\
 Subject: CN=MYPBXManager SHAKEN, O=MYPBXManager LLC, ST=New York, C=US\
 Issuer: CN=1RouteGroup SHAKEN Intermediate CA, O=1RouteGroup, ST=Texas, C=US
 
@@ -13,13 +13,14 @@ View: [Click to view](https://understandingwebpki.com/?cert=MIIClTCCAjqgAwIBAgIC
 
 | Code | Type | Details |
 |------|------|---------|
+| e_shaken_sti_certificate_policies | error | STI certificate shall include a Certificate Policies extension containing a single SHAKEN Certificate Policy |
 | e_shaken_cp1_3_ambiguous_identifier | error | bad TNAuthorizationList, bad TNAuthorizationList ASN.1 raw, asn1: syntax error: data truncated |
-| e_shaken_sti_tn_auth_list | error | bad TNAuthorizationList, bad TNAuthorizationList ASN.1 raw, asn1: syntax error: data truncated |
 | e_shaken_cp1_3_subject_sn | error | STI certificate shall include a ‘serialNumber’ attribute along with the CN |
-| e_shaken_sti_crl_distribution | error | STI intermediate and End-Entity certificates shall contain a CRL Distribution Points extension |
 | w_shaken_sti_subject_rdn_unknown | warn | STI certificate shall not include RDNs that are not specified |
 | e_shaken_sti_subject_cn | error | Cannot get SPC value from the TNAuthList extension, bad TNAuthorizationList, bad TNAuthorizationList ASN.1 raw, asn1: syntax error: data truncated |
-| e_shaken_sti_certificate_policies | error | STI certificate shall include a Certificate Policies extension containing a single SHAKEN Certificate Policy |
+| e_shaken_sti_crl_distribution | error | STI intermediate and End-Entity certificates shall contain a CRL Distribution Points extension |
+| e_shaken_sti_tn_auth_list | error | bad TNAuthorizationList, bad TNAuthorizationList ASN.1 raw, asn1: syntax error: data truncated |
 
 \* The percent of certificates per issuer is calculated against total certificates from all issuers\
 \*\* The percent of errors, warnings and notices is calculated against total observed certificates from the specified issuer
+\*\*\* Tests do not report on certificates with issues that predate the currently required ATIS 1000080 and Certificate Policy versions

@@ -2,7 +2,7 @@
 ## Unknown
 
 ### Certificate 7deaf409e0c7859925f43a64b96cdd8b0eb1be89
-Tested At: 2022-10-05 17:08:38 +0000 UTC\
+Tested At: 2022-10-05 17:17:20 +0000 UTC\
 Subject: CN=U. S. Telepacific Corp SHAKEN 7453, O=U. S. Telepacific Corp, L=Los Angeles, ST=California, C=US\
 Issuer: CN=Metaswitch STI-CA SHAKEN Issuing 1
 
@@ -18,3 +18,4 @@ View: [Click to view](https://understandingwebpki.com/?cert=MIICjjCCAjSgAwIBAgIQ
 
 \* The percent of certificates per issuer is calculated against total certificates from all issuers\
 \*\* The percent of errors, warnings and notices is calculated against total observed certificates from the specified issuer
+\*\*\* Tests do not report on certificates with issues that predate the currently required ATIS 1000080 and Certificate Policy versions

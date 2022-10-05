@@ -2,7 +2,7 @@
 ## Ribbon Communications
 
 ### Certificate aa06ee0a2f5d5930087d1a2dc67e5d6d649506cf
-Tested At: 2022-10-05 17:08:38 +0000 UTC\
+Tested At: 2022-10-05 17:17:23 +0000 UTC\
 Subject: CN=Nuwave Communications SHAKEN 620J, OU=Nuwave Communications, O=Nuwave Communications, C=US\
 Issuer: CN=SHAKEN Ribbon Issuing CA, OU=Certification Authorities, O=Ribbon Communications, C=US
 
@@ -13,11 +13,12 @@ View: [Click to view](https://understandingwebpki.com/?cert=MIIDETCCAragAwIBAgIQ
 
 | Code | Type | Details |
 |------|------|---------|
-| e_shaken_cp1_3_subject_sn | error | STI certificate shall include a ‘serialNumber’ attribute along with the CN |
-| w_shaken_sti_subject_rdn_unknown | warn | STI certificate shall not include RDNs that are not specified |
-| e_shaken_sti_certificate_policies | error | STI certificate shall include a Certificate Policies extension containing a single SHAKEN Certificate Policy |
-| e_shaken_cp1_3_ambiguous_identifier | error | Names used in the STI certificates shall represent an unambiguous identifier for the SP Subject |
 | e_shaken_sti_extension_unknown | error | STI certificate shall not include extensions that are not specified |
+| e_shaken_cp1_3_ambiguous_identifier | error | Names used in the STI certificates shall represent an unambiguous identifier for the SP Subject |
+| w_shaken_sti_subject_rdn_unknown | warn | STI certificate shall not include RDNs that are not specified |
+| e_shaken_cp1_3_subject_sn | error | STI certificate shall include a ‘serialNumber’ attribute along with the CN |
+| e_shaken_sti_certificate_policies | error | STI certificate shall include a Certificate Policies extension containing a single SHAKEN Certificate Policy |
 
 \* The percent of certificates per issuer is calculated against total certificates from all issuers\
 \*\* The percent of errors, warnings and notices is calculated against total observed certificates from the specified issuer
+\*\*\* Tests do not report on certificates with issues that predate the currently required ATIS 1000080 and Certificate Policy versions

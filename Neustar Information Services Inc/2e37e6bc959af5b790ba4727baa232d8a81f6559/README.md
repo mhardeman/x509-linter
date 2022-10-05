@@ -2,7 +2,7 @@
 ## Neustar Information Services Inc
 
 ### Certificate 2e37e6bc959af5b790ba4727baa232d8a81f6559
-Tested At: 2022-10-05 17:08:38 +0000 UTC\
+Tested At: 2022-10-05 17:17:14 +0000 UTC\
 Subject: C=US, ST=TX, L=Dallas, O=Logix, OU=Logix Fiber Network, CN=Logix-Keystore\
 Issuer: C=US, O=Neustar Information Services Inc, OU=www.ccid.neustar, CN=Neustar Certified Caller ID CA-1
 
@@ -18,3 +18,4 @@ View: [Click to view](https://understandingwebpki.com/?cert=MIID%2FTCCAuWgAwIBAg
 
 \* The percent of certificates per issuer is calculated against total certificates from all issuers\
 \*\* The percent of errors, warnings and notices is calculated against total observed certificates from the specified issuer
+\*\*\* Tests do not report on certificates with issues that predate the currently required ATIS 1000080 and Certificate Policy versions

@@ -7,11 +7,11 @@ Warnings: 0
 
 | Status | Code | Amount |
 |--------|------|--------|
-| error | e_shaken_sti_issuer | 1 |
-| error | e_shaken_sti_subject_cn | 1 |
-| error | e_shaken_cp1_3_subject_sn | 1 |
-| error | e_shaken_cp1_3_ambiguous_identifier | 1 |
 | error | e_shaken_sti_key_usage | 1 |
+| error | e_shaken_sti_subject_cn | 1 |
+| error | e_shaken_cp1_3_ambiguous_identifier | 1 |
+| error | e_shaken_cp1_3_subject_sn | 1 |
+| error | e_shaken_sti_issuer | 1 |
 
 ### Issued certificates
 
@@ -30,3 +30,5 @@ Warnings: 0
 | 26 May 21 15:37 UTC | WOW Internet Cable and Phone SHAKEN Cert 665E | false | [view](404c068287b5536bf01b6b5d6c720fa845a6e116%2FREADME.md) |
 | 20 Jul 21 19:54 UTC | New Horizon SHAKEN Cert 127E | false | [view](f8c902cd9b98752b438cd813d9ea611882ca935d%2FREADME.md) |
 | 07 Jun 22 12:24 UTC | Avid Communication SHAKEN Cert 742D | true | [view](ae5ecd4815b5f6173076a0f16e3abb2091254210%2FREADME.md) |
+
+\* Tests do not report on certificates with issues that predate the currently required ATIS 1000080 and Certificate Policy versions

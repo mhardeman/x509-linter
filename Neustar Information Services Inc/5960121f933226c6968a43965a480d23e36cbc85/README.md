@@ -2,7 +2,7 @@
 ## Neustar Information Services Inc
 
 ### Certificate 5960121f933226c6968a43965a480d23e36cbc85
-Tested At: 2022-10-05 17:08:38 +0000 UTC\
+Tested At: 2022-10-05 17:17:17 +0000 UTC\
 Subject: C=US, ST=IL, L=Chicago, O=support, OU=Peerless Network, CN=peerlessnetwork.com\
 Issuer: C=US, O=Neustar Information Services Inc, OU=www.ccid.neustar, CN=Neustar Certified Caller ID CA-1
 
@@ -18,3 +18,4 @@ View: [Click to view](https://understandingwebpki.com/?cert=MIIEAjCCAuqgAwIBAgIU
 
 \* The percent of certificates per issuer is calculated against total certificates from all issuers\
 \*\* The percent of errors, warnings and notices is calculated against total observed certificates from the specified issuer
+\*\*\* Tests do not report on certificates with issues that predate the currently required ATIS 1000080 and Certificate Policy versions

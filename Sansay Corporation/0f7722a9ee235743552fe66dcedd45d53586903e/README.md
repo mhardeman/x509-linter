@@ -2,7 +2,7 @@
 ## Sansay Corporation
 
 ### Certificate 0f7722a9ee235743552fe66dcedd45d53586903e
-Tested At: 2022-10-05 17:08:37 +0000 UTC\
+Tested At: 2022-10-05 17:17:11 +0000 UTC\
 Subject: CN=SHAKEN Technology Innovation Lab 599J, OU=Research and Development, O=Technology Innovation Lab, ST=New York, C=US\
 Issuer: CN=SHAKEN Sansay Intermediate CA US WEST 1, OU=Sansay CA, O=Sansay Corporation, ST=California, C=US
 
@@ -18,3 +18,4 @@ View: [Click to view](https://understandingwebpki.com/?cert=MIIDqjCCA1CgAwIBAgIU
 
 \* The percent of certificates per issuer is calculated against total certificates from all issuers\
 \*\* The percent of errors, warnings and notices is calculated against total observed certificates from the specified issuer
+\*\*\* Tests do not report on certificates with issues that predate the currently required ATIS 1000080 and Certificate Policy versions

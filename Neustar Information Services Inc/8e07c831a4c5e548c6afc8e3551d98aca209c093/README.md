@@ -2,7 +2,7 @@
 ## Neustar Information Services Inc
 
 ### Certificate 8e07c831a4c5e548c6afc8e3551d98aca209c093
-Tested At: 2022-10-05 17:08:38 +0000 UTC\
+Tested At: 2022-10-05 17:17:21 +0000 UTC\
 Subject: CN=SHAKEN 821J, O=Bluerock Communications, C=US\
 Issuer: CN=Neustar Certified Caller ID SHAKEN CA-1, OU=www.ccid.neustar, O=Neustar Information Services Inc, C=US
 
@@ -19,3 +19,4 @@ View: [Click to view](https://understandingwebpki.com/?cert=MIIDBzCCAq6gAwIBAgIU
 
 \* The percent of certificates per issuer is calculated against total certificates from all issuers\
 \*\* The percent of errors, warnings and notices is calculated against total observed certificates from the specified issuer
+\*\*\* Tests do not report on certificates with issues that predate the currently required ATIS 1000080 and Certificate Policy versions

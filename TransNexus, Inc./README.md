@@ -8,10 +8,10 @@ Warnings: 70
 | Status | Code | Amount |
 |--------|------|--------|
 | error | e_shaken_cp1_3_ambiguous_identifier | 2 |
-| error | e_incorrect_ku_encoding | 71 |
-| warn | w_shaken_sti_subject_rdn_unknown | 70 |
-| error | e_shaken_cp1_3_subject_sn | 70 |
 | error | e_shaken_sti_certificate_policies | 2 |
+| warn | w_shaken_sti_subject_rdn_unknown | 70 |
+| error | e_incorrect_ku_encoding | 71 |
+| error | e_shaken_cp1_3_subject_sn | 70 |
 
 ### Issued certificates
 
@@ -88,3 +88,5 @@ Warnings: 70
 | 19 Sep 22 20:17 UTC | SHAKEN 738J | true | [view](bf6f027eed3fc247d32478d371a63d7aef761a0d%2FREADME.md) |
 | 20 Sep 22 07:11 UTC | SHAKEN 0172 | true | [view](56d7d7c31d08fb982b00f04bd4a0a4f8c109e611%2FREADME.md) |
 | 20 Sep 22 08:36 UTC | SHAKEN 012K | true | [view](5f1708b029037c976c538f754fd364f57d0bd4fe%2FREADME.md) |
+
+\* Tests do not report on certificates with issues that predate the currently required ATIS 1000080 and Certificate Policy versions

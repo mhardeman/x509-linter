@@ -2,7 +2,7 @@
 ## Neustar Information Services Inc
 
 ### Certificate dfc2fd18498333f3836897f2875cb91ecf27e7d2
-Tested At: 2022-10-05 17:08:39 +0000 UTC\
+Tested At: 2022-10-05 17:17:29 +0000 UTC\
 Subject: CN=SHAKEN 951J, O=Zultys Inc, C=US\
 Issuer: CN=Neustar Certified Caller ID SHAKEN CA-1, OU=www.ccid.neustar, O=Neustar Information Services Inc, C=US
 
@@ -13,9 +13,10 @@ View: [Click to view](https://understandingwebpki.com/?cert=MIIC%2BzCCAqGgAwIBAg
 
 | Code | Type | Details |
 |------|------|---------|
+| e_shaken_sti_certificate_policies | error | STI certificate shall include a Certificate Policies extension containing a single SHAKEN Certificate Policy |
 | e_shaken_sti_extension_unknown | error | STI certificate shall not include extensions that are not specified |
 | e_shaken_cp1_3_subject_sn | error | STI certificate shall include a ‘serialNumber’ attribute along with the CN |
-| e_shaken_sti_certificate_policies | error | STI certificate shall include a Certificate Policies extension containing a single SHAKEN Certificate Policy |
 
 \* The percent of certificates per issuer is calculated against total certificates from all issuers\
 \*\* The percent of errors, warnings and notices is calculated against total observed certificates from the specified issuer
+\*\*\* Tests do not report on certificates with issues that predate the currently required ATIS 1000080 and Certificate Policy versions

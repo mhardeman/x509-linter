@@ -2,7 +2,7 @@
 ## Neustar Information Services Inc
 
 ### Certificate d94220a50c87e326070bbd8a4c9d7b7d7f7ab542
-Tested At: 2022-10-05 17:08:39 +0000 UTC\
+Tested At: 2022-10-05 17:17:28 +0000 UTC\
 Subject: C=US, ST=NY, L=Rochester, O=Support, OU=Communications, CN=frontier.com\
 Issuer: C=US, O=Neustar Information Services Inc, OU=www.ccid.neustar, CN=Neustar Certified Caller ID CA-1
 
@@ -18,3 +18,4 @@ View: [Click to view](https://understandingwebpki.com/?cert=MIID%2BzCCAuOgAwIBAg
 
 \* The percent of certificates per issuer is calculated against total certificates from all issuers\
 \*\* The percent of errors, warnings and notices is calculated against total observed certificates from the specified issuer
+\*\*\* Tests do not report on certificates with issues that predate the currently required ATIS 1000080 and Certificate Policy versions

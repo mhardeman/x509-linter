@@ -2,7 +2,7 @@
 ## TransNexus
 
 ### Certificate 314340da9783d71524f1a0ca949956ebc808a842
-Tested At: 2022-10-05 17:08:38 +0000 UTC\
+Tested At: 2022-10-05 17:17:14 +0000 UTC\
 Subject: CN=TCN SHAKEN 706J, OU=TCN, O=TransNexus, C=US\
 Issuer: CN=TransNexus Issuing CA G2, OU=Certification Authorities, O=TransNexus, C=US
 
@@ -18,3 +18,4 @@ View: [Click to view](https://understandingwebpki.com/?cert=MIICjTCCAjOgAwIBAgIQ
 
 \* The percent of certificates per issuer is calculated against total certificates from all issuers\
 \*\* The percent of errors, warnings and notices is calculated against total observed certificates from the specified issuer
+\*\*\* Tests do not report on certificates with issues that predate the currently required ATIS 1000080 and Certificate Policy versions

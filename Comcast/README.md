@@ -7,13 +7,13 @@ Warnings: 6
 
 | Status | Code | Amount |
 |--------|------|--------|
-| warn | w_shaken_sti_subject_rdn_unknown | 6 |
-| error | e_shaken_sti_subject_key_identifier | 6 |
-| warn | w_ext_subject_key_identifier_missing_sub_cert | 6 |
-| error | e_shaken_cp1_3_subject_sn | 6 |
-| error | e_shaken_cp1_3_ambiguous_identifier | 6 |
-| error | e_shaken_sti_certificate_policies | 6 |
 | error | e_shaken_sti_subject_cn | 6 |
+| error | e_shaken_sti_subject_key_identifier | 6 |
+| error | e_shaken_cp1_3_subject_sn | 6 |
+| error | e_shaken_sti_certificate_policies | 6 |
+| warn | w_ext_subject_key_identifier_missing_sub_cert | 6 |
+| error | e_shaken_cp1_3_ambiguous_identifier | 6 |
+| warn | w_shaken_sti_subject_rdn_unknown | 6 |
 
 ### Issued certificates
 
@@ -25,3 +25,5 @@ Warnings: 6
 | 18 Sep 22 10:05 UTC | SHAKEN | true | [view](692820bcc2789fc6920925c16b59e6e34f1978a4%2FREADME.md) |
 | 19 Sep 22 10:05 UTC | SHAKEN | true | [view](5f7c718f5c9448ce21656eeea34dfc3630927a4b%2FREADME.md) |
 | 20 Sep 22 10:05 UTC | SHAKEN | true | [view](9df4720732ce5810ba9cf652a9086ee470a8a459%2FREADME.md) |
+
+\* Tests do not report on certificates with issues that predate the currently required ATIS 1000080 and Certificate Policy versions

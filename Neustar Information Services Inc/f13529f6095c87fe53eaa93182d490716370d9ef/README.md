@@ -2,7 +2,7 @@
 ## Neustar Information Services Inc
 
 ### Certificate f13529f6095c87fe53eaa93182d490716370d9ef
-Tested At: 2022-10-05 17:08:39 +0000 UTC\
+Tested At: 2022-10-05 17:17:30 +0000 UTC\
 Subject: CN=SHAKEN 033H, O=GetGo Communications LLC, C=US\
 Issuer: CN=Neustar Certified Caller ID SHAKEN CA-1, OU=www.ccid.neustar, O=Neustar Information Services Inc, C=US
 
@@ -19,3 +19,4 @@ View: [Click to view](https://understandingwebpki.com/?cert=MIIDCTCCAq%2BgAwIBAg
 
 \* The percent of certificates per issuer is calculated against total certificates from all issuers\
 \*\* The percent of errors, warnings and notices is calculated against total observed certificates from the specified issuer
+\*\*\* Tests do not report on certificates with issues that predate the currently required ATIS 1000080 and Certificate Policy versions

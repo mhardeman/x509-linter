@@ -2,7 +2,7 @@
 ## Unknown
 
 ### Certificate 2bed8a9246c78dfdf1cbac12bd20316ad5892163
-Tested At: 2022-10-05 17:08:38 +0000 UTC\
+Tested At: 2022-10-05 17:17:14 +0000 UTC\
 Subject: CN=RCN SHAKEN Cert 7615, O=RCN, C=US\
 Issuer: CN=Metaswitch STI-CA SHAKEN Issuing 1
 
@@ -18,3 +18,4 @@ View: [Click to view](https://understandingwebpki.com/?cert=MIICQTCCAeegAwIBAgIQ
 
 \* The percent of certificates per issuer is calculated against total certificates from all issuers\
 \*\* The percent of errors, warnings and notices is calculated against total observed certificates from the specified issuer
+\*\*\* Tests do not report on certificates with issues that predate the currently required ATIS 1000080 and Certificate Policy versions

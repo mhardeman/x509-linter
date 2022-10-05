@@ -2,7 +2,7 @@
 ## Neustar Information Services Inc
 
 ### Certificate 44e193e2290156b4d91bc3735831fa6afb0ff7ff
-Tested At: 2022-10-05 17:08:38 +0000 UTC\
+Tested At: 2022-10-05 17:17:15 +0000 UTC\
 Subject: C=US, ST=NY, L=Albany, O=Firstlight, OU=VoIP, CN=SHAKEN-8468\
 Issuer: C=US, O=Neustar Information Services Inc, OU=www.ccid.neustar, CN=Neustar Certified Caller ID CA-1
 
@@ -18,3 +18,4 @@ View: [Click to view](https://understandingwebpki.com/?cert=MIID8DCCAtigAwIBAgIU
 
 \* The percent of certificates per issuer is calculated against total certificates from all issuers\
 \*\* The percent of errors, warnings and notices is calculated against total observed certificates from the specified issuer
+\*\*\* Tests do not report on certificates with issues that predate the currently required ATIS 1000080 and Certificate Policy versions

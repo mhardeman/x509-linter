@@ -2,7 +2,7 @@
 ## TransNexus, Inc.
 
 ### Certificate cbef581071e3e24abfa76d3afbb9a5576560b271
-Tested At: 2022-10-05 17:08:39 +0000 UTC\
+Tested At: 2022-10-05 17:17:26 +0000 UTC\
 Subject: CN=SHAKEN 738J, OU=SHAKEN, O=SkySwitch, C=US\
 Issuer: CN=TransNexus\, Inc. SHAKEN Issuing CA3, OU=SHAKEN, O=TransNexus\, Inc., C=US
 
@@ -19,3 +19,4 @@ View: [Click to view](https://understandingwebpki.com/?cert=MIIC7DCCApGgAwIBAgIQ
 
 \* The percent of certificates per issuer is calculated against total certificates from all issuers\
 \*\* The percent of errors, warnings and notices is calculated against total observed certificates from the specified issuer
+\*\*\* Tests do not report on certificates with issues that predate the currently required ATIS 1000080 and Certificate Policy versions

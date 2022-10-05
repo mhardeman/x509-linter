@@ -2,7 +2,7 @@
 ## Unknown
 
 ### Certificate 51fddfa3fae372a505080568fed4a0ddba991622
-Tested At: 2022-10-05 17:08:38 +0000 UTC\
+Tested At: 2022-10-05 17:17:16 +0000 UTC\
 Subject: CN=Segra SHAKEN Cert 1784, O=Segra, C=US\
 Issuer: CN=Metaswitch STI-CA SHAKEN Issuing 1
 
@@ -18,3 +18,4 @@ View: [Click to view](https://understandingwebpki.com/?cert=MIICRDCCAeugAwIBAgIQ
 
 \* The percent of certificates per issuer is calculated against total certificates from all issuers\
 \*\* The percent of errors, warnings and notices is calculated against total observed certificates from the specified issuer
+\*\*\* Tests do not report on certificates with issues that predate the currently required ATIS 1000080 and Certificate Policy versions

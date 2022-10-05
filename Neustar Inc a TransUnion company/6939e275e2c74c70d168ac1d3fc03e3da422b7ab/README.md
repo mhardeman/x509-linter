@@ -2,7 +2,7 @@
 ## Neustar Inc a TransUnion company
 
 ### Certificate 6939e275e2c74c70d168ac1d3fc03e3da422b7ab
-Tested At: 2022-10-05 17:08:38 +0000 UTC\
+Tested At: 2022-10-05 17:17:18 +0000 UTC\
 Subject: CN=SHAKEN 770J, O=Fuze Inc, C=US\
 Issuer: CN=Neustar Certified Caller ID SHAKEN CA-2, OU=www.ccid.neustar, O=Neustar Inc a TransUnion company, C=US
 
@@ -17,3 +17,4 @@ View: [Click to view](https://understandingwebpki.com/?cert=MIIC%2FTCCAqKgAwIBAg
 
 \* The percent of certificates per issuer is calculated against total certificates from all issuers\
 \*\* The percent of errors, warnings and notices is calculated against total observed certificates from the specified issuer
+\*\*\* Tests do not report on certificates with issues that predate the currently required ATIS 1000080 and Certificate Policy versions

@@ -2,7 +2,7 @@
 ## NetNumber Inc
 
 ### Certificate 0ebf970365dbca8232b80e72c6da7e05bb43d33a
-Tested At: 2022-10-05 17:08:37 +0000 UTC\
+Tested At: 2022-10-05 17:17:11 +0000 UTC\
 Subject: L=Austin, ST=Texas, O=Plivo Inc, C=US, CN=Plivo Inc\
 Issuer: L=Lowell, ST=Massachusettes, OU=US, O=NetNumber Inc, C=US, CN=NetNumber SHAKEN Root Intermediate CA 1
 
@@ -13,11 +13,12 @@ View: [Click to view](https://understandingwebpki.com/?cert=MIIC2zCCAmGgAwIBAgIJ
 
 | Code | Type | Details |
 |------|------|---------|
-| w_shaken_sti_subject_rdn_unknown | warn | STI certificate shall not include RDNs that are not specified |
-| e_shaken_sti_subject_cn | error | Common name shall contain the text string 'SHAKEN 800J' |
-| e_shaken_cp1_3_ambiguous_identifier | error | Names used in the STI certificates shall represent an unambiguous identifier for the SP Subject |
 | e_shaken_cp1_3_subject_sn | error | STI certificate shall include a ‘serialNumber’ attribute along with the CN |
 | e_shaken_sti_certificate_policies | error | STI certificate shall include a Certificate Policies extension containing a single SHAKEN Certificate Policy |
+| e_shaken_sti_subject_cn | error | Common name shall contain the text string 'SHAKEN 800J' |
+| e_shaken_cp1_3_ambiguous_identifier | error | Names used in the STI certificates shall represent an unambiguous identifier for the SP Subject |
+| w_shaken_sti_subject_rdn_unknown | warn | STI certificate shall not include RDNs that are not specified |
 
 \* The percent of certificates per issuer is calculated against total certificates from all issuers\
 \*\* The percent of errors, warnings and notices is calculated against total observed certificates from the specified issuer
+\*\*\* Tests do not report on certificates with issues that predate the currently required ATIS 1000080 and Certificate Policy versions
