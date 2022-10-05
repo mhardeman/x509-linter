@@ -343,7 +343,7 @@ func SaveOrganizationReport(r *LintCertificatesResult, outDir string) error {
 		fmt.Fprintln(file, "| Status | Code | Amount |")
 		fmt.Fprintln(file, "|--------|------|--------|")
 		for code, issue := range issuer.Issues {
-			fmt.Fprintf(file, "| %s | %s | %d |\n", issue.Type, code, issue.Amount)
+			fmt.Fprintf(file, "| %s | %s | %d |\n", statusToString(issue.Type), code, issue.Amount)
 		}
 
 		// certificates
