@@ -11,7 +11,7 @@ import (
 	"net/url"
 	"os"
 	"path"
-	"strings"
+	"sort"
 	"time"
 
 	"github.com/peculiarventures/x509-linter/pkg/atis1000080"
@@ -54,15 +54,20 @@ func RunLintCommand(certPath string, summary bool) error {
 			return fmt.Errorf("cannot lint the directory with certificates, %w", err)
 		}
 
-		err = SaveTotalReport(r, "")
+		reportDir := "x_report"
+		if err := os.Mkdir(reportDir, os.ModePerm); err != nil {
+			return fmt.Errorf("cannot create directory %s, %s", reportDir, err.Error())
+		}
+
+		err = SaveTotalReport(r, reportDir)
 		if err != nil {
 			return err
 		}
-		err = SaveCertificatesReport(r, "")
+		err = SaveOrganizationReport(r, reportDir)
 		if err != nil {
 			return err
 		}
-		err = SaveOrganizationReport(r, "")
+		err = SaveCertificatesReport(r, reportDir)
 		if err != nil {
 			return err
 		}
@@ -80,9 +85,10 @@ func RunLintCommand(certPath string, summary bool) error {
 }
 
 type LintCertificateResult struct {
-	Link   string
-	Cert   *x509.Certificate
-	Result *zlint.ResultSet
+	Link       string
+	Cert       *x509.Certificate
+	Thumbprint string
+	Result     *zlint.ResultSet
 }
 
 func LintCertificate(certPath string) (*LintCertificateResult, error) {
@@ -135,16 +141,21 @@ func LintCertificate(certPath string) (*LintCertificateResult, error) {
 	}
 
 	return &LintCertificateResult{
-		Link:   link,
-		Cert:   cert,
-		Result: zlint.LintCertificateEx(cert, registry),
+		Link:       link,
+		Cert:       cert,
+		Thumbprint: computeCertThumbprint(cert),
+		Result:     zlint.LintCertificateEx(cert, registry),
 	}, nil
 }
 
-func printResultMarkDown(w io.Writer, info *LintCertificateResult) {
+func computeCertThumbprint(c *x509.Certificate) string {
 	thumbprint := sha1.New()
-	thumbprint.Write(info.Cert.Raw)
-	fmt.Fprintf(w, "### Certificate %s\n", hex.EncodeToString(thumbprint.Sum(nil)))
+	thumbprint.Write(c.Raw)
+	return hex.EncodeToString(thumbprint.Sum(nil))
+}
+
+func printResultMarkDown(w io.Writer, info *LintCertificateResult) {
+	fmt.Fprintf(w, "### Certificate %s\n", info.Thumbprint)
 	fmt.Fprintf(w, "Tested At: %s\n\n", time.Unix(info.Result.Timestamp, 0).String())
 	fmt.Fprintf(w, "Subject: %s\n\n", info.Cert.Subject.String())
 	fmt.Fprintf(w, "Issuer: %s\n\n", info.Cert.Issuer.String())
@@ -276,16 +287,27 @@ func LintCertificates(dirPath string) (*LintCertificatesResult, error) {
 }
 
 func SaveOrganizationReport(r *LintCertificatesResult, outDir string) error {
-	file, err := os.Create(path.Join(outDir, "organization.md"))
-	if err != nil {
-		return fmt.Errorf("cannot save organization.md, %w", err)
-	}
-	defer file.Close()
-
-	fmt.Fprintln(file, "# SHAKEN COMPLIANCE SUMMARY")
-	fmt.Fprintln(file, "## Organizations")
 
 	for name, issuer := range r.Issuers {
+		// create folder
+		orgDir := path.Join(outDir, name)
+		if err := os.Mkdir(orgDir, os.ModePerm); err != nil {
+			return fmt.Errorf("cannot create directory %s, %s", name, err.Error())
+		}
+
+		// create file
+		orgFile := path.Join(orgDir, "index.md")
+		file, err := os.Create(orgFile)
+		if err != nil {
+			return fmt.Errorf("cannot create %s, %w", orgFile, err)
+		}
+		defer file.Close()
+
+		// header
+		fmt.Fprintln(file, "# SHAKEN COMPLIANCE")
+		fmt.Fprintln(file, "## Organization")
+
+		// summary
 		fmt.Fprintln(file, "")
 		fmt.Fprintf(file, "### %s\n", name)
 		fmt.Fprintln(file, "")
@@ -298,24 +320,43 @@ func SaveOrganizationReport(r *LintCertificatesResult, outDir string) error {
 		for code, issue := range issuer.Issues {
 			fmt.Fprintf(file, "| %s | %s | %d |\n", issue.Type, code, issue.Amount)
 		}
+
+		// certificates
+		fmt.Fprintln(file, "")
+		fmt.Fprintln(file, "### Issued certificates")
+		fmt.Fprintln(file, "")
+		fmt.Fprintln(file, "| Created at | Name | Problems | Link |")
+		fmt.Fprintln(file, "|------------|------|----------|------|")
+		sort.Slice(issuer.Certificates[:], func(i, j int) bool {
+			return issuer.Certificates[i].Cert.NotBefore.Unix() < issuer.Certificates[j].Cert.NotBefore.Unix()
+		})
+		for _, certReport := range issuer.Certificates {
+			fmt.Fprintf(file, "| %s | %s | %s | %s |\n",
+				certReport.Cert.NotBefore.Format(time.RFC822),                                           // created at
+				certReport.Cert.Subject.CommonName,                                                      // name
+				fmt.Sprintf("%t", certReport.Result.ErrorsPresent || certReport.Result.WarningsPresent), // problems
+				fmt.Sprintf("[view](%s)", url.PathEscape(path.Join(certReport.Thumbprint, "index.md"))), // link
+			)
+		}
 	}
 
 	return nil
 }
 
 func SaveTotalReport(r *LintCertificatesResult, outDir string) error {
-	file, err := os.Create(path.Join(outDir, "total.md"))
+	file, err := os.Create(path.Join(outDir, "index.md"))
 	if err != nil {
-		return fmt.Errorf("cannot save total.md, %w", err)
+		return fmt.Errorf("cannot save index.md, %w", err)
 	}
 	defer file.Close()
 
-	fmt.Fprintln(file, "# SHAKEN COMPLIANCE SUMMARY")
+	fmt.Fprintln(file, "# SHAKEN COMPLIANCE")
+	fmt.Fprintln(file, "## Summary")
 	fmt.Fprintln(file, "")
 	fmt.Fprintln(file, "| Issuers | Certificates | Errors | Warnings |")
 	fmt.Fprintln(file, "|---------|--------------|--------|----------|")
 	for issuerName, issuer := range r.Issuers {
-		issuerNameLink := fmt.Sprintf("[%s](organization.md#%s)", issuerName, strings.ReplaceAll(issuerName, " ", "-"))
+		issuerNameLink := fmt.Sprintf("[%s](%s)", issuerName, url.PathEscape(path.Join(issuerName, "index.md")))
 		fmt.Fprintf(file, "| %s | %d (%0.2f%%) | %d (%0.2f%%) | %d (%0.2f%%) |\n", issuerNameLink, issuer.Amount, percent(issuer.Amount, r.Amount), issuer.Errors, percent(issuer.Errors, issuer.Amount), issuer.Warnings, percent(issuer.Warnings, issuer.Amount))
 	}
 	fmt.Fprintf(file, "| **Total** | %d (100%%) | %d (%0.2f%%) | %d (%0.2f%%) |\n", r.Amount, r.Errors, percent(r.Errors, r.Amount), r.Warnings, percent(r.Warnings, r.Amount))
@@ -324,17 +365,26 @@ func SaveTotalReport(r *LintCertificatesResult, outDir string) error {
 }
 
 func SaveCertificatesReport(r *LintCertificatesResult, outDir string) error {
-	file, err := os.Create(path.Join(outDir, "certs.md"))
-	if err != nil {
-		return fmt.Errorf("cannot save certs.md, %w", err)
-	}
-	defer file.Close()
 
-	fmt.Fprintln(file, "# SHAKEN COMPLIANCE SUMMARY")
-	fmt.Fprintln(file, "## Certificates")
-
-	for _, issuer := range r.Issuers {
+	for issuerName, issuer := range r.Issuers {
 		for _, cert := range issuer.Certificates {
+			// create folder
+			certDir := path.Join(outDir, issuerName, cert.Thumbprint)
+			if err := os.Mkdir(certDir, os.ModePerm); err != nil {
+				return fmt.Errorf("cannot create directory %s, %s", certDir, err.Error())
+			}
+
+			// create file
+			certFile := path.Join(path.Join(certDir, "index.md"))
+			file, err := os.Create(certFile)
+			if err != nil {
+				return fmt.Errorf("cannot create %s, %w", certFile, err)
+			}
+			defer file.Close()
+
+			// header
+			fmt.Fprintln(file, "# SHAKEN COMPLIANCE")
+			fmt.Fprintln(file, "## Certificate")
 			fmt.Fprintln(file, "")
 			printResultMarkDown(file, cert)
 		}
