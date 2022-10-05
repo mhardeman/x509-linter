@@ -1,0 +1,21 @@
+# STIR/SHAKEN CA Ecosystem Compliance
+## Neustar Information Services Inc
+
+### Certificate 30598eb5437ae2fefdca2a2ecdb6332666d925d2
+Tested At: 2022-10-05 17:08:38 +0000 UTC\
+Subject: CN=SHAKEN 771J, O=LATAM Telecommunications LLC, C=US\
+Issuer: CN=Neustar Certified Caller ID SHAKEN CA-1, OU=www.ccid.neustar, O=Neustar Information Services Inc, C=US
+
+Link: https://187.174.67.118:8080/7075515eb2d150fc98c43e794c07bbca.cer
+
+View: [Click to view](https://understandingwebpki.com/?cert=MIIDDjCCArOgAwIBAgIUBi3dnA2V85cWrv88flfUcwl8ppQwCgYIKoZIzj0EAwIwgYUxCzAJBgNVBAYTAlVTMSkwJwYDVQQKDCBOZXVzdGFyIEluZm9ybWF0aW9uIFNlcnZpY2VzIEluYzEZMBcGA1UECwwQd3d3LmNjaWQubmV1c3RhcjEwMC4GA1UEAwwnTmV1c3RhciBDZXJ0aWZpZWQgQ2FsbGVyIElEIFNIQUtFTiBDQS0xMB4XDTIyMDcxMzE5MTA0OFoXDTIzMDcxMzE5MTA0OFowSjELMAkGA1UEBhMCVVMxJTAjBgNVBAoMHExBVEFNIFRlbGVjb21tdW5pY2F0aW9ucyBMTEMxFDASBgNVBAMMC1NIQUtFTiA3NzFKMFkwEwYHKoZIzj0CAQYIKoZIzj0DAQcDQgAEJbp9QqY3sDobZC5lI%2Bvjl7ggRU69zbBx%2F2kRJP1AYu3DdeWwz5sSazzIVvKbm%2BaQFT2YhrhBkK628%2BA6yvEjFaOCATkwggE1MBYGCCsGAQUFBwEaBAowCKAGFgQ3NzFKMAwGA1UdEwEB%2FwQCMAAwHwYDVR0jBBgwFoAUr9HIwu5yTIP8P%2B0Zp20dkLIH8DowWwYIKwYBBQUHAQEETzBNMEsGCCsGAQUFBzAChj9odHRwOi8vY2FjZXJ0cy11cy5jY2lkLm5ldXN0YXIvTmV1c3RhckNlcnRpZmllZENhbGxlcklkQ0ExLmNydCAwFwYDVR0gBBAwDjAMBgpghkgBhv8JAQEBMEcGA1UdHwRAMD4wPKA6oDiGNmh0dHBzOi8vYXV0aGVudGljYXRlLWFwaS5pY29uZWN0aXYuY29tL2Rvd25sb2FkL3YxL2NybDAdBgNVHQ4EFgQUDPGvWUEZ20NZtQe1X2R%2FeA%2BwF3IwDgYDVR0PAQH%2FBAQDAgeAMAoGCCqGSM49BAMCA0kAMEYCIQDtMInVyN4I09w5qeEGbDFr1K1EFa9BFf01eAxkiBUKEwIhAIh3iFRvb2OuELGMUaJ3nsi7KE7vIShWPsyLvpvp%2Fm9p)
+
+
+| Code | Type | Details |
+|------|------|---------|
+| e_shaken_sti_extension_unknown | error | STI certificate shall not include extensions that are not specified |
+| e_shaken_sti_certificate_policies | error | STI certificate shall include a Certificate Policies extension containing a single SHAKEN Certificate Policy |
+| e_shaken_cp1_3_subject_sn | error | STI certificate shall include a ‘serialNumber’ attribute along with the CN |
+
+\* The percent of certificates per issuer is calculated against total certificates from all issuers\
+\*\* The percent of errors, warnings and notices is calculated against total observed certificates from the specified issuer
