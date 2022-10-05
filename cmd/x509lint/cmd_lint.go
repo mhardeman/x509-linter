@@ -154,6 +154,19 @@ func computeCertThumbprint(c *x509.Certificate) string {
 	return hex.EncodeToString(thumbprint.Sum(nil))
 }
 
+func statusToString(s lint.LintStatus) string {
+	switch s {
+	case lint.Error:
+		return "error"
+	case lint.Warn:
+		return "warn"
+	case lint.Notice:
+		return "notice"
+	default:
+		return s.String()
+	}
+}
+
 func printResultMarkDown(w io.Writer, info *LintCertificateResult) {
 	fmt.Fprintf(w, "### Certificate %s\n", info.Thumbprint)
 	fmt.Fprintf(w, "Tested At: %s\\\n", time.Unix(info.Result.Timestamp, 0).String())
@@ -166,7 +179,7 @@ func printResultMarkDown(w io.Writer, info *LintCertificateResult) {
 	fmt.Fprintf(w, "|------|------|---------|\n")
 	for code, result := range info.Result.Results {
 		if result.Status == lint.Error || result.Status == lint.Warn || result.Status == lint.Notice {
-			fmt.Fprintf(w, "| %s | %s | %s |\n", code, result.Status, result.Details)
+			fmt.Fprintf(w, "| %s | %s | %s |\n", code, statusToString(result.Status), result.Details)
 		}
 	}
 
@@ -324,7 +337,7 @@ func SaveOrganizationReport(r *LintCertificatesResult, outDir string) error {
 		fmt.Fprintf(file, "## %s\n", name)
 		fmt.Fprintln(file, "")
 		fmt.Fprintf(file, "Errors: %d\\\n", issuer.Errors)
-		fmt.Fprintf(file, "Warnings: %d\n", issuer.Warnings)
+		fmt.Fprintf(file, "Warnings: %d\\\n", issuer.Warnings)
 		fmt.Fprintf(file, "Notices: %d\n", issuer.Notices)
 		fmt.Fprintln(file, "")
 		fmt.Fprintln(file, "| Status | Code | Amount |")
