@@ -296,7 +296,7 @@ func SaveOrganizationReport(r *LintCertificatesResult, outDir string) error {
 		}
 
 		// create file
-		orgFile := path.Join(orgDir, "index.md")
+		orgFile := path.Join(orgDir, "README.md")
 		file, err := os.Create(orgFile)
 		if err != nil {
 			return fmt.Errorf("cannot create %s, %w", orgFile, err)
@@ -304,12 +304,11 @@ func SaveOrganizationReport(r *LintCertificatesResult, outDir string) error {
 		defer file.Close()
 
 		// header
-		fmt.Fprintln(file, "# SHAKEN COMPLIANCE")
-		fmt.Fprintln(file, "## Organization")
+		fmt.Fprintln(file, "# STIR/SHAKEN CA Ecosystem Compliance")
 
 		// summary
 		fmt.Fprintln(file, "")
-		fmt.Fprintf(file, "### %s\n", name)
+		fmt.Fprintf(file, "## %s\n", name)
 		fmt.Fprintln(file, "")
 		fmt.Fprintf(file, "Errors: %d\\\n", issuer.Errors)
 		fmt.Fprintf(file, "Warnings: %d\n", issuer.Warnings)
@@ -331,10 +330,10 @@ func SaveOrganizationReport(r *LintCertificatesResult, outDir string) error {
 		})
 		for _, certReport := range issuer.Certificates {
 			fmt.Fprintf(file, "| %s | %s | %s | %s |\n",
-				certReport.Cert.NotBefore.Format(time.RFC822),                                           // created at
-				certReport.Cert.Subject.CommonName,                                                      // name
-				fmt.Sprintf("%t", certReport.Result.ErrorsPresent || certReport.Result.WarningsPresent), // problems
-				fmt.Sprintf("[view](%s)", url.PathEscape(path.Join(certReport.Thumbprint, "index.md"))), // link
+				certReport.Cert.NotBefore.Format(time.RFC822),                                            // created at
+				certReport.Cert.Subject.CommonName,                                                       // name
+				fmt.Sprintf("%t", certReport.Result.ErrorsPresent || certReport.Result.WarningsPresent),  // problems
+				fmt.Sprintf("[view](%s)", url.PathEscape(path.Join(certReport.Thumbprint, "README.md"))), // link
 			)
 		}
 	}
@@ -343,19 +342,24 @@ func SaveOrganizationReport(r *LintCertificatesResult, outDir string) error {
 }
 
 func SaveTotalReport(r *LintCertificatesResult, outDir string) error {
-	file, err := os.Create(path.Join(outDir, "index.md"))
+	file, err := os.Create(path.Join(outDir, "README.md"))
 	if err != nil {
-		return fmt.Errorf("cannot save index.md, %w", err)
+		return fmt.Errorf("cannot save README.md, %w", err)
 	}
 	defer file.Close()
 
-	fmt.Fprintln(file, "# SHAKEN COMPLIANCE")
+	fmt.Fprintln(file, "# STIR/SHAKEN CA Ecosystem Compliance")
+	fmt.Fprintln(file, "")
+	fmt.Fprintln(file, "[Approved Certificate Authorities](https://authenticate.iconectiv.com/approved-certification-authorities) in the STIR/SHAKEN ecosystem are required to meet technical requirements from [ATIS-1000080](https://access.atis.org/apps/group_public/document.php?document_id=62163) and policy requirements from the supporting CA ecosystem’s [Certificate Policy](https://authenticate.iconectiv.com/documents-authenticate).")
+	fmt.Fprintln(file, "")
+	fmt.Fprintln(file, "This report is generated using [Zlint](https://github.com/zmap/zlint) a tool commonly used to asses CA ecosystem compliance with such requirements. The tests used to generate this report are currently not part of the main Zlint distribution but can be found [here](https://github.com/PeculiarVentures/x509-linter).")
+	fmt.Fprintln(file, "")
 	fmt.Fprintln(file, "## Summary")
 	fmt.Fprintln(file, "")
 	fmt.Fprintln(file, "| Issuers | Certificates | Errors | Warnings |")
 	fmt.Fprintln(file, "|---------|--------------|--------|----------|")
 	for issuerName, issuer := range r.Issuers {
-		issuerNameLink := fmt.Sprintf("[%s](%s)", issuerName, url.PathEscape(path.Join(issuerName, "index.md")))
+		issuerNameLink := fmt.Sprintf("[%s](%s)", issuerName, url.PathEscape(path.Join(issuerName, "README.md")))
 		fmt.Fprintf(file, "| %s | %d (%0.2f%%) | %d (%0.2f%%) | %d (%0.2f%%) |\n", issuerNameLink, issuer.Amount, percent(issuer.Amount, r.Amount), issuer.Errors, percent(issuer.Errors, issuer.Amount), issuer.Warnings, percent(issuer.Warnings, issuer.Amount))
 	}
 	fmt.Fprintf(file, "| **Total** | %d (100%%) | %d (%0.2f%%) | %d (%0.2f%%) |\n", r.Amount, r.Errors, percent(r.Errors, r.Amount), r.Warnings, percent(r.Warnings, r.Amount))
@@ -374,7 +378,7 @@ func SaveCertificatesReport(r *LintCertificatesResult, outDir string) error {
 			}
 
 			// create file
-			certFile := path.Join(path.Join(certDir, "index.md"))
+			certFile := path.Join(path.Join(certDir, "README.md"))
 			file, err := os.Create(certFile)
 			if err != nil {
 				return fmt.Errorf("cannot create %s, %w", certFile, err)
@@ -382,8 +386,8 @@ func SaveCertificatesReport(r *LintCertificatesResult, outDir string) error {
 			defer file.Close()
 
 			// header
-			fmt.Fprintln(file, "# SHAKEN COMPLIANCE")
-			fmt.Fprintln(file, "## Certificate")
+			fmt.Fprintln(file, "# STIR/SHAKEN CA Ecosystem Compliance")
+			fmt.Fprintf(file, "## %s\n", issuerName)
 			fmt.Fprintln(file, "")
 			printResultMarkDown(file, cert)
 		}
