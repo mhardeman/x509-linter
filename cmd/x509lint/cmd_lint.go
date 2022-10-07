@@ -85,7 +85,10 @@ func RunLintCommand(certPath string, summary bool) error {
 			}
 		}
 
-		r := LintCertificates(checkCerts)
+		r := LintCertificates(checkCerts, &x509.VerifyOptions{
+			Roots:         rootPool,
+			Intermediates: intermediatePool,
+		})
 
 		reportDir := "x_report"
 		if err := os.Mkdir(reportDir, os.ModePerm); err != nil {
@@ -117,7 +120,7 @@ func RunLintCommand(certPath string, summary bool) error {
 			return fmt.Errorf("cannot read the certificate from the file %s, %s", certPath, err.Error())
 		}
 
-		result, err := LintCertificate(certs[0])
+		result, err := LintCertificate(certs[0], nil)
 		if err != nil {
 			return fmt.Errorf("cannot lint the certificate, %w", err)
 		}
@@ -129,13 +132,14 @@ func RunLintCommand(certPath string, summary bool) error {
 }
 
 type LintCertificateResult struct {
-	Link       string
-	Cert       *x509.Certificate
-	Thumbprint string
-	Result     *zlint.ResultSet
+	Link         string
+	Cert         *x509.Certificate
+	Thumbprint   string
+	Result       *zlint.ResultSet
+	Organization string
 }
 
-func LintCertificate(cert *internal.PemCertificate) (*LintCertificateResult, error) {
+func LintCertificate(cert *internal.PemCertificate, options *x509.VerifyOptions) (*LintCertificateResult, error) {
 	// Initialize lint registry
 	registry, err := lint.GlobalRegistry().Filter(lint.FilterOptions{
 		// IncludeSources: lint.SourceList{shaken.ShakenPolicy},
@@ -156,11 +160,37 @@ func LintCertificate(cert *internal.PemCertificate) (*LintCertificateResult, err
 		link = ""
 	}
 
+	// get organization name
+	organization := internal.GetOrganizationName(cert.Certificate)
+	if options != nil {
+		current, expired, never, err := cert.Certificate.Verify(*options)
+		if err != nil {
+			if len(current) > 0 {
+				fmt.Println("Name from Current")
+				chain := current[0]
+				organization = internal.GetOrganizationName(chain[len(chain)-1])
+			} else if len(expired) > 0 {
+				fmt.Println("Name from Expired")
+				chain := expired[0]
+				organization = internal.GetOrganizationName(chain[len(chain)-1])
+			} else if len(never) > 0 {
+				fmt.Println("Name from Never")
+				chain := never[0]
+				organization = internal.GetOrganizationName(chain[len(chain)-1])
+			}
+		} else {
+			fmt.Println("Name from Issue, chain error")
+		}
+	} else {
+		fmt.Println("Name from Issue")
+	}
+
 	return &LintCertificateResult{
-		Link:       link,
-		Cert:       cert.Certificate,
-		Thumbprint: computeCertThumbprint(cert.Certificate),
-		Result:     zlint.LintCertificateEx(cert.Certificate, registry),
+		Link:         link,
+		Cert:         cert.Certificate,
+		Thumbprint:   computeCertThumbprint(cert.Certificate),
+		Result:       zlint.LintCertificateEx(cert.Certificate, registry),
+		Organization: organization,
 	}, nil
 }
 
@@ -270,21 +300,12 @@ func (t *LintCertificatesResult) AppendCertificate(c *LintCertificateResult) {
 		return
 	}
 
-	organization := "Unknown"
-	if len(c.Cert.Issuer.Organization) > 0 {
-		organization = c.Cert.Issuer.Organization[0]
-	} else if len(c.Cert.Subject.Organization) > 0 {
-		organization = c.Cert.Subject.Organization[0]
-	} else if len(c.Cert.Subject.CommonName) > 0 {
-		organization = c.Cert.Subject.CommonName
-	}
-
-	issuer := t.Issuers[organization]
+	issuer := t.Issuers[c.Organization]
 	if issuer == nil {
 		issuer = &LintOrganizationResult{
 			Issues: map[string]*LintIssue{},
 		}
-		t.Issuers[organization] = issuer
+		t.Issuers[c.Organization] = issuer
 	}
 
 	issuer.AppendCertificate(c)
@@ -326,7 +347,7 @@ func ReadCertificatesDir(dirPath string) ([]*internal.PemCertificate, error) {
 	return res, nil
 }
 
-func LintCertificates(certs []*internal.PemCertificate) *LintCertificatesResult {
+func LintCertificates(certs []*internal.PemCertificate, options *x509.VerifyOptions) *LintCertificatesResult {
 	res := &LintCertificatesResult{
 		Issuers: map[string]*LintOrganizationResult{},
 	}
@@ -337,7 +358,7 @@ func LintCertificates(certs []*internal.PemCertificate) *LintCertificatesResult 
 			continue
 		}
 
-		certRes, err := LintCertificate(cert)
+		certRes, err := LintCertificate(cert, options)
 		if err != nil {
 			continue
 		}
@@ -426,8 +447,19 @@ func SaveTotalReport(r *LintCertificatesResult, outDir string) error {
 	fmt.Fprintln(file, "")
 	fmt.Fprintln(file, "| Issuers | Certificates | Errors | Warnings | Notices |")
 	fmt.Fprintln(file, "|---------|--------------|--------|----------|---------|")
-	for issuerName, issuer := range r.Issuers {
-		issuerNameLink := fmt.Sprintf("[%s](%s)", issuerName, url.PathEscape(path.Join(issuerName, "README.md")))
+
+	// order r.Issuers keys
+	keys := make([]string, 0, len(r.Issuers))
+	for k := range r.Issuers {
+		keys = append(keys, k)
+	}
+	sort.Slice(keys[:], func(a int, b int) bool {
+		return keys[a] < keys[b]
+	})
+
+	for _, key := range keys {
+		issuer := r.Issuers[key]
+		issuerNameLink := fmt.Sprintf("[%s](%s)", key, url.PathEscape(path.Join(key, "README.md")))
 		fmt.Fprintf(file, "| %s | %d (%0.2f%%) | %d (%0.2f%%) | %d (%0.2f%%) | %d (%0.2f%%) |\n", issuerNameLink, issuer.Amount, percent(issuer.Amount, r.Amount), issuer.Errors, percent(issuer.Errors, issuer.Amount), issuer.Warnings, percent(issuer.Warnings, issuer.Amount), issuer.Notices, percent(issuer.Notices, issuer.Amount))
 	}
 	fmt.Fprintf(file, "| **Total** | %d (100%%) | %d (%0.2f%%) | %d (%0.2f%%) | %d (%0.2f%%) |\n", r.Amount, r.Errors, percent(r.Errors, r.Amount), r.Warnings, percent(r.Warnings, r.Amount), r.Notices, percent(r.Notices, r.Amount))

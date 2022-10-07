@@ -43,3 +43,16 @@ func ParseCertificates(source []byte) []*PemCertificate {
 
 	return res
 }
+
+func GetOrganizationName(c *x509.Certificate) string {
+	org := "Unknown"
+	if len(c.Issuer.Organization) > 0 {
+		org = c.Issuer.Organization[0]
+	} else if len(c.Subject.Organization) > 0 {
+		org = c.Subject.Organization[0]
+	} else if len(c.Subject.CommonName) > 0 {
+		org = c.Subject.CommonName
+	}
+
+	return org
+}
