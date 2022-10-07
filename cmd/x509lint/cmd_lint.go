@@ -175,25 +175,24 @@ func LintCertificate(cert *internal.PemCertificate, options *x509.VerifyOptions)
 
 	// get organization name
 	organization := internal.GetOrganizationName(cert.Certificate)
-	fmt.Printf("Lint certificate %s, org: %s\n", computeCertThumbprint(cert.Certificate), organization)
 	if options != nil {
 		current, expired, never, err := cert.Certificate.Verify(*options)
 		if err != nil {
 			if len(current) > 0 {
-				fmt.Printf("Name from Current: %s\n", organization)
+				// fmt.Printf("Name from Current: %s\n", organization)
 				chain := current[0]
 				organization = internal.GetOrganizationName(chain[len(chain)-1])
 			} else if len(expired) > 0 {
-				fmt.Printf("Name from Expired: %s\n", organization)
+				// fmt.Printf("Name from Expired: %s\n", organization)
 				chain := expired[0]
 				organization = internal.GetOrganizationName(chain[len(chain)-1])
 			} else if len(never) > 0 {
-				fmt.Printf("Name from Never: %s\n", organization)
+				// fmt.Printf("Name from Never: %s\n", organization)
 				chain := never[0]
 				organization = internal.GetOrganizationName(chain[len(chain)-1])
 			}
 		} else {
-			fmt.Printf("Name from Issuer, error: %s\n", organization)
+			// fmt.Printf("Name from Issuer, error: %s\n", organization)
 		}
 	} else {
 		fmt.Printf("Name from Issuer: %s\n", organization)
@@ -202,10 +201,13 @@ func LintCertificate(cert *internal.PemCertificate, options *x509.VerifyOptions)
 		organization = wellknownIssueNames[organization]
 	}
 
+	thumbprint := computeCertThumbprint(cert.Certificate)
+	fmt.Printf("Lint certificate %s issued by '%s' (%s)\n", thumbprint, organization, link)
+
 	return &LintCertificateResult{
 		Link:         link,
 		Cert:         cert.Certificate,
-		Thumbprint:   computeCertThumbprint(cert.Certificate),
+		Thumbprint:   thumbprint,
 		Result:       zlint.LintCertificateEx(cert.Certificate, registry),
 		Organization: organization,
 	}, nil
