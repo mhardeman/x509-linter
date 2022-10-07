@@ -18,7 +18,7 @@ jobs:
           go-version: "1.18.3"
 
       - name: Download certificates
-        run: go run cmd/x509lint/*.go download --outDir x_certs shaken-urls.txt
+        run: go run cmd/x509lint/*.go download --includeCa --outDir x_certs shaken-urls.txt
 
       - name: Run lint
         run: go run cmd/x509lint/*.go lint x_certs
