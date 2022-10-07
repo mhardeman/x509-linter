@@ -139,6 +139,19 @@ type LintCertificateResult struct {
 	Organization string
 }
 
+var wellknownIssueNames = map[string]string{
+	"Comcast":                          "Comcast",
+	"GBSDTech":                         "GBSDTech",
+	"Martini Security, LLC":            "Martini Security",
+	"Metaswitch STI-CA SHAKEN Root":    "Metaswitch",
+	"NetNumber Inc":                    "NetNumber",
+	"Neustar Information Services Inc": "Neustar Information Services",
+	"Peeringhub Inc":                   "Peeringhub",
+	"Sansay Corporation":               "Sansay Corporation",
+	"TMOBILE-USA":                      "T-Mobile",
+	"TransNexus, Inc.":                 "TransNexus",
+}
+
 func LintCertificate(cert *internal.PemCertificate, options *x509.VerifyOptions) (*LintCertificateResult, error) {
 	// Initialize lint registry
 	registry, err := lint.GlobalRegistry().Filter(lint.FilterOptions{
@@ -162,27 +175,31 @@ func LintCertificate(cert *internal.PemCertificate, options *x509.VerifyOptions)
 
 	// get organization name
 	organization := internal.GetOrganizationName(cert.Certificate)
+	fmt.Printf("Lint certificate %s, org: %s\n", computeCertThumbprint(cert.Certificate), organization)
 	if options != nil {
 		current, expired, never, err := cert.Certificate.Verify(*options)
 		if err != nil {
 			if len(current) > 0 {
-				fmt.Println("Name from Current")
+				fmt.Printf("Name from Current: %s\n", organization)
 				chain := current[0]
 				organization = internal.GetOrganizationName(chain[len(chain)-1])
 			} else if len(expired) > 0 {
-				fmt.Println("Name from Expired")
+				fmt.Printf("Name from Expired: %s\n", organization)
 				chain := expired[0]
 				organization = internal.GetOrganizationName(chain[len(chain)-1])
 			} else if len(never) > 0 {
-				fmt.Println("Name from Never")
+				fmt.Printf("Name from Never: %s\n", organization)
 				chain := never[0]
 				organization = internal.GetOrganizationName(chain[len(chain)-1])
 			}
 		} else {
-			fmt.Println("Name from Issue, chain error")
+			fmt.Printf("Name from Issuer, error: %s\n", organization)
 		}
 	} else {
-		fmt.Println("Name from Issue")
+		fmt.Printf("Name from Issuer: %s\n", organization)
+	}
+	if len(wellknownIssueNames[organization]) != 0 {
+		organization = wellknownIssueNames[organization]
 	}
 
 	return &LintCertificateResult{
