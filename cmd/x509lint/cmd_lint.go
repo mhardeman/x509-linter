@@ -251,6 +251,10 @@ func printResultMarkDown(w io.Writer, info *LintCertificateResult) {
 	if !info.Result.ErrorsPresent && !info.Result.WarningsPresent {
 		fmt.Fprintln(w, "")
 		fmt.Fprintf(w, "%d tests were ran and no issues were found\n", len(info.Result.Results))
+	} else {
+		// Issue footer
+		fmt.Fprintln(w, "")
+		fmt.Fprintln(w, "\\* Tests downgrade all issues in certificates issued before the latest ATIS 1000080 and Certificate Policy versions to Notices")
 	}
 }
 
