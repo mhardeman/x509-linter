@@ -4,7 +4,6 @@ import (
 	"crypto/sha1"
 	"encoding/base64"
 	"encoding/hex"
-	"encoding/pem"
 	"fmt"
 	"io"
 	"io/ioutil"
@@ -14,6 +13,7 @@ import (
 	"sort"
 	"time"
 
+	"github.com/peculiarventures/x509-linter/cmd/internal"
 	"github.com/peculiarventures/x509-linter/pkg/atis1000080"
 	"github.com/zmap/zcrypto/x509"
 	"github.com/zmap/zlint/v3"
@@ -49,10 +49,43 @@ func RunLintCommand(certPath string, summary bool) error {
 	}
 
 	if fileInfo.IsDir() {
-		r, err := LintCertificates(certPath)
-		if err != nil {
-			return fmt.Errorf("cannot lint the directory with certificates, %w", err)
+		// load root certs
+		checkCerts := []*internal.PemCertificate{}
+		rootPool := x509.NewCertPool()
+		intermediatePool := x509.NewCertPool()
+		rootPem, err := os.ReadFile("shaken-ca-list.pem")
+		if err == nil {
+			rootCerts := internal.ParseCertificates(rootPem)
+			for _, cert := range rootCerts {
+				rootPool.AddCert(cert.Certificate)
+			}
 		}
+
+		files, err := ioutil.ReadDir(certPath)
+		if err != nil {
+			return fmt.Errorf("cannot read the directory %s, %w", certPath, err)
+		}
+
+		for _, file := range files {
+			if !file.IsDir() {
+				certPath := path.Join(certPath, file.Name())
+				certRaw, err := os.ReadFile(certPath)
+				if err != nil {
+					continue
+				}
+				certs := internal.ParseCertificates(certRaw)
+				for _, cert := range certs {
+					if cert.Certificate.IsCA {
+						// add intermediate certs into pool
+						intermediatePool.AddCert(cert.Certificate)
+					}
+					// add leaf and intermediate certs into check list
+					checkCerts = append(checkCerts, cert)
+				}
+			}
+		}
+
+		r := LintCertificates(checkCerts)
 
 		reportDir := "x_report"
 		if err := os.Mkdir(reportDir, os.ModePerm); err != nil {
@@ -73,7 +106,18 @@ func RunLintCommand(certPath string, summary bool) error {
 		}
 	} else {
 		// file is not a directory
-		result, err := LintCertificate(certPath)
+
+		raw, err := os.ReadFile(certPath)
+		if err != nil {
+			return fmt.Errorf("cannot read the file %s, %s", certPath, err.Error())
+		}
+
+		certs := internal.ParseCertificates(raw)
+		if len(certs) == 0 {
+			return fmt.Errorf("cannot read the certificate from the file %s, %s", certPath, err.Error())
+		}
+
+		result, err := LintCertificate(certs[0])
 		if err != nil {
 			return fmt.Errorf("cannot lint the certificate, %w", err)
 		}
@@ -91,26 +135,7 @@ type LintCertificateResult struct {
 	Result     *zlint.ResultSet
 }
 
-func LintCertificate(certPath string) (*LintCertificateResult, error) {
-	raw, err := os.ReadFile(certPath)
-	if err != nil {
-		return nil, fmt.Errorf("cannot read the certificate file %s, %s", certPath, err.Error())
-	}
-
-	// Parse cert
-	p, _ := pem.Decode(raw)
-	if len(p.Bytes) > 0 {
-		// try parse pem and if it's ok replace raw to bytes from the pem
-		if p.Type != "CERTIFICATE" {
-			return nil, fmt.Errorf("incorrect PEM data, tag value is %s, but should be 'CERTIFICATE'", p.Type)
-		}
-		raw = p.Bytes
-	}
-	cert, err := x509.ParseCertificate(raw)
-	if err != nil {
-		return nil, fmt.Errorf("cannot parse the certificate %s, %s", certPath, err.Error())
-	}
-
+func LintCertificate(cert *internal.PemCertificate) (*LintCertificateResult, error) {
 	// Initialize lint registry
 	registry, err := lint.GlobalRegistry().Filter(lint.FilterOptions{
 		// IncludeSources: lint.SourceList{shaken.ShakenPolicy},
@@ -126,25 +151,16 @@ func LintCertificate(certPath string) (*LintCertificateResult, error) {
 		return nil, fmt.Errorf("cannot initialize the lint registry, %s", err.Error())
 	}
 
-	config, err := lint.NewConfigFromString(`
-	[w_organization_identity]
-	Some = "test"
-	`)
-	if err != nil {
-		return nil, fmt.Errorf("cannot create config, error: %s", err.Error())
-	}
-	registry.SetConfiguration(config)
-
-	link := p.Headers["Link"]
-	if link == "" {
-		link = certPath
+	link := cert.Headers["Link"]
+	if len(link) == 0 {
+		link = ""
 	}
 
 	return &LintCertificateResult{
 		Link:       link,
-		Cert:       cert,
-		Thumbprint: computeCertThumbprint(cert),
-		Result:     zlint.LintCertificateEx(cert, registry),
+		Cert:       cert.Certificate,
+		Thumbprint: computeCertThumbprint(cert.Certificate),
+		Result:     zlint.LintCertificateEx(cert.Certificate, registry),
 	}, nil
 }
 
@@ -286,29 +302,50 @@ func (t *LintCertificatesResult) AppendCertificate(c *LintCertificateResult) {
 	}
 }
 
-func LintCertificates(dirPath string) (*LintCertificatesResult, error) {
+func ReadCertificatesDir(dirPath string) ([]*internal.PemCertificate, error) {
 	files, err := ioutil.ReadDir(dirPath)
 	if err != nil {
-		return nil, fmt.Errorf("cannot read the directory, %w", err)
+		return nil, fmt.Errorf("cannot read the '%s' directory, %w", dirPath, err)
 	}
 
-	res := &LintCertificatesResult{
-		Issuers: map[string]*LintOrganizationResult{},
-	}
+	res := []*internal.PemCertificate{}
 
 	for _, file := range files {
 		if !file.IsDir() {
 			certPath := path.Join(dirPath, file.Name())
-			certRes, err := LintCertificate(certPath)
+			certRaw, err := os.ReadFile(certPath)
 			if err != nil {
 				continue
 			}
 
-			res.AppendCertificate(certRes)
+			certs := internal.ParseCertificates(certRaw)
+			res = append(res, certs...)
 		}
 	}
 
 	return res, nil
+}
+
+func LintCertificates(certs []*internal.PemCertificate) *LintCertificatesResult {
+	res := &LintCertificatesResult{
+		Issuers: map[string]*LintOrganizationResult{},
+	}
+
+	for _, cert := range certs {
+		// TODO ignore CA certs
+		if cert.Certificate.IsCA {
+			continue
+		}
+
+		certRes, err := LintCertificate(cert)
+		if err != nil {
+			continue
+		}
+
+		res.AppendCertificate(certRes)
+	}
+
+	return res
 }
 
 // SaveOrganizationReport writes report for each organization
