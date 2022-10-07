@@ -418,6 +418,10 @@ func SaveOrganizationReport(r *LintCertificatesResult, outDir string) error {
 			fmt.Fprintf(file, "| %s | %s | %d |\n", statusToString(issue.Type), code, issue.Amount)
 		}
 
+		// summery footer
+		fmt.Fprintln(file, "")
+		fmt.Fprintln(file, "\\* Tests downgrade all issues in certificates issued before the latest ATIS 1000080 and Certificate Policy versions to Notices")
+
 		// certificates
 		fmt.Fprintln(file, "")
 		fmt.Fprintln(file, "### Issued certificates")
@@ -435,10 +439,6 @@ func SaveOrganizationReport(r *LintCertificatesResult, outDir string) error {
 				fmt.Sprintf("[view](%s)", url.PathEscape(path.Join(certReport.Thumbprint, "README.md"))), // link
 			)
 		}
-
-		// footer
-		fmt.Fprintln(file, "")
-		fmt.Fprintln(file, "\\* Tests downgrade all issues in certificates issued before the latest ATIS 1000080 and Certificate Policy versions to Notices")
 	}
 
 	return nil
