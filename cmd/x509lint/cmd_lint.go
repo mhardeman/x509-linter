@@ -147,7 +147,7 @@ var wellknownIssueNames = map[string]string{
 	"NetNumber Inc":                    "NetNumber",
 	"Neustar Information Services Inc": "Neustar",
 	"Peeringhub Inc":                   "Peeringhub",
-	"Sansay Corporation":               "Sansay Corporation",
+	"Sansay Corporation":               "Sansay",
 	"TMOBILE-USA":                      "T-Mobile",
 	"TransNexus, Inc.":                 "TransNexus",
 }
