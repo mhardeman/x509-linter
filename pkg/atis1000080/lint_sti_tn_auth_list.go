@@ -24,17 +24,17 @@ func NewTnAuthList() lint.LintInterface {
 
 // CheckApplies implements lint.LintInterface
 func (*tnAuthList) CheckApplies(c *x509.Certificate) bool {
-	return IsDateATIS1000080(c)
+	return !c.IsCA
 }
 
 // Execute implements lint.LintInterface
 func (*tnAuthList) Execute(c *x509.Certificate) *lint.LintResult {
 	_, err := GetTNEntrySPC(c)
 	if err != nil {
-		return &lint.LintResult{
+		return DowngradeATIS1000080(c, &lint.LintResult{
 			Status:  lint.Error,
 			Details: err.Error(),
-		}
+		})
 	}
 
 	return &lint.LintResult{

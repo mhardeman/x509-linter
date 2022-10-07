@@ -28,16 +28,16 @@ func NewSerialNumber() lint.LintInterface {
 
 // CheckApplies implements lint.LintInterface
 func (*serialNumber) CheckApplies(c *x509.Certificate) bool {
-	return IsDateATIS1000080(c)
+	return !c.IsCA
 }
 
 // Execute implements lint.LintInterface
 func (*serialNumber) Execute(c *x509.Certificate) *lint.LintResult {
 	if strings.HasPrefix(c.SerialNumber.String(), "-") || c.SerialNumber.Cmp(big.NewInt(0x0100000000000000)) == -1 {
-		return &lint.LintResult{
+		return DowngradeATIS1000080(c, &lint.LintResult{
 			Status:  lint.Error,
 			Details: "STI certificates shall include a Serial Number field containing an integer greater than zero. The serial number shall contain at least 64 bits of output from a Cryptographically Secure PseudoRandom Number Generator (CSPRNG)",
-		}
+		})
 	}
 
 	return &lint.LintResult{

@@ -24,7 +24,7 @@ func NewAuthorityKeyIdentifier() lint.LintInterface {
 
 // CheckApplies implements lint.LintInterface
 func (*authorityKeyIdentifier) CheckApplies(c *x509.Certificate) bool {
-	return IsDateATIS1000080(c)
+	return !c.IsCA
 }
 
 // Execute implements lint.LintInterface
@@ -36,8 +36,8 @@ func (*authorityKeyIdentifier) Execute(c *x509.Certificate) *lint.LintResult {
 		}
 	}
 
-	return &lint.LintResult{
+	return DowngradeATIS1000080(c, &lint.LintResult{
 		Status:  lint.Error,
 		Details: "STI certificates shall contain an Authority Key Identifier extension",
-	}
+	})
 }

@@ -42,7 +42,7 @@ func NewSubjectRdnUnknown() lint.LintInterface {
 
 // CheckApplies implements lint.LintInterface
 func (*subjectRdnUnknown) CheckApplies(c *x509.Certificate) bool {
-	return IsDateATIS1000080(c)
+	return !c.IsCA
 }
 
 // Execute implements lint.LintInterface
@@ -58,10 +58,10 @@ func (*subjectRdnUnknown) Execute(c *x509.Certificate) *lint.LintResult {
 	}
 
 	if len(unknownRdn) != 0 {
-		return &lint.LintResult{
+		return DowngradeATIS1000080(c, &lint.LintResult{
 			Status:  lint.Warn,
 			Details: "STI certificate shall not include RDNs that are not specified",
-		}
+		})
 	}
 
 	return &lint.LintResult{

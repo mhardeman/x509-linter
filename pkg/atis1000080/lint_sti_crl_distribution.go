@@ -26,7 +26,7 @@ func NewCRLDistribution() lint.LintInterface {
 
 // CheckApplies implements lint.LintInterface
 func (*crlDistribution) CheckApplies(c *x509.Certificate) bool {
-	return IsDateATIS1000080(c)
+	return !c.IsCA
 }
 
 // Execute implements lint.LintInterface
@@ -36,10 +36,10 @@ func (*crlDistribution) Execute(c *x509.Certificate) *lint.LintResult {
 		if len(c.CRLDistributionPoints) == 1 {
 			_, err := http.Get(c.CRLDistributionPoints[0])
 			if err == nil {
-				return &lint.LintResult{
+				return DowngradeATIS1000080(c, &lint.LintResult{
 					Status:  lint.Error,
 					Details: "CRL Distribution Point shall be reachable if the requesting IP address within the program ACLs",
-				}
+				})
 			}
 
 			return &lint.LintResult{
@@ -47,14 +47,14 @@ func (*crlDistribution) Execute(c *x509.Certificate) *lint.LintResult {
 			}
 		}
 
-		return &lint.LintResult{
+		return DowngradeATIS1000080(c, &lint.LintResult{
 			Status:  lint.Error,
 			Details: "CRL Distribution Points extension should contain a single DistributionPoint entry",
-		}
+		})
 	}
 
-	return &lint.LintResult{
+	return DowngradeATIS1000080(c, &lint.LintResult{
 		Status:  lint.Error,
 		Details: "STI intermediate and End-Entity certificates shall contain a CRL Distribution Points extension",
-	}
+	})
 }

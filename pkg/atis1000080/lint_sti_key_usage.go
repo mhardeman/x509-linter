@@ -24,7 +24,7 @@ func NewKeyUsage() lint.LintInterface {
 
 // CheckApplies implements lint.LintInterface
 func (*keyUsage) CheckApplies(c *x509.Certificate) bool {
-	return !c.IsCA && IsDateATIS1000080(c)
+	return !c.IsCA
 }
 
 // Execute implements lint.LintInterface
@@ -37,14 +37,14 @@ func (*keyUsage) Execute(c *x509.Certificate) *lint.LintResult {
 			}
 		}
 
-		return &lint.LintResult{
+		return DowngradeATIS1000080(c, &lint.LintResult{
 			Status:  lint.Error,
 			Details: "The Key Usage extension shall contain a single key usage value of digitalSignature",
-		}
+		})
 	}
 
-	return &lint.LintResult{
+	return DowngradeATIS1000080(c, &lint.LintResult{
 		Status:  lint.Error,
 		Details: "STI certificates shall contain a Key Usage extension marked as critical",
-	}
+	})
 }

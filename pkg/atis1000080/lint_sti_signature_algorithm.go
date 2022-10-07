@@ -26,16 +26,16 @@ func NewSignatureAlgorithm() lint.LintInterface {
 
 // CheckApplies implements lint.LintInterface
 func (*signatureAlgorithm) CheckApplies(c *x509.Certificate) bool {
-	return IsDateATIS1000080(c)
+	return !c.IsCA
 }
 
 // Execute implements lint.LintInterface
 func (*signatureAlgorithm) Execute(c *x509.Certificate) *lint.LintResult {
 	if c.SignatureAlgorithmOID.String() != "1.2.840.10045.4.3.2" {
-		return &lint.LintResult{
+		return DowngradeATIS1000080(c, &lint.LintResult{
 			Status:  lint.Error,
 			Details: signatureAlgorithm_details,
-		}
+		})
 	}
 
 	return &lint.LintResult{

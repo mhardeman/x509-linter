@@ -24,7 +24,7 @@ func NewSubjectKeyIdentifier() lint.LintInterface {
 
 // CheckApplies implements lint.LintInterface
 func (*subjectKeyIdentifier) CheckApplies(c *x509.Certificate) bool {
-	return IsDateATIS1000080(c)
+	return !c.IsCA
 }
 
 // Execute implements lint.LintInterface
@@ -36,8 +36,8 @@ func (*subjectKeyIdentifier) Execute(c *x509.Certificate) *lint.LintResult {
 		}
 	}
 
-	return &lint.LintResult{
+	return DowngradeATIS1000080(c, &lint.LintResult{
 		Status:  lint.Error,
 		Details: "STI certificates shall contain a Subject Key Identifier extension",
-	}
+	})
 }

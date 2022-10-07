@@ -24,7 +24,7 @@ func NewIssuer() lint.LintInterface {
 
 // CheckApplies implements lint.LintInterface
 func (*issuer) CheckApplies(c *x509.Certificate) bool {
-	return IsDateATIS1000080(c)
+	return !c.IsCA
 }
 
 // Execute implements lint.LintInterface
@@ -43,10 +43,10 @@ func (*issuer) Execute(c *x509.Certificate) *lint.LintResult {
 	}
 
 	if len(missedAttrs) != 0 {
-		return &lint.LintResult{
+		return DowngradeATIS1000080(c, &lint.LintResult{
 			Status:  lint.Error,
 			Details: "The DN shall contain a Country (C=) attribute, a Common Name (CN=) attribute and an Organization (O=) attribute",
-		}
+		})
 	}
 
 	return &lint.LintResult{

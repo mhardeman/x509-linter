@@ -26,16 +26,16 @@ func NewVersion() lint.LintInterface {
 
 // CheckApplies implements lint.LintInterface
 func (*version) CheckApplies(c *x509.Certificate) bool {
-	return IsDateATIS1000080(c)
+	return !c.IsCA
 }
 
 // Execute implements lint.LintInterface
 func (*version) Execute(c *x509.Certificate) *lint.LintResult {
 	if c.Version != 3 {
-		return &lint.LintResult{
+		return DowngradeATIS1000080(c, &lint.LintResult{
 			Status:  lint.Error,
 			Details: version_details,
-		}
+		})
 	}
 
 	return &lint.LintResult{

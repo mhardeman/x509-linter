@@ -27,25 +27,25 @@ func NewSubjectCN() lint.LintInterface {
 
 // CheckApplies implements lint.LintInterface
 func (*subjectCN) CheckApplies(c *x509.Certificate) bool {
-	return IsDateATIS1000080(c)
+	return !c.IsCA
 }
 
 // Execute implements lint.LintInterface
 func (*subjectCN) Execute(c *x509.Certificate) *lint.LintResult {
 	spc, err := GetTNEntrySPC(c)
 	if err != nil {
-		return &lint.LintResult{
+		return DowngradeATIS1000080(c, &lint.LintResult{
 			Status:  lint.Error,
 			Details: fmt.Sprintf("Cannot get SPC value from the TNAuthList extension, %s", err.Error()),
-		}
+		})
 	}
 
 	match := fmt.Sprintf("SHAKEN %s", spc)
 	if !strings.Contains(c.Subject.CommonName, match) {
-		return &lint.LintResult{
+		return DowngradeATIS1000080(c, &lint.LintResult{
 			Status:  lint.Error,
 			Details: fmt.Sprintf("Common name shall contain the text string '%s'", match),
-		}
+		})
 	}
 
 	return &lint.LintResult{

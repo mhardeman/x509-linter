@@ -45,7 +45,7 @@ func NewExtensionUnknown() lint.LintInterface {
 
 // CheckApplies implements lint.LintInterface
 func (*extensionUnknown) CheckApplies(c *x509.Certificate) bool {
-	return IsDateATIS1000080(c)
+	return !c.IsCA
 }
 
 // Execute implements lint.LintInterface
@@ -60,10 +60,10 @@ func (*extensionUnknown) Execute(c *x509.Certificate) *lint.LintResult {
 	}
 
 	if len(unknownExtensions) != 0 {
-		return &lint.LintResult{
+		return DowngradeATIS1000080(c, &lint.LintResult{
 			Status:  lint.Error,
 			Details: "STI certificate shall not include extensions that are not specified",
-		}
+		})
 	}
 
 	return &lint.LintResult{

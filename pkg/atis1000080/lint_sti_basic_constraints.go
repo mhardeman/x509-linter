@@ -31,7 +31,7 @@ func NewBasicConstraints() lint.LintInterface {
 
 // CheckApplies implements lint.LintInterface
 func (*basicConstraints) CheckApplies(c *x509.Certificate) bool {
-	return IsDateATIS1000080(c)
+	return !c.IsCA
 }
 
 // Execute implements lint.LintInterface
@@ -41,10 +41,10 @@ func (*basicConstraints) Execute(c *x509.Certificate) *lint.LintResult {
 	if ext != nil && ext.Critical {
 		basicConstraints := asnBasicConstraints{}
 		if _, err := asn1.Unmarshal(ext.Value, &basicConstraints); err != nil {
-			return &lint.LintResult{
+			return DowngradeATIS1000080(c, &lint.LintResult{
 				Status:  lint.Error,
 				Details: err.Error(), // "bad BasicConstraints ASN.1 value",
-			}
+			})
 		}
 
 		return &lint.LintResult{
@@ -52,8 +52,8 @@ func (*basicConstraints) Execute(c *x509.Certificate) *lint.LintResult {
 		}
 	}
 
-	return &lint.LintResult{
+	return DowngradeATIS1000080(c, &lint.LintResult{
 		Status:  lint.Error,
 		Details: "STI certificates shall contain a BasicConstraints extension marked critical",
-	}
+	})
 }

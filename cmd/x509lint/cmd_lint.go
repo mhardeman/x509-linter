@@ -314,11 +314,6 @@ type LintCertificatesResult struct {
 }
 
 func (t *LintCertificatesResult) AppendCertificate(c *LintCertificateResult) {
-	// TODO implement using SHAKEN Notice rule
-	if !(atis1000080.IsDateATIS1000080(c.Cert) || atis1000080.IsDateCP1_3(c.Cert)) {
-		return
-	}
-
 	issuer := t.Issuers[c.Organization]
 	if issuer == nil {
 		issuer = &LintOrganizationResult{

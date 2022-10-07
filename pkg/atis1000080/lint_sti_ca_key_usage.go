@@ -39,14 +39,14 @@ func (*caKeyUsage) Execute(c *x509.Certificate) *lint.LintResult {
 			}
 		}
 
-		return &lint.LintResult{
+		return DowngradeATIS1000080(c, &lint.LintResult{
 			Status:  lint.Error,
 			Details: "The Key Usage extension shall contain the key usage value keyCertSign, and may contain the key usage values digitalSignature and/or cRLSign",
-		}
+		})
 	}
 
-	return &lint.LintResult{
+	return DowngradeATIS1000080(c, &lint.LintResult{
 		Status:  lint.Error,
 		Details: "STI certificates shall contain a Key Usage extension marked as critical",
-	}
+	})
 }

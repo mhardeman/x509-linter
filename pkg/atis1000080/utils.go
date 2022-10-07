@@ -1,10 +1,12 @@
 package atis1000080
 
 import (
+	"fmt"
 	"time"
 
 	"github.com/zmap/zcrypto/x509"
 	"github.com/zmap/zcrypto/x509/pkix"
+	"github.com/zmap/zlint/v3/lint"
 )
 
 const id_TNAuthList = "1.3.6.1.5.5.7.1.26"
@@ -58,4 +60,27 @@ func IsDateCP1_3(c *x509.Certificate) bool {
 
 	// January 10, 2022
 	return !c.NotBefore.Before(time.Date(2022, time.January, 10, 0, 0, 0, 0, time.UTC))
+}
+
+const downgrade_ATIS1000080 = "This certificate was issued before the latest ATIS-1000080 specification. The test result has been downgraded to notice as this test may not have existed in earlier versions of the specification."
+const downgrade_cp1_3 = "This certificate was issued before the latest Certificate Policy. The test result has been downgraded to notice as this test may not have existed in earlier versions of the policy."
+
+// DowngradeATIS1000080 Downgrades lint result for old certs
+func DowngradeATIS1000080(c *x509.Certificate, r *lint.LintResult) *lint.LintResult {
+	if !IsDateATIS1000080(c) && r.Status != lint.Pass {
+		r.Status = lint.Notice
+		r.Details = fmt.Sprintf("%s %s", downgrade_ATIS1000080, r.Details)
+	}
+
+	return r
+}
+
+// DowngradeCP1_3 Downgrades lint result for old certs
+func DowngradeCP1_3(c *x509.Certificate, r *lint.LintResult) *lint.LintResult {
+	if !IsDateCP1_3(c) && r.Status != lint.Pass {
+		r.Status = lint.Notice
+		r.Details = fmt.Sprintf("%s %s", downgrade_cp1_3, r.Details)
+	}
+
+	return r
 }

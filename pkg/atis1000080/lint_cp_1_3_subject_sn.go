@@ -28,7 +28,7 @@ func NewSubjectSN() lint.LintInterface {
 
 // CheckApplies implements lint.LintInterface
 func (*subjectSN) CheckApplies(c *x509.Certificate) bool {
-	return IsDateCP1_3(c)
+	return !c.IsCA
 }
 
 // Execute implements lint.LintInterface
@@ -41,10 +41,10 @@ func (*subjectSN) Execute(c *x509.Certificate) *lint.LintResult {
 	}
 
 	if len(values) != 1 {
-		return &lint.LintResult{
+		return DowngradeCP1_3(c, &lint.LintResult{
 			Status:  lint.Error,
 			Details: serialNumberShallBeIncluded,
-		}
+		})
 	}
 
 	return &lint.LintResult{

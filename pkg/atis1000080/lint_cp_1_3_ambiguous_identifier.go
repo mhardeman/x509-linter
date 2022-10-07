@@ -26,7 +26,7 @@ func NewAmbiguousIdentifiers() lint.LintInterface {
 
 // CheckApplies implements lint.LintInterface
 func (*ambiguousIdentifiers) CheckApplies(c *x509.Certificate) bool {
-	return IsDateCP1_3(c)
+	return !c.IsCA
 }
 
 // Execute implements lint.LintInterface
@@ -46,10 +46,10 @@ func (*ambiguousIdentifiers) Execute(c *x509.Certificate) *lint.LintResult {
 
 	name := fmt.Sprintf("SHAKEN %s", spc)
 	if c.Subject.CommonName != name {
-		return &lint.LintResult{
+		return DowngradeCP1_3(c, &lint.LintResult{
 			Status:  lint.Error,
 			Details: "Names used in the STI certificates shall represent an unambiguous identifier for the SP Subject",
-		}
+		})
 	}
 
 	return &lint.LintResult{
