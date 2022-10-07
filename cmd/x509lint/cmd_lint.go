@@ -412,8 +412,8 @@ func SaveOrganizationReport(r *LintCertificatesResult, outDir string) error {
 		fmt.Fprintf(file, "Warnings: %d\\\n", issuer.Warnings)
 		fmt.Fprintf(file, "Notices: %d\n", issuer.Notices)
 		fmt.Fprintln(file, "")
-		fmt.Fprintln(file, "| Status | Code | Amount |")
-		fmt.Fprintln(file, "|--------|------|--------|")
+		fmt.Fprintln(file, "| Status | Code | Instances |")
+		fmt.Fprintln(file, "|--------|------|-----------|")
 		for code, issue := range issuer.Issues {
 			fmt.Fprintf(file, "| %s | %s | %d |\n", statusToString(issue.Type), code, issue.Amount)
 		}
