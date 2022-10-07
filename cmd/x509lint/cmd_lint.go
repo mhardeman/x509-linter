@@ -145,7 +145,7 @@ var wellknownIssueNames = map[string]string{
 	"Martini Security, LLC":            "Martini Security",
 	"Metaswitch STI-CA SHAKEN Root":    "Metaswitch",
 	"NetNumber Inc":                    "NetNumber",
-	"Neustar Information Services Inc": "Neustar Information Services",
+	"Neustar Information Services Inc": "Neustar",
 	"Peeringhub Inc":                   "Peeringhub",
 	"Sansay Corporation":               "Sansay Corporation",
 	"TMOBILE-USA":                      "T-Mobile",
