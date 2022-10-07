@@ -61,7 +61,8 @@ func RunDownloadCommand(listPath string, outDir string, includeCa bool) error {
 
 			certs := internal.ParseCertificates(certRaw)
 			files := []string{}
-			for _, cert := range certs {
+			for _, pemCert := range certs {
+				cert := pemCert.Certificate
 				if cert.IsCA && !includeCa {
 					// skip CA cert if includeCa is false
 					continue
