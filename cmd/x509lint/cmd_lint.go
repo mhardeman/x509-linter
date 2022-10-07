@@ -438,7 +438,7 @@ func SaveOrganizationReport(r *LintCertificatesResult, outDir string) error {
 
 		// footer
 		fmt.Fprintln(file, "")
-		fmt.Fprintln(file, "\\* Tests do not report on certificates with issues that predate the currently required ATIS 1000080 and Certificate Policy versions")
+		fmt.Fprintln(file, "\\* Tests downgrade all issues in certificates issued before the latest ATIS 1000080 and Certificate Policy versions to Notices")
 	}
 
 	return nil
@@ -481,7 +481,7 @@ func SaveTotalReport(r *LintCertificatesResult, outDir string) error {
 	fmt.Fprintln(file, "")
 	fmt.Fprintln(file, "\\* The percent of certificates per issuer is calculated against total certificates from all issuers\\")
 	fmt.Fprintln(file, "\\*\\* The percent of errors, warnings and notices is calculated against total observed certificates from the specified issuer\\")
-	fmt.Fprintln(file, "\\*\\*\\* Tests do not report on certificates with issues that predate the currently required ATIS 1000080 and Certificate Policy versions")
+	fmt.Fprintln(file, "\\*\\*\\* Tests downgrade all issues in certificates issued before the latest ATIS 1000080 and Certificate Policy versions to Notices")
 
 	fmt.Fprintln(file, "")
 	fmt.Fprintln(file, "## Key")
