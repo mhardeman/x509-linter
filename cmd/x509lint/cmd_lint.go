@@ -227,6 +227,8 @@ func statusToString(s lint.LintStatus) string {
 		return "warn"
 	case lint.Notice:
 		return "notice"
+	case lint.NE:
+		return "NE"
 	default:
 		return s.String()
 	}
@@ -243,7 +245,10 @@ func printResultMarkDown(w io.Writer, info *LintCertificateResult) {
 	fmt.Fprintf(w, "| Code | Type | Details |\n")
 	fmt.Fprintf(w, "|------|------|---------|\n")
 	for code, result := range info.Result.Results {
-		if result.Status == lint.Error || result.Status == lint.Warn || result.Status == lint.Notice {
+		if result.Status == lint.Error ||
+			result.Status == lint.Warn ||
+			result.Status == lint.Notice ||
+			result.Status == lint.NE {
 			fmt.Fprintf(w, "| %s | %s | %s |\n", code, statusToString(result.Status), result.Details)
 		}
 	}
@@ -495,6 +500,7 @@ func SaveTotalReport(r *LintCertificatesResult, outDir string) error {
 	fmt.Fprintln(file, "| Error | Tests in which the specifications are unambiguous on what the expected behavior must be. |")
 	fmt.Fprintln(file, "| Warning	| Tests in which the specifications are ambiguous or are provide only a recommendation. |")
 	fmt.Fprintln(file, "| Notice | Tests in which industry best practices are not followed. |")
+	fmt.Fprintln(file, "| Not Effective	| Tests that exist in the current specifications but were not in effect at the time of issuance. |")
 
 	return nil
 }
