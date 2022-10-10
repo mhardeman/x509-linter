@@ -1,8 +1,6 @@
 package atis1000080
 
 import (
-	"time"
-
 	"github.com/zmap/zcrypto/x509"
 	"github.com/zmap/zlint/v3/lint"
 )
@@ -31,7 +29,7 @@ func init() {
 		Description:   "STI certificate shall not include RDNs that are not specified",
 		Citation:      "Citation",
 		Source:        SHAKEN,
-		EffectiveDate: time.Date(2019, time.October, 22, 0, 0, 0, 0, time.UTC),
+		EffectiveDate: ATIS1000080_v004_Date,
 		Lint:          NewSubjectRdnUnknown,
 	})
 }
