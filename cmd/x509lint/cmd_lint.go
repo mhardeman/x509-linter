@@ -24,6 +24,7 @@ type AuthorityReport struct {
 	Certificates uint
 	Warnings     uint
 	Errors       uint
+	NE           uint
 }
 
 type SummaryReport struct {
@@ -241,8 +242,7 @@ func printResultMarkDown(w io.Writer, info *LintCertificateResult) {
 	for code, result := range info.Result.Results {
 		if result.Status == lint.Error ||
 			result.Status == lint.Warn ||
-			result.Status == lint.Notice ||
-			result.Status == lint.NE {
+			result.Status == lint.Notice {
 			fmt.Fprintf(w, "| %s | %s | %s |\n", code, statusToString(result.Status), result.Details)
 		}
 	}
@@ -253,7 +253,22 @@ func printResultMarkDown(w io.Writer, info *LintCertificateResult) {
 	} else {
 		// Issue footer
 		fmt.Fprintln(w, "")
-		fmt.Fprintln(w, "\\* Tests downgrade all issues in certificates issued before the latest ATIS 1000080 and Certificate Policy versions to Notices")
+		fmt.Fprintln(w, "\\* Tests use the ATIS 1000080 and Certificate Policy versions. Certificates issued before these dates are not evaluated as the rules may not have been enforce at the time")
+	}
+
+	neHeader := false
+	for code, result := range info.Result.Results {
+		if result.Status == lint.NE {
+			if !neHeader {
+				// Print header only once
+				fmt.Fprintln(w, "")
+				fmt.Fprintln(w, "### Identified Issues")
+				fmt.Fprintln(w, "")
+				neHeader = true
+			}
+
+			fmt.Fprintf(w, "- %s\n", code)
+		}
 	}
 }
 
@@ -266,6 +281,7 @@ type LintResult struct {
 	Errors   uint
 	Warnings uint
 	Notices  uint
+	NE       uint
 }
 
 type LintIssue struct {
@@ -281,10 +297,15 @@ type LintOrganizationResult struct {
 
 func (t *LintOrganizationResult) AppendCertificate(c *LintCertificateResult) {
 	t.Certificates = append(t.Certificates, c)
+	nePresents := false
 
 	// Update Issues
 	for code, result := range c.Result.Results {
-		if !(result.Status == lint.Error || result.Status == lint.Warn || result.Status == lint.Notice) {
+		// filter results by Status
+		if !(result.Status == lint.Error ||
+			result.Status == lint.Warn ||
+			result.Status == lint.Notice ||
+			result.Status == lint.NE) {
 			continue
 		}
 		issue := t.Issues[code]
@@ -296,6 +317,11 @@ func (t *LintOrganizationResult) AppendCertificate(c *LintCertificateResult) {
 		}
 
 		issue.Amount += 1
+
+		// c.Result doesn't have NEPresents
+		if !nePresents && result.Status == lint.NE {
+			nePresents = true
+		}
 	}
 
 	// Update counters
@@ -308,6 +334,9 @@ func (t *LintOrganizationResult) AppendCertificate(c *LintCertificateResult) {
 	}
 	if c.Result.NoticesPresent {
 		t.Notices += 1
+	}
+	if nePresents {
+		t.NE += 1
 	}
 }
 
@@ -337,6 +366,12 @@ func (t *LintCertificatesResult) AppendCertificate(c *LintCertificateResult) {
 	}
 	if c.Result.NoticesPresent {
 		t.Notices += 1
+	}
+	for _, issue := range c.Result.Results {
+		if issue.Status == lint.NE {
+			t.NE += 1
+			break
+		}
 	}
 }
 
@@ -413,7 +448,8 @@ func SaveOrganizationReport(r *LintCertificatesResult, outDir string) error {
 		fmt.Fprintln(file, "")
 		fmt.Fprintf(file, "Errors: %d\\\n", issuer.Errors)
 		fmt.Fprintf(file, "Warnings: %d\\\n", issuer.Warnings)
-		fmt.Fprintf(file, "Notices: %d\n", issuer.Notices)
+		fmt.Fprintf(file, "Notices: %d\\\n", issuer.Notices)
+		fmt.Fprintf(file, "NE: %d\n", issuer.NE)
 		fmt.Fprintln(file, "")
 		fmt.Fprintln(file, "| Status | Code | Instances |")
 		fmt.Fprintln(file, "|--------|------|-----------|")
@@ -423,7 +459,7 @@ func SaveOrganizationReport(r *LintCertificatesResult, outDir string) error {
 
 		// summery footer
 		fmt.Fprintln(file, "")
-		fmt.Fprintln(file, "\\* Tests downgrade all issues in certificates issued before the latest ATIS 1000080 and Certificate Policy versions to Notices")
+		fmt.Fprintln(file, "\\* Tests use the ATIS 1000080 and Certificate Policy versions. Certificates issued before these dates are not evaluated as the rules may not have been enforce at the time")
 
 		// certificates
 		fmt.Fprintln(file, "")
@@ -462,8 +498,8 @@ func SaveTotalReport(r *LintCertificatesResult, outDir string) error {
 	fmt.Fprintln(file, "")
 	fmt.Fprintln(file, "## Summary")
 	fmt.Fprintln(file, "")
-	fmt.Fprintln(file, "| Issuers | Certificates | Errors | Warnings | Notices |")
-	fmt.Fprintln(file, "|---------|--------------|--------|----------|---------|")
+	fmt.Fprintln(file, "| Issuers | Certificates | Errors | Warnings | Notices | NE |")
+	fmt.Fprintln(file, "|---------|--------------|--------|----------|---------|----|")
 
 	// order r.Issuers keys
 	keys := make([]string, 0, len(r.Issuers))
@@ -477,14 +513,14 @@ func SaveTotalReport(r *LintCertificatesResult, outDir string) error {
 	for _, key := range keys {
 		issuer := r.Issuers[key]
 		issuerNameLink := fmt.Sprintf("[%s](%s)", key, url.PathEscape(path.Join(key, "README.md")))
-		fmt.Fprintf(file, "| %s | %d (%0.2f%%) | %d (%0.2f%%) | %d (%0.2f%%) | %d (%0.2f%%) |\n", issuerNameLink, issuer.Amount, percent(issuer.Amount, r.Amount), issuer.Errors, percent(issuer.Errors, issuer.Amount), issuer.Warnings, percent(issuer.Warnings, issuer.Amount), issuer.Notices, percent(issuer.Notices, issuer.Amount))
+		fmt.Fprintf(file, "| %s | %d (%0.2f%%) | %d (%0.2f%%) | %d (%0.2f%%) | %d (%0.2f%%) | %d (%0.2f%%) |\n", issuerNameLink, issuer.Amount, percent(issuer.Amount, r.Amount), issuer.Errors, percent(issuer.Errors, issuer.Amount), issuer.Warnings, percent(issuer.Warnings, issuer.Amount), issuer.Notices, percent(issuer.Notices, issuer.Amount), issuer.NE, percent(issuer.NE, issuer.Amount))
 	}
-	fmt.Fprintf(file, "| **Total** | %d (100%%) | %d (%0.2f%%) | %d (%0.2f%%) | %d (%0.2f%%) |\n", r.Amount, r.Errors, percent(r.Errors, r.Amount), r.Warnings, percent(r.Warnings, r.Amount), r.Notices, percent(r.Notices, r.Amount))
+	fmt.Fprintf(file, "| **Total** | %d (100%%) | %d (%0.2f%%) | %d (%0.2f%%) | %d (%0.2f%%) | %d (%0.2f%%) |\n", r.Amount, r.Errors, percent(r.Errors, r.Amount), r.Warnings, percent(r.Warnings, r.Amount), r.Notices, percent(r.Notices, r.Amount), r.NE, percent(r.NE, r.Amount))
 
 	fmt.Fprintln(file, "")
 	fmt.Fprintln(file, "\\* The percent of certificates per issuer is calculated against total certificates from all issuers\\")
 	fmt.Fprintln(file, "\\*\\* The percent of errors, warnings and notices is calculated against total observed certificates from the specified issuer\\")
-	fmt.Fprintln(file, "\\*\\*\\* Tests downgrade all issues in certificates issued before the latest ATIS 1000080 and Certificate Policy versions to Notices")
+	fmt.Fprintln(file, "\\*\\*\\* Tests use the ATIS 1000080 and Certificate Policy versions. Certificates issued before these dates are not evaluated as the rules may not have been enforce at the time")
 
 	fmt.Fprintln(file, "")
 	fmt.Fprintln(file, "## Key")
