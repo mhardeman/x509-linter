@@ -262,7 +262,7 @@ func printResultMarkDown(w io.Writer, info *LintCertificateResult) {
 			if !neHeader {
 				// Print header only once
 				fmt.Fprintln(w, "")
-				fmt.Fprintln(w, "### Identified Issues")
+				fmt.Fprintln(w, "### Not Effected")
 				fmt.Fprintln(w, "")
 				neHeader = true
 			}

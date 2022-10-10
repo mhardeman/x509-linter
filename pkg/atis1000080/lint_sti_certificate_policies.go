@@ -24,7 +24,7 @@ func NewCertificatePolicies() lint.LintInterface {
 
 // CheckApplies implements lint.LintInterface
 func (*certificatePolicies) CheckApplies(c *x509.Certificate) bool {
-	return !c.IsCA
+	return !c.SelfSigned
 }
 
 // Execute implements lint.LintInterface

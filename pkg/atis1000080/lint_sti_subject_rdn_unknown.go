@@ -40,7 +40,7 @@ func NewSubjectRdnUnknown() lint.LintInterface {
 
 // CheckApplies implements lint.LintInterface
 func (*subjectRdnUnknown) CheckApplies(c *x509.Certificate) bool {
-	return !c.IsCA
+	return true
 }
 
 // Execute implements lint.LintInterface

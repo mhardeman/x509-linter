@@ -26,7 +26,7 @@ func NewVersion() lint.LintInterface {
 
 // CheckApplies implements lint.LintInterface
 func (*version) CheckApplies(c *x509.Certificate) bool {
-	return !c.IsCA
+	return true
 }
 
 // Execute implements lint.LintInterface

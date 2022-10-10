@@ -24,13 +24,13 @@ func NewAuthorityKeyIdentifier() lint.LintInterface {
 
 // CheckApplies implements lint.LintInterface
 func (*authorityKeyIdentifier) CheckApplies(c *x509.Certificate) bool {
-	return !c.IsCA
+	return true
 }
 
 // Execute implements lint.LintInterface
 func (*authorityKeyIdentifier) Execute(c *x509.Certificate) *lint.LintResult {
 	ext := FindExtension(c, "2.5.29.35")
-	if ext != nil {
+	if c.SelfSigned || ext != nil {
 		return &lint.LintResult{
 			Status: lint.Pass,
 		}
