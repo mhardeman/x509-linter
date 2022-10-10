@@ -5,6 +5,7 @@ import (
 	"testing"
 
 	"github.com/peculiarventures/x509-linter/cmd/internal"
+	"github.com/zmap/zcrypto/x509"
 )
 
 func TestParseCertificates(t *testing.T) {
@@ -130,6 +131,52 @@ MIID+DCCAuCgAwIBAgIUbz8Od22dmDT4D98MU+Cx8rIqJggwDQYJKoZIhvcNAQEL
 		t.Run(tt.name, func(t *testing.T) {
 			if got := len(internal.ParseCertificates(tt.args.source)); got != tt.want {
 				t.Errorf("ParseCertificates() = %v, want %v", got, tt.want)
+			}
+		})
+	}
+}
+
+func parseCertificate(t *testing.T, base64String string) *x509.Certificate {
+	raw, err := base64.StdEncoding.DecodeString(base64String)
+	if err != nil {
+		t.Fatalf("Cannot decode the base64 string of the certificate. Error: %s", err.Error())
+	}
+	cert, err := x509.ParseCertificate(raw)
+	if err != nil {
+		t.Fatalf("Cannot parse the certificate. Error: %s", err.Error())
+	}
+
+	return cert
+}
+
+func TestGetValidityDays(t *testing.T) {
+	type args struct {
+		c *x509.Certificate
+	}
+	tests := []struct {
+		name string
+		args args
+		want int
+	}{
+		{
+			name: "3 years (1096 days)",
+			args: args{
+				c: parseCertificate(t, "MIID+zCCAuOgAwIBAgIUGFko9jLiaggPzUHJ9QICtqumBG8wDQYJKoZIhvcNAQELBQAwfjEpMCcGA1UEAwwgTmV1c3RhciBDZXJ0aWZpZWQgQ2FsbGVyIElEIENBLTExGTAXBgNVBAsMEHd3dy5jY2lkLm5ldXN0YXIxKTAnBgNVBAoMIE5ldXN0YXIgSW5mb3JtYXRpb24gU2VydmljZXMgSW5jMQswCQYDVQQGEwJVUzAeFw0yMDAxMTAyMDA5MDNaFw0yMzAxMTAyMDA5MDNaMHAxGDAWBgNVBAMMD0NlbnR1cnlMaW5rLmNvbTEXMBUGA1UECwwOQ29tbXVuaWNhdGlvbnMxEDAOBgNVBAoMB1N1cHBvcnQxDzANBgNVBAcMBk1vbnJvZTELMAkGA1UECAwCQ0ExCzAJBgNVBAYTAlVTMFkwEwYHKoZIzj0CAQYIKoZIzj0DAQcDQgAEEPiNlGRnSNvkauQ6SxPjLUpRMmgRxRtmIHbaBhCVdPXCEsxzeWBpgY7ND+ju4m7YB7PQ+Gb6IOb/Oxs0FUVfSaOCAUgwggFEMAwGA1UdEwEB/wQCMAAwHwYDVR0jBBgwFoAUO7lcyzEXnEjP1Npm6422qNXhCfcwgYEGCCsGAQUFBwEBBHUwczBHBggrBgEFBQcwAoY7aHR0cDovL2NhY2VydHMuY2NpZC5uZXVzdGFyL05ldXN0YXJDZXJ0aWZpZWRDYWxsZXJJZENBMS5jcnQwKAYIKwYBBQUHMAGGHGh0dHA6Ly9vY3NwLWNhMS5jY2lkLm5ldXN0YXIwSAYDVR0fBEEwPzA9oDugOYY3aHR0cDovL2NybC5jY2lkLm5ldXN0YXIvTmV1c3RhckNlcnRpZmllZENhbGxlcklkQ0ExLmNybDAdBgNVHQ4EFgQUAWBuLN/b0nn97j1pD1KRe5Eul+AwDgYDVR0PAQH/BAQDAgeAMBYGCCsGAQUFBwEaBAowCKAGFgQ4ODI2MA0GCSqGSIb3DQEBCwUAA4IBAQAF+LdvjhXSawCgp3Xn82nr+EuOHv/2Qpgr2GjYJZiA83iNkYIZZ6C+EGu/IQvPQoAvXs7pJJzEuSGbniH5jRhgMqPZGz64uguwmH8u8wZjDTnhdW7dnlOrP3EMj9jJoncnyGPQrIRFGbGhDPWxsl8X1U8rvitUd+kOXRgUUdvKq7lEHFLLxoTTixbp/tT9dMLEU0UsjJa5bUeWalqpVR+kvEK1WvyD3AaK456wlMj1nM2XEND2jt24G+nOB9MjhZljQgl1yRTZtKviqUZrwq5hEUdHIYvGWXaiuNK7MZkkmb/7i5hirrFPLFJ5K4NLBnsJsYLvmPlG3CCGoXDYtJXo"),
+			},
+			want: 1096,
+		},
+		{
+			name: "1 day",
+			args: args{
+				c: parseCertificate(t, "MIIBDDCBs6ADAgECAgEBMAoGCCqGSM49BAMCMA0xCzAJBgNVBAMTAkNBMB4XDTIyMTAxMDE3MjAyMVoXDTIyMTAxMTE3MjAyMVowDzENMAsGA1UEAxMETGVhZjBZMBMGByqGSM49AgEGCCqGSM49AwEHA0IABGG0PGLskEbiBY0xDuYg8vPMzcTyLvhBPl40uARkuu4uTScK2fQL5VP7d3t3JkPEmstVQS4Cqc/fvVJRQIdKV06jAjAAMAoGCCqGSM49BAMCA0gAMEUCIQCU2PrUfAocvNNzP2du/77S+fBR4wLu7ug3XVwvTISJVwIgEOOFivZJa0MqmWkwqB9iA1KwiyfgW6k2tATHEw7aafo="),
+			},
+			want: 1,
+		},
+	}
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			if got := internal.GetValidityDays(tt.args.c); got != tt.want {
+				t.Errorf("GetValidityDays() = %v, want %v", got, tt.want)
 			}
 		})
 	}

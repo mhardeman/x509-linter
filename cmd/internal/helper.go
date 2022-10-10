@@ -56,3 +56,8 @@ func GetOrganizationName(c *x509.Certificate) string {
 
 	return org
 }
+
+// GetValidityDays returns validity period of the certificate in days
+func GetValidityDays(c *x509.Certificate) int {
+	return c.ValidityPeriod / 86400
+}

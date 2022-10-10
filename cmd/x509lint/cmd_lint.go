@@ -20,18 +20,6 @@ import (
 	"github.com/zmap/zlint/v3/lint"
 )
 
-type AuthorityReport struct {
-	Certificates uint
-	Warnings     uint
-	Errors       uint
-	NE           uint
-}
-
-type SummaryReport struct {
-	Authorities map[string]*AuthorityReport
-	*AuthorityReport
-}
-
 func RunLintCommand(certPath string, summary bool) error {
 	if certPath == "" {
 		return fmt.Errorf("cannot get certificate path, variable 'certPath' is empty")
@@ -223,7 +211,7 @@ func statusToString(s lint.LintStatus) string {
 	case lint.Notice:
 		return "notice"
 	case lint.NE:
-		return "NE"
+		return "not effective"
 	default:
 		return s.String()
 	}
@@ -232,6 +220,7 @@ func statusToString(s lint.LintStatus) string {
 func printResultMarkDown(w io.Writer, info *LintCertificateResult) {
 	fmt.Fprintf(w, "### Certificate %s\n", info.Thumbprint)
 	fmt.Fprintf(w, "Tested At: %s\\\n", time.Unix(info.Result.Timestamp, 0).String())
+	fmt.Fprintf(w, "Validity period: %d day(s)\\\n", internal.GetValidityDays(info.Cert))
 	fmt.Fprintf(w, "Subject: %s\\\n", info.Cert.Subject.String())
 	fmt.Fprintf(w, "Issuer: %s\n\n", info.Cert.Issuer.String())
 	fmt.Fprintf(w, "Link: %s\n\n", info.Link)
@@ -250,10 +239,6 @@ func printResultMarkDown(w io.Writer, info *LintCertificateResult) {
 	if !info.Result.ErrorsPresent && !info.Result.WarningsPresent {
 		fmt.Fprintln(w, "")
 		fmt.Fprintf(w, "%d tests were ran and no issues were found\n", len(info.Result.Results))
-	} else {
-		// Issue footer
-		fmt.Fprintln(w, "")
-		fmt.Fprintln(w, "\\* Tests use the ATIS 1000080 and Certificate Policy versions. Certificates issued before these dates are not evaluated as the rules may not have been enforce at the time")
 	}
 
 	neHeader := false
@@ -262,13 +247,19 @@ func printResultMarkDown(w io.Writer, info *LintCertificateResult) {
 			if !neHeader {
 				// Print header only once
 				fmt.Fprintln(w, "")
-				fmt.Fprintln(w, "### Not Effected")
+				fmt.Fprintln(w, "### Not Effective")
 				fmt.Fprintln(w, "")
 				neHeader = true
 			}
 
 			fmt.Fprintf(w, "- %s\n", code)
 		}
+	}
+
+	if neHeader {
+		// Issue footer
+		fmt.Fprintln(w, "")
+		fmt.Fprintln(w, "\\* Tests use the ATIS 1000080 and Certificate Policy versions. Certificates issued before these dates are not evaluated as the rules may not have been enforce at the time")
 	}
 }
 
@@ -284,6 +275,12 @@ type LintResult struct {
 	NE       uint
 }
 
+type Findings struct {
+	LeafCertificates        uint
+	ValidityDays            int
+	SoonExpiredCertificates uint
+}
+
 type LintIssue struct {
 	Type   lint.LintStatus
 	Amount uint
@@ -293,6 +290,7 @@ type LintOrganizationResult struct {
 	Issues       map[string]*LintIssue
 	Certificates []*LintCertificateResult
 	LintResult
+	Findings
 }
 
 func (t *LintOrganizationResult) AppendCertificate(c *LintCertificateResult) {
@@ -338,11 +336,22 @@ func (t *LintOrganizationResult) AppendCertificate(c *LintCertificateResult) {
 	if nePresents {
 		t.NE += 1
 	}
+
+	// finding
+	if !c.Cert.IsCA {
+		t.LeafCertificates += 1
+		t.ValidityDays += internal.GetValidityDays(c.Cert)
+
+		if time.Now().AddDate(0, 0, 30).After(c.Cert.NotAfter) {
+			t.SoonExpiredCertificates += 1
+		}
+	}
 }
 
 type LintCertificatesResult struct {
 	Issuers map[string]*LintOrganizationResult
 	LintResult
+	Findings
 }
 
 func (t *LintCertificatesResult) AppendCertificate(c *LintCertificateResult) {
@@ -373,6 +382,11 @@ func (t *LintCertificatesResult) AppendCertificate(c *LintCertificateResult) {
 			break
 		}
 	}
+
+	// finding
+	t.LeafCertificates += issuer.LeafCertificates
+	t.ValidityDays += issuer.ValidityDays
+	t.SoonExpiredCertificates += issuer.SoonExpiredCertificates
 }
 
 func ReadCertificatesDir(dirPath string) ([]*internal.PemCertificate, error) {
@@ -445,11 +459,14 @@ func SaveOrganizationReport(r *LintCertificatesResult, outDir string) error {
 		// summary
 		fmt.Fprintln(file, "")
 		fmt.Fprintf(file, "## %s\n", name)
+
+		PrintFindings(file, &r.Findings)
+
 		fmt.Fprintln(file, "")
 		fmt.Fprintf(file, "Errors: %d\\\n", issuer.Errors)
 		fmt.Fprintf(file, "Warnings: %d\\\n", issuer.Warnings)
 		fmt.Fprintf(file, "Notices: %d\\\n", issuer.Notices)
-		fmt.Fprintf(file, "Not Effected: %d\n", issuer.NE)
+		fmt.Fprintf(file, "Not Effective: %d\n", issuer.NE)
 		fmt.Fprintln(file, "")
 		fmt.Fprintln(file, "| Status | Code | Instances |")
 		fmt.Fprintln(file, "|--------|------|-----------|")
@@ -463,7 +480,7 @@ func SaveOrganizationReport(r *LintCertificatesResult, outDir string) error {
 
 		// certificates
 		fmt.Fprintln(file, "")
-		fmt.Fprintln(file, "### Issued certificates")
+		fmt.Fprintln(file, "## Issued certificates")
 		fmt.Fprintln(file, "")
 		fmt.Fprintln(file, "| Created at | Name | Problems | Link |")
 		fmt.Fprintln(file, "|------------|------|----------|------|")
@@ -495,11 +512,12 @@ func SaveTotalReport(r *LintCertificatesResult, outDir string) error {
 	fmt.Fprintln(file, "[Approved Certificate Authorities](https://authenticate.iconectiv.com/approved-certification-authorities) in the STIR/SHAKEN ecosystem are required to meet technical requirements from [ATIS-1000080](https://access.atis.org/apps/group_public/document.php?document_id=62163) and policy requirements from the supporting CA ecosystem’s [Certificate Policy](https://authenticate.iconectiv.com/documents-authenticate).")
 	fmt.Fprintln(file, "")
 	fmt.Fprintln(file, "This report is generated using [Zlint](https://github.com/zmap/zlint) a tool commonly used to asses CA ecosystem compliance with such requirements. The tests used to generate this report are currently not part of the main Zlint distribution but can be found [here](https://github.com/PeculiarVentures/x509-linter).")
+
 	fmt.Fprintln(file, "")
 	fmt.Fprintln(file, "## Summary")
 	fmt.Fprintln(file, "")
-	fmt.Fprintln(file, "| Issuers | Certificates | Errors | Warnings | Notices | Not Effected	|")
-	fmt.Fprintln(file, "|---------|--------------|--------|----------|---------|--------------|")
+	fmt.Fprintln(file, "| Issuers | Certificates | Errors | Warnings | Notices | Not Effective |")
+	fmt.Fprintln(file, "|---------|--------------|--------|----------|---------|---------------|")
 
 	// order r.Issuers keys
 	keys := make([]string, 0, len(r.Issuers))
@@ -532,7 +550,19 @@ func SaveTotalReport(r *LintCertificatesResult, outDir string) error {
 	fmt.Fprintln(file, "| Notice | Tests in which industry best practices are not followed. |")
 	fmt.Fprintln(file, "| Not Effective	| Tests that exist in the current specifications but were not in effect at the time of issuance. |")
 
+	PrintFindings(file, &r.Findings)
+
 	return nil
+}
+
+func PrintFindings(file *os.File, findings *Findings) {
+	if findings.LeafCertificates > 0 {
+		fmt.Fprintln(file, "")
+		fmt.Fprintln(file, "## Finding")
+		fmt.Fprintln(file, "")
+		fmt.Fprintf(file, "- Average validity span as of issuance %d days\n", findings.ValidityDays/int(findings.LeafCertificates))
+		fmt.Fprintf(file, "- Percentage of leaf certificates expiring in the next 30 days is %d%%\n", findings.SoonExpiredCertificates/findings.LeafCertificates)
+	}
 }
 
 func SaveCertificatesReport(r *LintCertificatesResult, outDir string) error {

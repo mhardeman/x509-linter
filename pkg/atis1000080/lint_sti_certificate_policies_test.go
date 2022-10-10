@@ -20,7 +20,7 @@ func Test_certificatePolicies_Execute(t *testing.T) {
 	}{
 		{
 			name: "extension is absent",
-			args: args{c: TEST_CERT_VERSION_INCORRECT},
+			args: args{c: ParseCert("MIIBDDCBs6ADAgECAgEBMAoGCCqGSM49BAMCMA0xCzAJBgNVBAMTAkNBMB4XDTIyMTAxMDE3MjAyMVoXDTIyMTAxMTE3MjAyMVowDzENMAsGA1UEAxMETGVhZjBZMBMGByqGSM49AgEGCCqGSM49AwEHA0IABGG0PGLskEbiBY0xDuYg8vPMzcTyLvhBPl40uARkuu4uTScK2fQL5VP7d3t3JkPEmstVQS4Cqc/fvVJRQIdKV06jAjAAMAoGCCqGSM49BAMCA0gAMEUCIQCU2PrUfAocvNNzP2du/77S+fBR4wLu7ug3XVwvTISJVwIgEOOFivZJa0MqmWkwqB9iA1KwiyfgW6k2tATHEw7aafo=")},
 			want: &lint.LintResult{
 				Status:  lint.Error,
 				Details: "STI certificate shall include a Certificate Policies extension containing a single SHAKEN Certificate Policy",
@@ -37,14 +37,6 @@ func Test_certificatePolicies_Execute(t *testing.T) {
 		{
 			name: "SHAKEN policy is not single",
 			args: args{c: TEST_CERT_SHAKEN_POLICY_NOT_SINGLE},
-			want: &lint.LintResult{
-				Status:  lint.Error,
-				Details: "STI certificate shall include a Certificate Policies extension containing a single SHAKEN Certificate Policy",
-			},
-		},
-		{
-			name: "SHAKEN policy is correct",
-			args: args{c: TEST_CERT_SHAKEN_POLICY_v1_1},
 			want: &lint.LintResult{
 				Status:  lint.Error,
 				Details: "STI certificate shall include a Certificate Policies extension containing a single SHAKEN Certificate Policy",

@@ -33,7 +33,7 @@ func (*certificatePolicies) Execute(c *x509.Certificate) *lint.LintResult {
 		if IsDateCP1_3(c) && c.PolicyIdentifiers[0].String() != SHAKEN_CP_v1_3 {
 			return DowngradeATIS1000080(c, &lint.LintResult{
 				Status:  lint.Error,
-				Details: "MESSAGE",
+				Details: "STI certificate shall contain '2.16.840.1.114569.1.1.3' policy",
 			})
 		}
 
