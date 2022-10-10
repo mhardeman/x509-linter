@@ -449,7 +449,7 @@ func SaveOrganizationReport(r *LintCertificatesResult, outDir string) error {
 		fmt.Fprintf(file, "Errors: %d\\\n", issuer.Errors)
 		fmt.Fprintf(file, "Warnings: %d\\\n", issuer.Warnings)
 		fmt.Fprintf(file, "Notices: %d\\\n", issuer.Notices)
-		fmt.Fprintf(file, "NE: %d\n", issuer.NE)
+		fmt.Fprintf(file, "Not Effected: %d\n", issuer.NE)
 		fmt.Fprintln(file, "")
 		fmt.Fprintln(file, "| Status | Code | Instances |")
 		fmt.Fprintln(file, "|--------|------|-----------|")
