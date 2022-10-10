@@ -460,13 +460,12 @@ func SaveOrganizationReport(r *LintCertificatesResult, outDir string) error {
 		fmt.Fprintln(file, "")
 		fmt.Fprintf(file, "## %s\n", name)
 
-		PrintFindings(file, &r.Findings)
-
 		fmt.Fprintln(file, "")
-		fmt.Fprintf(file, "Errors: %d\\\n", issuer.Errors)
-		fmt.Fprintf(file, "Warnings: %d\\\n", issuer.Warnings)
-		fmt.Fprintf(file, "Notices: %d\\\n", issuer.Notices)
-		fmt.Fprintf(file, "Not Effective: %d\n", issuer.NE)
+		PrintFindingList(file, &r.Findings)
+		fmt.Fprintf(file, "- Errors: %d\n", issuer.Errors)
+		fmt.Fprintf(file, "- Warnings: %d\n", issuer.Warnings)
+		fmt.Fprintf(file, "- Notices: %d\n", issuer.Notices)
+		fmt.Fprintf(file, "- Not Effective: %d\n", issuer.NE)
 		fmt.Fprintln(file, "")
 		fmt.Fprintln(file, "| Status | Code | Instances |")
 		fmt.Fprintln(file, "|--------|------|-----------|")
@@ -516,6 +515,8 @@ func SaveTotalReport(r *LintCertificatesResult, outDir string) error {
 	fmt.Fprintln(file, "")
 	fmt.Fprintln(file, "## Summary")
 	fmt.Fprintln(file, "")
+	PrintFindingList(file, &r.Findings)
+	fmt.Fprintln(file, "")
 	fmt.Fprintln(file, "| Issuers | Certificates | Errors | Warnings | Notices | Not Effective |")
 	fmt.Fprintln(file, "|---------|--------------|--------|----------|---------|---------------|")
 
@@ -549,17 +550,11 @@ func SaveTotalReport(r *LintCertificatesResult, outDir string) error {
 	fmt.Fprintln(file, "| Warning	| Tests in which the specifications are ambiguous or are provide only a recommendation. |")
 	fmt.Fprintln(file, "| Notice | Tests in which industry best practices are not followed. |")
 	fmt.Fprintln(file, "| Not Effective	| Tests that exist in the current specifications but were not in effect at the time of issuance. |")
-
-	PrintFindings(file, &r.Findings)
-
 	return nil
 }
 
-func PrintFindings(file *os.File, findings *Findings) {
+func PrintFindingList(file *os.File, findings *Findings) {
 	if findings.LeafCertificates > 0 {
-		fmt.Fprintln(file, "")
-		fmt.Fprintln(file, "## Finding")
-		fmt.Fprintln(file, "")
 		fmt.Fprintf(file, "- Average validity span as of issuance %d days\n", findings.ValidityDays/int(findings.LeafCertificates))
 		fmt.Fprintf(file, "- Percentage of leaf certificates expiring in the next 30 days is %d%%\n", findings.SoonExpiredCertificates/findings.LeafCertificates)
 	}
