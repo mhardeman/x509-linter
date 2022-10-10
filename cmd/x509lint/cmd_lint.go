@@ -498,8 +498,8 @@ func SaveTotalReport(r *LintCertificatesResult, outDir string) error {
 	fmt.Fprintln(file, "")
 	fmt.Fprintln(file, "## Summary")
 	fmt.Fprintln(file, "")
-	fmt.Fprintln(file, "| Issuers | Certificates | Errors | Warnings | Notices | NE |")
-	fmt.Fprintln(file, "|---------|--------------|--------|----------|---------|----|")
+	fmt.Fprintln(file, "| Issuers | Certificates | Errors | Warnings | Notices | Not Effected	|")
+	fmt.Fprintln(file, "|---------|--------------|--------|----------|---------|--------------|")
 
 	// order r.Issuers keys
 	keys := make([]string, 0, len(r.Issuers))
