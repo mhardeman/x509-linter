@@ -222,6 +222,12 @@ func printResultMarkDown(w io.Writer, info *LintCertificateResult) {
 	fmt.Fprintf(w, "### Certificate %s\n", info.Thumbprint)
 	fmt.Fprintf(w, "Tested At: %s\\\n", time.Unix(info.Result.Timestamp, 0).String())
 	fmt.Fprintf(w, "Initial Validity Period: %d day(s)\\\n", internal.GetValidityDays(info.Cert))
+	remainingDays := internal.GetRemainingDays(info.Cert, time.Now())
+	remaining := fmt.Sprintf("%d day(s)", remainingDays)
+	if remainingDays < 1 {
+		remaining = "Expired"
+	}
+	fmt.Fprintf(w, "Remaining Validity Period: %s\\\n", remaining)
 	fmt.Fprintf(w, "Subject: %s\\\n", strings.ReplaceAll(info.Cert.Subject.String(), "\\", "\\\\"))
 	fmt.Fprintf(w, "Issuer: %s\n\n", strings.ReplaceAll(info.Cert.Issuer.String(), "\\", "\\\\"))
 	fmt.Fprintf(w, "Link: %s\n\n", info.Link)

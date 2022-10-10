@@ -3,6 +3,7 @@ package internal_test
 import (
 	"encoding/base64"
 	"testing"
+	"time"
 
 	"github.com/peculiarventures/x509-linter/cmd/internal"
 	"github.com/zmap/zcrypto/x509"
@@ -184,6 +185,51 @@ func TestGetValidityDays(t *testing.T) {
 		t.Run(tt.name, func(t *testing.T) {
 			if got := internal.GetValidityDays(tt.args.c); got != tt.want {
 				t.Errorf("GetValidityDays() = %v, want %v", got, tt.want)
+			}
+		})
+	}
+}
+
+func TestGetRemainingDays(t *testing.T) {
+	type args struct {
+		c   *x509.Certificate
+		now time.Time
+	}
+	cert := parseCertificate(t, "MIIBDDCBs6ADAgECAgEBMAoGCCqGSM49BAMCMA0xCzAJBgNVBAMTAkNBMB4XDTIyMTAxMDE3MjAyMVoXDTIyMTAxMTE3MjAyMVowDzENMAsGA1UEAxMETGVhZjBZMBMGByqGSM49AgEGCCqGSM49AwEHA0IABGG0PGLskEbiBY0xDuYg8vPMzcTyLvhBPl40uARkuu4uTScK2fQL5VP7d3t3JkPEmstVQS4Cqc/fvVJRQIdKV06jAjAAMAoGCCqGSM49BAMCA0gAMEUCIQCU2PrUfAocvNNzP2du/77S+fBR4wLu7ug3XVwvTISJVwIgEOOFivZJa0MqmWkwqB9iA1KwiyfgW6k2tATHEw7aafo=")
+	tests := []struct {
+		name string
+		args args
+		want int
+	}{
+		{
+			name: "2 days",
+			args: args{
+				c:   cert,
+				now: time.Date(2022, time.October, 11, 0, 0, 0, 0, time.UTC),
+			},
+			want: 1,
+		},
+		{
+			name: "-1 days",
+			args: args{
+				c:   cert,
+				now: time.Date(2022, time.October, 13, 0, 0, 0, 0, time.UTC),
+			},
+			want: -1,
+		},
+		{
+			name: "?? days",
+			args: args{
+				c:   parseCertificate(t, "MIIDKzCCAtGgAwIBAgIUO5Ul22ujxF/mUyCN9trojyl92sswCgYIKoZIzj0EAwIwcTELMAkGA1UEBhMCVVMxCzAJBgNVBAgTAldBMRAwDgYDVQQHEwdTZWF0dGxlMR4wHAYDVQQKExVNYXJ0aW5pIFNlY3VyaXR5LCBMTEMxIzAhBgNVBAMTGk1hcnRpbmkgU2VjdXJpdHkgU0hBS0VOIEcxMB4XDTIyMDkyODIxMzE1NFoXDTIyMTIyNzA2MDAwMFowdzEUMBIGA1UEAxMLU0hBS0VOIDcwOUoxKTAnBgNVBAUTIDA3NjE1QjM5MjYxNzczMDczMjRBNEJBMzBCOTBCODc2MQswCQYDVQQGEwJVUzEnMCUGA1UEChMeTE9XIExBVEVOQ1kgQ09NTVVOSUNBVElPTlMgTExDMFkwEwYHKoZIzj0CAQYIKoZIzj0DAQcDQgAEuo2sdvQME2uhTVVbzq2hAWmbEKwl5QxVi/gEycR0FNt1IqogXwp4DguFJMIQg5Tq2YzfJn5EcYXJl/MbnWkmRqOCAT8wggE7MA4GA1UdDwEB/wQEAwIHgDAMBgNVHRMBAf8EAjAAMB0GA1UdDgQWBBTVNnrRLzgn/MTquelAIF9vVPWnRjAfBgNVHSMEGDAWgBQt1ctQCVNMkSR/I7Gp5SWHOJZJgjAWBggrBgEFBQcBGgQKMAigBhYENzA5SjCBpgYDVR0fBIGeMIGbMIGYoDqgOIY2aHR0cHM6Ly9hdXRoZW50aWNhdGUtYXBpLmljb25lY3Rpdi5jb20vZG93bmxvYWQvdjEvY3JsolqkWDBWMRQwEgYDVQQHEwtCcmlkZ2V3YXRlcjELMAkGA1UECBMCTkoxEzARBgNVBAMTClNUSS1QQSBDUkwxCzAJBgNVBAYTAlVTMQ8wDQYDVQQKEwZTVEktUEEwGgYDVR0gAQH/BBAwDjAMBgpghkgBhv8JAQEDMAoGCCqGSM49BAMCA0gAMEUCIQD7CNa49VBCKEyD6ECxM8PRF5mO5PLyBly5hfs+yLaMYQIgE2Jc+GGQfF7zjklbX1cG4eRoyFjOjBsuyHNhuxOkOqI="),
+				now: time.Date(2022, time.October, 11, 0, 0, 0, 0, time.UTC),
+			},
+			want: 78,
+		},
+	}
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			if got := internal.GetRemainingDays(tt.args.c, tt.args.now); got != tt.want {
+				t.Errorf("GetRemainingDays() = %v, want %v", got, tt.want)
 			}
 		})
 	}
