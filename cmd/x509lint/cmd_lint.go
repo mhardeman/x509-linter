@@ -11,6 +11,7 @@ import (
 	"os"
 	"path"
 	"sort"
+	"strings"
 	"time"
 
 	"github.com/peculiarventures/x509-linter/cmd/internal"
@@ -220,9 +221,9 @@ func statusToString(s lint.LintStatus) string {
 func printResultMarkDown(w io.Writer, info *LintCertificateResult) {
 	fmt.Fprintf(w, "### Certificate %s\n", info.Thumbprint)
 	fmt.Fprintf(w, "Tested At: %s\\\n", time.Unix(info.Result.Timestamp, 0).String())
-	fmt.Fprintf(w, "Validity period: %d day(s)\\\n", internal.GetValidityDays(info.Cert))
-	fmt.Fprintf(w, "Subject: %s\\\n", info.Cert.Subject.String())
-	fmt.Fprintf(w, "Issuer: %s\n\n", info.Cert.Issuer.String())
+	fmt.Fprintf(w, "Initial Validity Period: %d day(s)\\\n", internal.GetValidityDays(info.Cert))
+	fmt.Fprintf(w, "Subject: %s\\\n", strings.ReplaceAll(info.Cert.Subject.String(), "\\", "\\\\"))
+	fmt.Fprintf(w, "Issuer: %s\n\n", strings.ReplaceAll(info.Cert.Issuer.String(), "\\", "\\\\"))
 	fmt.Fprintf(w, "Link: %s\n\n", info.Link)
 	fmt.Fprintf(w, "View: [Click to view](https://understandingwebpki.com/?cert=%s)\n\n", url.QueryEscape(base64.StdEncoding.EncodeToString(info.Cert.Raw)))
 	fmt.Fprintln(w, "")
