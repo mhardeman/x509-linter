@@ -290,7 +290,7 @@ type LintOrganizationResult struct {
 	Issues       map[string]*LintIssue
 	Certificates []*LintCertificateResult
 	LintResult
-	Findings
+	*Findings
 }
 
 func (t *LintOrganizationResult) AppendCertificate(c *LintCertificateResult) {
@@ -351,14 +351,15 @@ func (t *LintOrganizationResult) AppendCertificate(c *LintCertificateResult) {
 type LintCertificatesResult struct {
 	Issuers map[string]*LintOrganizationResult
 	LintResult
-	Findings
+	*Findings
 }
 
 func (t *LintCertificatesResult) AppendCertificate(c *LintCertificateResult) {
 	issuer := t.Issuers[c.Organization]
 	if issuer == nil {
 		issuer = &LintOrganizationResult{
-			Issues: map[string]*LintIssue{},
+			Issues:   map[string]*LintIssue{},
+			Findings: &Findings{},
 		}
 		t.Issuers[c.Organization] = issuer
 	}
@@ -415,7 +416,8 @@ func ReadCertificatesDir(dirPath string) ([]*internal.PemCertificate, error) {
 
 func LintCertificates(certs []*internal.PemCertificate, options *x509.VerifyOptions) *LintCertificatesResult {
 	res := &LintCertificatesResult{
-		Issuers: map[string]*LintOrganizationResult{},
+		Issuers:  map[string]*LintOrganizationResult{},
+		Findings: &Findings{},
 	}
 
 	for _, cert := range certs {
@@ -461,7 +463,7 @@ func SaveOrganizationReport(r *LintCertificatesResult, outDir string) error {
 		fmt.Fprintf(file, "## %s\n", name)
 
 		fmt.Fprintln(file, "")
-		PrintFindingList(file, &r.Findings)
+		PrintFindingList(file, issuer.Findings)
 		fmt.Fprintf(file, "- Errors: %d\n", issuer.Errors)
 		fmt.Fprintf(file, "- Warnings: %d\n", issuer.Warnings)
 		fmt.Fprintf(file, "- Notices: %d\n", issuer.Notices)
@@ -494,6 +496,8 @@ func SaveOrganizationReport(r *LintCertificatesResult, outDir string) error {
 				fmt.Sprintf("[view](%s)", url.PathEscape(path.Join(certReport.Thumbprint, "README.md"))), // link
 			)
 		}
+
+		PrintFooter(file)
 	}
 
 	return nil
@@ -515,7 +519,7 @@ func SaveTotalReport(r *LintCertificatesResult, outDir string) error {
 	fmt.Fprintln(file, "")
 	fmt.Fprintln(file, "## Summary")
 	fmt.Fprintln(file, "")
-	PrintFindingList(file, &r.Findings)
+	PrintFindingList(file, r.Findings)
 	fmt.Fprintln(file, "")
 	fmt.Fprintln(file, "| Issuers | Certificates | Errors | Warnings | Notices | Not Effective |")
 	fmt.Fprintln(file, "|---------|--------------|--------|----------|---------|---------------|")
@@ -550,13 +554,16 @@ func SaveTotalReport(r *LintCertificatesResult, outDir string) error {
 	fmt.Fprintln(file, "| Warning	| Tests in which the specifications are ambiguous or are provide only a recommendation. |")
 	fmt.Fprintln(file, "| Notice | Tests in which industry best practices are not followed. |")
 	fmt.Fprintln(file, "| Not Effective	| Tests that exist in the current specifications but were not in effect at the time of issuance. |")
+
+	PrintFooter(file)
+
 	return nil
 }
 
 func PrintFindingList(file *os.File, findings *Findings) {
 	if findings.LeafCertificates > 0 {
-		fmt.Fprintf(file, "- Average validity span as of issuance %d days\n", findings.ValidityDays/int(findings.LeafCertificates))
-		fmt.Fprintf(file, "- Percentage of leaf certificates expiring in the next 30 days is %d%%\n", findings.SoonExpiredCertificates/findings.LeafCertificates)
+		fmt.Fprintf(file, "- Average validity span as of leaf certificates %d days\n", findings.ValidityDays/int(findings.LeafCertificates))
+		fmt.Fprintf(file, "- Percentage of leaf certificates expiring in the next 30 days is %0.2f%%\n", percent(findings.SoonExpiredCertificates, findings.LeafCertificates))
 	}
 }
 
@@ -583,8 +590,16 @@ func SaveCertificatesReport(r *LintCertificatesResult, outDir string) error {
 			fmt.Fprintf(file, "## %s\n", issuerName)
 			fmt.Fprintln(file, "")
 			printResultMarkDown(file, cert)
+
+			PrintFooter(file)
 		}
 	}
 
 	return nil
+}
+
+func PrintFooter(file *os.File) {
+	now := time.Now()
+	fmt.Fprintln(file, "")
+	fmt.Fprintf(file, "Generated: %s at %s", now.Format("02/01/2006"), now.Format("15:04:05"))
 }

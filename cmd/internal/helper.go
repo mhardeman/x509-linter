@@ -2,6 +2,7 @@ package internal
 
 import (
 	"encoding/pem"
+	"math"
 
 	"github.com/zmap/zcrypto/x509"
 )
@@ -59,5 +60,5 @@ func GetOrganizationName(c *x509.Certificate) string {
 
 // GetValidityDays returns validity period of the certificate in days
 func GetValidityDays(c *x509.Certificate) int {
-	return c.ValidityPeriod / 86400
+	return int(math.Ceil(float64(c.ValidityPeriod) / float64(86400)))
 }
