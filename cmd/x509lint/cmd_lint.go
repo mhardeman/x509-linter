@@ -245,7 +245,7 @@ func printResultMarkDown(w io.Writer, info *LintCertificateResult) {
 
 	if !info.Result.ErrorsPresent && !info.Result.WarningsPresent {
 		fmt.Fprintln(w, "")
-		fmt.Fprintf(w, "%d tests were ran and no issues were found\n", len(info.Result.Results))
+		fmt.Fprintf(w, "%d tests were ran and non warning or error level issues were found\n", len(info.Result.Results))
 	}
 
 	neHeader := false
