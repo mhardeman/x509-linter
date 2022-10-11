@@ -115,7 +115,7 @@ func RunLintCommand(certPath string, summary bool) error {
 			return fmt.Errorf("cannot lint the certificate, %w", err)
 		}
 
-		printResultMarkDown(os.Stdout, result)
+		PrintCertificateReport(os.Stdout, result)
 	}
 
 	return nil
@@ -218,58 +218,6 @@ func statusToString(s lint.LintStatus) string {
 	}
 }
 
-func printResultMarkDown(w io.Writer, info *LintCertificateResult) {
-	fmt.Fprintf(w, "### Certificate %s\n", info.Thumbprint)
-	fmt.Fprintf(w, "Tested At: %s\\\n", time.Unix(info.Result.Timestamp, 0).String())
-	fmt.Fprintf(w, "Initial Validity Period: %d day(s)\\\n", internal.GetValidityDays(info.Cert))
-	remainingDays := internal.GetRemainingDays(info.Cert, time.Now())
-	remaining := fmt.Sprintf("%d day(s)", remainingDays)
-	if remainingDays < 1 {
-		remaining = "Expired"
-	}
-	fmt.Fprintf(w, "Remaining Validity Period: %s\\\n", remaining)
-	fmt.Fprintf(w, "Subject: %s\\\n", strings.ReplaceAll(info.Cert.Subject.String(), "\\", "\\\\"))
-	fmt.Fprintf(w, "Issuer: %s\n\n", strings.ReplaceAll(info.Cert.Issuer.String(), "\\", "\\\\"))
-	fmt.Fprintf(w, "Link: %s\n\n", info.Link)
-	fmt.Fprintf(w, "View: [Click to view](https://understandingwebpki.com/?cert=%s)\n\n", url.QueryEscape(base64.StdEncoding.EncodeToString(info.Cert.Raw)))
-	fmt.Fprintln(w, "")
-	fmt.Fprintf(w, "| Code | Type | Details |\n")
-	fmt.Fprintf(w, "|------|------|---------|\n")
-	for code, result := range info.Result.Results {
-		if result.Status == lint.Error ||
-			result.Status == lint.Warn ||
-			result.Status == lint.Notice {
-			fmt.Fprintf(w, "| %s | %s | %s |\n", code, statusToString(result.Status), result.Details)
-		}
-	}
-
-	if !info.Result.ErrorsPresent && !info.Result.WarningsPresent {
-		fmt.Fprintln(w, "")
-		fmt.Fprintf(w, "%d tests were ran and non warning or error level issues were found\n", len(info.Result.Results))
-	}
-
-	neHeader := false
-	for code, result := range info.Result.Results {
-		if result.Status == lint.NE {
-			if !neHeader {
-				// Print header only once
-				fmt.Fprintln(w, "")
-				fmt.Fprintln(w, "### Not Effective")
-				fmt.Fprintln(w, "")
-				neHeader = true
-			}
-
-			fmt.Fprintf(w, "- %s\n", code)
-		}
-	}
-
-	if neHeader {
-		// Issue footer
-		fmt.Fprintln(w, "")
-		fmt.Fprintln(w, "\\* Tests use the ATIS 1000080 and Certificate Policy versions. Certificates issued before these dates are not evaluated as the rules may not have been enforce at the time")
-	}
-}
-
 func percent(a uint, b uint) float64 {
 	return float64(a) / float64(b) * 100
 }
@@ -294,6 +242,7 @@ type LintIssue struct {
 }
 
 type LintOrganizationResult struct {
+	Name         string
 	Issues       map[string]*LintIssue
 	Certificates []*LintCertificateResult
 	LintResult
@@ -365,6 +314,7 @@ func (t *LintCertificatesResult) AppendCertificate(c *LintCertificateResult) {
 	issuer := t.Issuers[c.Organization]
 	if issuer == nil {
 		issuer = &LintOrganizationResult{
+			Name:     c.Organization,
 			Issues:   map[string]*LintIssue{},
 			Findings: &Findings{},
 		}
@@ -462,49 +412,7 @@ func SaveOrganizationReport(r *LintCertificatesResult, outDir string) error {
 		}
 		defer file.Close()
 
-		// header
-		fmt.Fprintln(file, "# STIR/SHAKEN CA Ecosystem Compliance")
-
-		// summary
-		fmt.Fprintln(file, "")
-		fmt.Fprintf(file, "## %s\n", name)
-
-		fmt.Fprintln(file, "")
-		PrintFindingList(file, issuer.Findings)
-		fmt.Fprintf(file, "- Errors: %d\n", issuer.Errors)
-		fmt.Fprintf(file, "- Warnings: %d\n", issuer.Warnings)
-		fmt.Fprintf(file, "- Notices: %d\n", issuer.Notices)
-		fmt.Fprintf(file, "- Not Effective: %d\n", issuer.NE)
-		fmt.Fprintln(file, "")
-		fmt.Fprintln(file, "| Status | Code | Instances |")
-		fmt.Fprintln(file, "|--------|------|-----------|")
-		for code, issue := range issuer.Issues {
-			fmt.Fprintf(file, "| %s | %s | %d |\n", statusToString(issue.Type), code, issue.Amount)
-		}
-
-		// summery footer
-		fmt.Fprintln(file, "")
-		fmt.Fprintln(file, "\\* Tests use the ATIS 1000080 and Certificate Policy versions. Certificates issued before these dates are not evaluated as the rules may not have been enforce at the time")
-
-		// certificates
-		fmt.Fprintln(file, "")
-		fmt.Fprintln(file, "## Issued certificates")
-		fmt.Fprintln(file, "")
-		fmt.Fprintln(file, "| Created at | Name | Problems | Link |")
-		fmt.Fprintln(file, "|------------|------|----------|------|")
-		sort.Slice(issuer.Certificates[:], func(i, j int) bool {
-			return issuer.Certificates[i].Cert.NotBefore.Unix() < issuer.Certificates[j].Cert.NotBefore.Unix()
-		})
-		for _, certReport := range issuer.Certificates {
-			fmt.Fprintf(file, "| %s | %s | %s | %s |\n",
-				certReport.Cert.NotBefore.Format(time.RFC822),                                            // created at
-				certReport.Cert.Subject.CommonName,                                                       // name
-				fmt.Sprintf("%t", certReport.Result.ErrorsPresent || certReport.Result.WarningsPresent),  // problems
-				fmt.Sprintf("[view](%s)", url.PathEscape(path.Join(certReport.Thumbprint, "README.md"))), // link
-			)
-		}
-
-		PrintFooter(file)
+		PrintOrganizationReport(file, issuer)
 	}
 
 	return nil
@@ -517,6 +425,51 @@ func SaveTotalReport(r *LintCertificatesResult, outDir string) error {
 	}
 	defer file.Close()
 
+	PrintTotalReport(file, r)
+
+	return nil
+}
+
+// PrintFindingList prints the list of findings
+func PrintFindingList(w io.Writer, f *Findings) {
+	if f.LeafCertificates > 0 {
+		fmt.Fprintf(w, "- Average validity span as of leaf certificates %d days\n", f.ValidityDays/int(f.LeafCertificates))
+		fmt.Fprintf(w, "- Percentage of leaf certificates expiring in the next 30 days is %0.2f%%\n", percent(f.SoonExpiredCertificates, f.LeafCertificates))
+	}
+}
+
+func SaveCertificatesReport(r *LintCertificatesResult, outDir string) error {
+	for issuerName, issuer := range r.Issuers {
+		for _, cert := range issuer.Certificates {
+			// create folder
+			certDir := path.Join(outDir, issuerName, cert.Thumbprint)
+			if err := os.Mkdir(certDir, os.ModePerm); err != nil {
+				return fmt.Errorf("cannot create directory %s, %s", certDir, err.Error())
+			}
+
+			// create file
+			certFile := path.Join(path.Join(certDir, "README.md"))
+			file, err := os.Create(certFile)
+			if err != nil {
+				return fmt.Errorf("cannot create %s, %w", certFile, err)
+			}
+			defer file.Close()
+
+			PrintCertificateReportForIssuer(file, issuerName, cert)
+		}
+	}
+
+	return nil
+}
+
+func PrintFooter(file io.Writer) {
+	now := time.Now()
+	fmt.Fprintln(file, "")
+	fmt.Fprintf(file, "Generated: %s at %s", now.Format("02/01/2006"), now.Format("15:04:05"))
+}
+
+// PrintTotalReport prints the total report
+func PrintTotalReport(file io.Writer, r *LintCertificatesResult) {
 	fmt.Fprintln(file, "# STIR/SHAKEN CA Ecosystem Compliance")
 	fmt.Fprintln(file, "")
 	fmt.Fprintln(file, "[Approved Certificate Authorities](https://authenticate.iconectiv.com/approved-certification-authorities) in the STIR/SHAKEN ecosystem are required to meet technical requirements from [ATIS-1000080](https://access.atis.org/apps/group_public/document.php?document_id=62163) and policy requirements from the supporting CA ecosystem’s [Certificate Policy](https://authenticate.iconectiv.com/documents-authenticate).")
@@ -563,50 +516,113 @@ func SaveTotalReport(r *LintCertificatesResult, outDir string) error {
 	fmt.Fprintln(file, "| Not Effective	| Tests that exist in the current specifications but were not in effect at the time of issuance. |")
 
 	PrintFooter(file)
-
-	return nil
 }
 
-func PrintFindingList(file *os.File, findings *Findings) {
-	if findings.LeafCertificates > 0 {
-		fmt.Fprintf(file, "- Average validity span as of leaf certificates %d days\n", findings.ValidityDays/int(findings.LeafCertificates))
-		fmt.Fprintf(file, "- Percentage of leaf certificates expiring in the next 30 days is %0.2f%%\n", percent(findings.SoonExpiredCertificates, findings.LeafCertificates))
+func PrintOrganizationReport(w io.Writer, r *LintOrganizationResult) {
+	// header
+	fmt.Fprintln(w, "# STIR/SHAKEN CA Ecosystem Compliance")
+
+	// summary
+	fmt.Fprintln(w, "")
+	fmt.Fprintf(w, "## %s\n", r.Name)
+
+	fmt.Fprintln(w, "")
+	PrintFindingList(w, r.Findings)
+	fmt.Fprintf(w, "- Errors: %d\n", r.Errors)
+	fmt.Fprintf(w, "- Warnings: %d\n", r.Warnings)
+	fmt.Fprintf(w, "- Notices: %d\n", r.Notices)
+	fmt.Fprintf(w, "- Not Effective: %d\n", r.NE)
+	fmt.Fprintln(w, "")
+	fmt.Fprintln(w, "| Status | Code | Instances |")
+	fmt.Fprintln(w, "|--------|------|-----------|")
+	for code, issue := range r.Issues {
+		fmt.Fprintf(w, "| %s | %s | %d |\n", statusToString(issue.Type), code, issue.Amount)
 	}
+
+	// summery footer
+	fmt.Fprintln(w, "")
+	fmt.Fprintln(w, "\\* Tests use the ATIS 1000080 and Certificate Policy versions. Certificates issued before these dates are not evaluated as the rules may not have been enforce at the time")
+
+	// certificates
+	fmt.Fprintln(w, "")
+	fmt.Fprintln(w, "## Issued certificates")
+	fmt.Fprintln(w, "")
+	fmt.Fprintln(w, "| Created at | Name | Problems | Link |")
+	fmt.Fprintln(w, "|------------|------|----------|------|")
+	sort.Slice(r.Certificates[:], func(i, j int) bool {
+		return r.Certificates[i].Cert.NotBefore.Unix() < r.Certificates[j].Cert.NotBefore.Unix()
+	})
+	for _, certReport := range r.Certificates {
+		fmt.Fprintf(w, "| %s | %s | %s | %s |\n",
+			certReport.Cert.NotBefore.Format(time.RFC822),                                            // created at
+			certReport.Cert.Subject.CommonName,                                                       // name
+			fmt.Sprintf("%t", certReport.Result.ErrorsPresent || certReport.Result.WarningsPresent),  // problems
+			fmt.Sprintf("[view](%s)", url.PathEscape(path.Join(certReport.Thumbprint, "README.md"))), // link
+		)
+	}
+
+	PrintFooter(w)
 }
 
-func SaveCertificatesReport(r *LintCertificatesResult, outDir string) error {
-
-	for issuerName, issuer := range r.Issuers {
-		for _, cert := range issuer.Certificates {
-			// create folder
-			certDir := path.Join(outDir, issuerName, cert.Thumbprint)
-			if err := os.Mkdir(certDir, os.ModePerm); err != nil {
-				return fmt.Errorf("cannot create directory %s, %s", certDir, err.Error())
-			}
-
-			// create file
-			certFile := path.Join(path.Join(certDir, "README.md"))
-			file, err := os.Create(certFile)
-			if err != nil {
-				return fmt.Errorf("cannot create %s, %w", certFile, err)
-			}
-			defer file.Close()
-
-			// header
-			fmt.Fprintln(file, "# STIR/SHAKEN CA Ecosystem Compliance")
-			fmt.Fprintf(file, "## %s\n", issuerName)
-			fmt.Fprintln(file, "")
-			printResultMarkDown(file, cert)
-
-			PrintFooter(file)
+// PrintCertificateReport prints the certificate report
+func PrintCertificateReport(w io.Writer, r *LintCertificateResult) {
+	fmt.Fprintf(w, "### Certificate %s\n", r.Thumbprint)
+	fmt.Fprintf(w, "Tested At: %s\\\n", time.Unix(r.Result.Timestamp, 0).String())
+	fmt.Fprintf(w, "Initial Validity Period: %d day(s)\\\n", internal.GetValidityDays(r.Cert))
+	remainingDays := internal.GetRemainingDays(r.Cert, time.Now())
+	remaining := fmt.Sprintf("%d day(s)", remainingDays)
+	if remainingDays < 1 {
+		remaining = "Expired"
+	}
+	fmt.Fprintf(w, "Remaining Validity Period: %s\\\n", remaining)
+	fmt.Fprintf(w, "Subject: %s\\\n", strings.ReplaceAll(r.Cert.Subject.String(), "\\", "\\\\"))
+	fmt.Fprintf(w, "Issuer: %s\n\n", strings.ReplaceAll(r.Cert.Issuer.String(), "\\", "\\\\"))
+	fmt.Fprintf(w, "Link: %s\n\n", r.Link)
+	fmt.Fprintf(w, "View: [Click to view](https://understandingwebpki.com/?cert=%s)\n\n", url.QueryEscape(base64.StdEncoding.EncodeToString(r.Cert.Raw)))
+	fmt.Fprintln(w, "")
+	fmt.Fprintf(w, "| Code | Type | Details |\n")
+	fmt.Fprintf(w, "|------|------|---------|\n")
+	for code, result := range r.Result.Results {
+		if result.Status == lint.Error ||
+			result.Status == lint.Warn ||
+			result.Status == lint.Notice {
+			fmt.Fprintf(w, "| %s | %s | %s |\n", code, statusToString(result.Status), result.Details)
 		}
 	}
 
-	return nil
+	if !r.Result.ErrorsPresent && !r.Result.WarningsPresent {
+		fmt.Fprintln(w, "")
+		fmt.Fprintf(w, "%d tests were ran and non warning or error level issues were found\n", len(r.Result.Results))
+	}
+
+	neHeader := false
+	for code, result := range r.Result.Results {
+		if result.Status == lint.NE {
+			if !neHeader {
+				// Print header only once
+				fmt.Fprintln(w, "")
+				fmt.Fprintln(w, "### Not Effective")
+				fmt.Fprintln(w, "")
+				neHeader = true
+			}
+
+			fmt.Fprintf(w, "- %s\n", code)
+		}
+	}
+
+	if neHeader {
+		// Issue footer
+		fmt.Fprintln(w, "")
+		fmt.Fprintln(w, "\\* Tests use the ATIS 1000080 and Certificate Policy versions. Certificates issued before these dates are not evaluated as the rules may not have been enforce at the time")
+	}
 }
 
-func PrintFooter(file *os.File) {
-	now := time.Now()
-	fmt.Fprintln(file, "")
-	fmt.Fprintf(file, "Generated: %s at %s", now.Format("02/01/2006"), now.Format("15:04:05"))
+// PrintCertificateReportForIssuer prints the certificate report for specified issuer
+func PrintCertificateReportForIssuer(w io.Writer, issuerName string, r *LintCertificateResult) {
+	fmt.Fprintln(w, "# STIR/SHAKEN CA Ecosystem Compliance")
+	fmt.Fprintf(w, "## %s\n", issuerName)
+	fmt.Fprintln(w, "")
+	PrintCertificateReport(w, r)
+
+	PrintFooter(w)
 }
