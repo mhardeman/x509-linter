@@ -12,7 +12,7 @@ func init() {
 		Name:          "e_shaken_sti_root_certificate_policies",
 		Description:   "STI Root certificates shall not contain a Certificate Policies extension",
 		Citation:      ATIS1000080_STI_Citation,
-		Source:        SHAKEN,
+		Source:        ATIS_Source,
 		EffectiveDate: ATIS1000080_v004_Date,
 		Lint:          NewRootCertificatePolicies,
 	})

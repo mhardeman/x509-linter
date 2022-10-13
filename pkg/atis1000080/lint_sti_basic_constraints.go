@@ -21,7 +21,7 @@ func init() {
 		Name:          "e_shaken_sti_basic_constraints",
 		Description:   "STI certificates shall contain a Basic Constraints extension marked critical",
 		Citation:      ATIS1000080_STI_Citation,
-		Source:        SHAKEN,
+		Source:        ATIS_Source,
 		EffectiveDate: ATIS1000080_v004_Date,
 		Lint:          NewBasicConstraints,
 	})

@@ -12,7 +12,7 @@ func init() {
 		Name:          "e_shaken_sti_tn_auth_list",
 		Description:   "STI End-Entity certificates shall contain a TNAuthList extension as specified in RFC 8226. The TNAuthList shall contain a single SPC value",
 		Citation:      ATIS1000080_STI_Citation,
-		Source:        SHAKEN,
+		Source:        ATIS_Source,
 		EffectiveDate: ATIS1000080_v004_Leaf_Date,
 		Lint:          NewTnAuthList,
 	})

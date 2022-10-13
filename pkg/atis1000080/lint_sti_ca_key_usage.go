@@ -14,7 +14,7 @@ func init() {
 		Name:          "e_shaken_sti_ca_key_usage",
 		Description:   "STI certificates shall contain a Key Usage extension marked as critical. For root and intermediate certificates, the Key Usage extension shall contain the key usage value keyCertSign (5), and may contain the key usage values digitalSignature (0) and/or cRLSign (6)",
 		Citation:      ATIS1000080_STI_Citation,
-		Source:        SHAKEN,
+		Source:        ATIS_Source,
 		EffectiveDate: ATIS1000080_v004_Date,
 		Lint:          NewCaKeyUsage,
 	})

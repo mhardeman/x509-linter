@@ -15,9 +15,9 @@ func init() {
 	lint.RegisterLint(&lint.Lint{
 		Name:          "e_shaken_cp1_3_subject_sn",
 		Description:   "The ‘serialNumber’ attribute shall be included along with the CN",
-		Citation:      CP_v1_3_Citation,
-		Source:        SHAKEN,
-		EffectiveDate: CP_v1_3_Date,
+		Citation:      CPv1_3_Citation,
+		Source:        CPv1_3_Source,
+		EffectiveDate: CPv1_3_Date,
 		Lint:          NewSubjectSN,
 	})
 }

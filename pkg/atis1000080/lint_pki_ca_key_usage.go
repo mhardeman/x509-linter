@@ -13,7 +13,7 @@ func init() {
 		Name:          "n_shaken_pki_ca_key_usage",
 		Description:   "For CA certificates, the Key Usage extension should contain a single key usage value of keyCertSign",
 		Citation:      PKI_Citation,
-		Source:        SHAKEN,
+		Source:        PKI_Source,
 		EffectiveDate: util.ZeroDate,
 		Lint:          NewPkiCaKeyUsage,
 	})

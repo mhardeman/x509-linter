@@ -14,7 +14,7 @@ func init() {
 		Name:          "e_shaken_sti_certificate_policies",
 		Description:   "STI End-Entity certificates shall include a Certificate Policies extension containing a single OID value that identifies the SHAKEN Certificate Policy established by the STI-PA",
 		Citation:      ATIS1000080_STI_Citation,
-		Source:        SHAKEN,
+		Source:        ATIS_Source,
 		EffectiveDate: ATIS1000080_v004_Leaf_Date,
 		Lint:          NewCertificatePolicies,
 	})

@@ -12,7 +12,7 @@ func init() {
 		Name:          "e_shaken_sti_ca_issuer_dn",
 		Description:   subject_details,
 		Citation:      ATIS1000080_STI_Citation,
-		Source:        SHAKEN,
+		Source:        ATIS_Source,
 		EffectiveDate: ATIS1000080_v004_Leaf_Date,
 		Lint:          NewCaIssuerDn,
 	})

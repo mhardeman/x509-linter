@@ -14,7 +14,7 @@ func init() {
 		Name:          "e_shaken_sti_ca_subject_cn",
 		Description:   "For non-End-Entity CA certificates, the Common Name attribute shall include the text string \"SHAKEN\" and also indicate whether the certificate is a root or intermediate certificate",
 		Citation:      ATIS1000080_STI_Citation,
-		Source:        SHAKEN,
+		Source:        ATIS_Source,
 		EffectiveDate: ATIS1000080_v004_Date,
 		Lint:          NewCaSubjectCN,
 	})

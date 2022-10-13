@@ -12,7 +12,7 @@ func init() {
 		Name:          "e_shaken_sti_ca_version",
 		Description:   version_details,
 		Citation:      ATIS1000080_STI_Citation,
-		Source:        SHAKEN,
+		Source:        ATIS_Source,
 		EffectiveDate: ATIS1000080_v004_Date,
 		Lint:          NewCaVersion,
 	})

@@ -12,7 +12,7 @@ func init() {
 		Name:          "e_shaken_sti_ca_extension_unknown",
 		Description:   "STI certificate shall not include extensions that are not specified",
 		Citation:      ATIS1000080_STI_Citation,
-		Source:        SHAKEN,
+		Source:        ATIS_Source,
 		EffectiveDate: ATIS1000080_v004_Date,
 		Lint:          NewCaExtensionUnknown,
 	})

@@ -12,7 +12,7 @@ func init() {
 		Name:          "e_shaken_sti_key_usage",
 		Description:   "STI certificates shall contain a Key Usage extension marked as critical. For End-Entity certificates, the Key Usage extension shall contain a single key usage value of digitalSignature (0).",
 		Citation:      ATIS1000080_STI_Citation,
-		Source:        SHAKEN,
+		Source:        ATIS_Source,
 		EffectiveDate: ATIS1000080_v004_Leaf_Date,
 		Lint:          NewKeyUsage,
 	})

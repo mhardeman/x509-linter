@@ -12,7 +12,7 @@ func init() {
 		Name:          "n_shaken_sti_ca_certificate_policy_critical",
 		Description:   "STI certificates should contain a CertificatePolicies extension marked uncritical",
 		Citation:      ATIS1000080_STI_Citation,
-		Source:        SHAKEN,
+		Source:        ATIS_Source,
 		EffectiveDate: ATIS1000080_v004_Date,
 		Lint:          NewCaCertificatePolicyCritical,
 	})

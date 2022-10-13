@@ -15,7 +15,7 @@ func init() {
 		Name:          "e_shaken_sti_crl_distribution",
 		Description:   "STI End-Entity certificates shall contain a CRL Distribution Points extension containing a single DistributionPoint entry",
 		Citation:      ATIS1000080_STI_Citation,
-		Source:        SHAKEN,
+		Source:        ATIS_Source,
 		EffectiveDate: ATIS1000080_v004_Leaf_Date,
 		Lint:          NewCrlDistribution,
 	})

@@ -17,7 +17,7 @@ func init() {
 		Name:          "w_shaken_sti_subject_rdn_unknown",
 		Description:   subjectRdn_details,
 		Citation:      "Citation",
-		Source:        SHAKEN,
+		Source:        ATIS_Source,
 		EffectiveDate: ATIS1000080_v004_Leaf_Date,
 		Lint:          NewSubjectRdnUnknown,
 	})

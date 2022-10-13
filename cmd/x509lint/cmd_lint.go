@@ -148,7 +148,9 @@ func LintCertificate(cert *internal.PemCertificate, options *x509.VerifyOptions)
 		// IncludeSources: lint.SourceList{shaken.ShakenPolicy},
 		IncludeSources: lint.SourceList{
 			lint.RFC5280,
-			atis1000080.SHAKEN,
+			atis1000080.ATIS_Source,
+			atis1000080.CPv1_3_Source,
+			atis1000080.PKI_Source,
 		},
 		ExcludeNames: []string{
 			"w_distribution_point_missing_ldap_or_uri",
@@ -647,13 +649,14 @@ func PrintCertificateReport(w io.Writer, r *LintCertificateResult) {
 	fmt.Fprintf(w, "Link: %s\n\n", r.Link)
 	fmt.Fprintf(w, "View: [Click to view](https://understandingwebpki.com/?cert=%s)\n\n", url.QueryEscape(base64.StdEncoding.EncodeToString(r.Cert.Raw)))
 	fmt.Fprintln(w, "")
-	fmt.Fprintf(w, "| Code | Type | Details |\n")
-	fmt.Fprintf(w, "|------|------|---------|\n")
+	fmt.Fprintf(w, "| Code | Type | Source | Details |\n")
+	fmt.Fprintf(w, "|------|------|--------|---------|\n")
 	for code, result := range r.Result.Results {
 		if result.Status == lint.Error ||
 			result.Status == lint.Warn ||
 			result.Status == lint.Notice {
-			fmt.Fprintf(w, "| %s | %s | %s |\n", code, statusToString(result.Status), result.Details)
+			rule := lint.GlobalRegistry().ByName(code)
+			fmt.Fprintf(w, "| %s | %s | %s | %s |\n", code, statusToString(result.Status), rule.Source, result.Details)
 		}
 	}
 

@@ -24,7 +24,7 @@ func init() {
 			"the Authority Key Identifier shall contain a keyIdentifier field with a value that matches " +
 			"the Subject Key Identifier value of the same root certificate",
 		Citation:      ATIS1000080_STI_Citation,
-		Source:        SHAKEN,
+		Source:        ATIS_Source,
 		EffectiveDate: ATIS1000080_v004_Date,
 		Lint:          NewRootAuthorityKeyIdentifier,
 	})
