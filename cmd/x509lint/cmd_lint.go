@@ -600,10 +600,11 @@ func PrintOrganizationReport(w io.Writer, name string, r *LintTotalResult) {
 		fmt.Fprintf(w, "- Certificates with Notices: %d\n", issuer.Notices)
 		fmt.Fprintf(w, "- Certificates with tests not executed as the requirements were Not Effective at issuance time: %d\n", issuer.NE)
 		fmt.Fprintln(w, "")
-		fmt.Fprintln(w, "| Status | Code | Instances |")
-		fmt.Fprintln(w, "|--------|------|-----------|")
+		fmt.Fprintln(w, "| Status | Code | Source | Instances |")
+		fmt.Fprintln(w, "|--------|------|--------|-----------|")
 		for code, issue := range issuer.Issues {
-			fmt.Fprintf(w, "| %s | %s | %d |\n", statusToString(issue.Type), code, issue.Amount)
+			rule := lint.GlobalRegistry().ByName(code)
+			fmt.Fprintf(w, "| %s | %s | %s | %d |\n", statusToString(issue.Type), code, rule.Source, issue.Amount)
 		}
 
 		// summery footer
