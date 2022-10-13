@@ -9,7 +9,9 @@ import (
 	"github.com/zmap/zlint/v3/lint"
 )
 
-var CERT_KU_ICA_keyCertSign = ParseCert("MIIBETCBuKADAgECAgEBMAoGCCqGSM49BAMCMAAwHhcNMjIxMDAzMTUwNjUzWhcNMjIxMDA0MTUwNjUzWjAAMFkwEwYHKoZIzj0CAQYIKoZIzj0DAQcDQgAEZE4tMNzgxSiOD58aQHC4Kk2SSUpTCpqbCgaMJPeYBZMNNn2lAvaX+E/1ZWZmb+ElbieLSEgrY9nuUC//5BephqMjMCEwDwYDVR0TAQH/BAUwAwEB/zAOBgNVHQ8BAf8EBAMCAgQwCgYIKoZIzj0EAwIDSAAwRQIgQsoxlZWBhveYlvW3JA0Q6sQqY2jT2ijUjhBj8kfS39ACIQC5+oaKj538OFCxqhdyK85hUCTh2TYW9WDl+gXJHARFTw==")
+var CERT_KU_CA_keyCertSign = ParseCert("MIIBETCBuKADAgECAgEBMAoGCCqGSM49BAMCMAAwHhcNMjIxMDAzMTUwNjUzWhcNMjIxMDA0MTUwNjUzWjAAMFkwEwYHKoZIzj0CAQYIKoZIzj0DAQcDQgAEZE4tMNzgxSiOD58aQHC4Kk2SSUpTCpqbCgaMJPeYBZMNNn2lAvaX+E/1ZWZmb+ElbieLSEgrY9nuUC//5BephqMjMCEwDwYDVR0TAQH/BAUwAwEB/zAOBgNVHQ8BAf8EBAMCAgQwCgYIKoZIzj0EAwIDSAAwRQIgQsoxlZWBhveYlvW3JA0Q6sQqY2jT2ijUjhBj8kfS39ACIQC5+oaKj538OFCxqhdyK85hUCTh2TYW9WDl+gXJHARFTw==")
+var CERT_KU_CA_WITHOUT_keyCertSign = ParseCert("MIIBEjCBuKADAgECAgEBMAoGCCqGSM49BAMCMAAwHhcNMjIxMDAzMTUxMjUxWhcNMjIxMDA0MTUxMjUxWjAAMFkwEwYHKoZIzj0CAQYIKoZIzj0DAQcDQgAEMR86UkOcy2aZYuASNz0QcR3RrD0U6AkoFVDSwJv8eGZMu0MVL6lsAJr9L0LAcLUZ4q7nmZ61seGrQL5Gx+BRnaMjMCEwDwYDVR0TAQH/BAUwAwEB/zAOBgNVHQ8BAf8EBAMCB4AwCgYIKoZIzj0EAwIDSQAwRgIhAI1xmeTmKE6ryG/6U74/j96NzEdaco9B8djI8h/6ZKQLAiEA+7u434VC6tYemgqYqGlX3OfjN2Sz29syTQElI1YxXxk=")
+var CERT_KU_CA_keyCertSign_digitalSignature = ParseCert("MIIBETCBuKADAgECAgEBMAoGCCqGSM49BAMCMAAwHhcNMjIxMDAzMTUxMjA2WhcNMjIxMDA0MTUxMjA2WjAAMFkwEwYHKoZIzj0CAQYIKoZIzj0DAQcDQgAE7kp9whB/AdqlOSUntQ7WBbW3AYdlc/ppe3daPsQnKYwZc+I8KWmUE1FefH2e77P4Vh3RVsBUI/UXYpBwRYNR7qMjMCEwDwYDVR0TAQH/BAUwAwEB/zAOBgNVHQ8BAf8EBAMCAoQwCgYIKoZIzj0EAwIDSAAwRQIgaOdJM0woR2cVGENr+ljXwMedasasrThmC3ftKfHk0HQCIQDoDNTiwSOK2xcSrhp1XXMShjqKnOQK+al16cvEjuN6QQ==")
 
 func Test_caKeyUsage_CheckApplies(t *testing.T) {
 	CheckAppliesRootOrIntermediateCertificate(t, "caKeyUsage", atis1000080.NewCaKeyUsage)
@@ -27,7 +29,7 @@ func Test_caKeyUsage_Execute(t *testing.T) {
 		{
 			name: "KeyUsage with keyCertSign flag",
 			args: args{
-				c: CERT_KU_ICA_keyCertSign,
+				c: CERT_KU_CA_keyCertSign,
 			},
 			want: &lint.LintResult{
 				Status: lint.Pass,
@@ -54,7 +56,7 @@ func Test_caKeyUsage_Execute(t *testing.T) {
 		{
 			name: "KeyUsage with keyCertSign, digitalSignature flags",
 			args: args{
-				c: ParseCert("MIIBETCBuKADAgECAgEBMAoGCCqGSM49BAMCMAAwHhcNMjIxMDAzMTUxMjA2WhcNMjIxMDA0MTUxMjA2WjAAMFkwEwYHKoZIzj0CAQYIKoZIzj0DAQcDQgAE7kp9whB/AdqlOSUntQ7WBbW3AYdlc/ppe3daPsQnKYwZc+I8KWmUE1FefH2e77P4Vh3RVsBUI/UXYpBwRYNR7qMjMCEwDwYDVR0TAQH/BAUwAwEB/zAOBgNVHQ8BAf8EBAMCAoQwCgYIKoZIzj0EAwIDSAAwRQIgaOdJM0woR2cVGENr+ljXwMedasasrThmC3ftKfHk0HQCIQDoDNTiwSOK2xcSrhp1XXMShjqKnOQK+al16cvEjuN6QQ=="),
+				c: CERT_KU_CA_keyCertSign_digitalSignature,
 			},
 			want: &lint.LintResult{
 				Status: lint.Pass,
@@ -63,7 +65,7 @@ func Test_caKeyUsage_Execute(t *testing.T) {
 		{
 			name: "KeyUsage without keyCertSign flags",
 			args: args{
-				c: ParseCert("MIIBEjCBuKADAgECAgEBMAoGCCqGSM49BAMCMAAwHhcNMjIxMDAzMTUxMjUxWhcNMjIxMDA0MTUxMjUxWjAAMFkwEwYHKoZIzj0CAQYIKoZIzj0DAQcDQgAEMR86UkOcy2aZYuASNz0QcR3RrD0U6AkoFVDSwJv8eGZMu0MVL6lsAJr9L0LAcLUZ4q7nmZ61seGrQL5Gx+BRnaMjMCEwDwYDVR0TAQH/BAUwAwEB/zAOBgNVHQ8BAf8EBAMCB4AwCgYIKoZIzj0EAwIDSQAwRgIhAI1xmeTmKE6ryG/6U74/j96NzEdaco9B8djI8h/6ZKQLAiEA+7u434VC6tYemgqYqGlX3OfjN2Sz29syTQElI1YxXxk="),
+				c: CERT_KU_CA_WITHOUT_keyCertSign,
 			},
 			want: &lint.LintResult{
 				Status:  lint.Error,

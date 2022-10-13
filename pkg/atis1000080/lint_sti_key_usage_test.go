@@ -72,7 +72,7 @@ func Test_keyUsage_CheckApplies(t *testing.T) {
 		{
 			name: "CA cert",
 			args: args{
-				c: CERT_KU_ICA_keyCertSign,
+				c: CERT_KU_CA_keyCertSign,
 			},
 			want: false,
 		},

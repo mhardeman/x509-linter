@@ -5,6 +5,8 @@ import (
 	"github.com/zmap/zlint/v3/lint"
 )
 
+const id_KeyUsages = "2.5.29.15"
+
 type caKeyUsage struct{}
 
 func init() {
@@ -29,7 +31,7 @@ func (*caKeyUsage) CheckApplies(c *x509.Certificate) bool {
 
 // Execute implements lint.LintInterface
 func (*caKeyUsage) Execute(c *x509.Certificate) *lint.LintResult {
-	ext := FindExtension(c, "2.5.29.15")
+	ext := FindExtension(c, id_KeyUsages)
 	if ext != nil && ext.Critical {
 		flag := x509.KeyUsageCertSign | x509.KeyUsageCRLSign | x509.KeyUsageDigitalSignature
 		if c.KeyUsage&x509.KeyUsageCertSign == x509.KeyUsageCertSign &&

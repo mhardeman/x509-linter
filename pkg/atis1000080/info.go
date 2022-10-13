@@ -21,4 +21,5 @@ var (
 	// January 10, 2022
 	CP_v1_3_Date     = time.Date(2022, time.January, 10, 0, 0, 0, 0, time.UTC)
 	CP_v1_3_Citation = "ToKENs (SHAKEN) Certificate Policy / "
+	PKI_Citation     = "PKI Best Practice"
 )
