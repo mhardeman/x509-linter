@@ -1,19 +1,24 @@
 package atis1000080
 
 import (
+	"fmt"
+
 	"github.com/zmap/zcrypto/x509"
 	"github.com/zmap/zlint/v3/lint"
 )
+
+const id_SubjectKeyIdentifier = "2.5.29.14"
+const subjectKeyIdentifier_details = "STI certificates shall contain a Subject Key Identifier extension"
 
 type subjectKeyIdentifier struct{}
 
 func init() {
 	lint.RegisterLint(&lint.Lint{
 		Name:          "e_shaken_sti_subject_key_identifier",
-		Description:   "STI certificates shall contain a Subject Key Identifier extension",
+		Description:   subjectKeyIdentifier_details,
 		Citation:      ATIS1000080_STI_Citation,
 		Source:        SHAKEN,
-		EffectiveDate: ATIS1000080_v004_Date,
+		EffectiveDate: ATIS1000080_v004_Leaf_Date,
 		Lint:          NewSubjectKeyIdentifier,
 	})
 }
@@ -29,15 +34,23 @@ func (*subjectKeyIdentifier) CheckApplies(c *x509.Certificate) bool {
 
 // Execute implements lint.LintInterface
 func (*subjectKeyIdentifier) Execute(c *x509.Certificate) *lint.LintResult {
-	ext := FindExtension(c, "2.5.29.14")
-	if ext != nil {
+	if err := assertSubjectKeyIdentifier(c); err != nil {
 		return &lint.LintResult{
-			Status: lint.Pass,
+			Status:  lint.Error,
+			Details: err.Error(),
 		}
 	}
 
-	return DowngradeATIS1000080(c, &lint.LintResult{
-		Status:  lint.Error,
-		Details: "STI certificates shall contain a Subject Key Identifier extension",
-	})
+	return &lint.LintResult{
+		Status: lint.Pass,
+	}
+}
+
+func assertSubjectKeyIdentifier(c *x509.Certificate) error {
+	ext := FindExtension(c, id_SubjectKeyIdentifier)
+	if ext == nil {
+		return fmt.Errorf(subjectKeyIdentifier_details)
+	}
+
+	return nil
 }

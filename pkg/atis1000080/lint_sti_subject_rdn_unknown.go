@@ -1,35 +1,24 @@
 package atis1000080
 
 import (
+	"fmt"
+
 	"github.com/zmap/zcrypto/x509"
+	"github.com/zmap/zcrypto/x509/pkix"
 	"github.com/zmap/zlint/v3/lint"
 )
 
+const subjectRdn_details = "STI certificate shall not include RDNs that are not specified"
+
 type subjectRdnUnknown struct{}
-
-var shakenRdn = []string{
-	"2.5.4.3",  // commonName
-	"2.5.4.6",  // countryName
-	"2.5.4.10", // organization
-	"2.5.4.5",  // SERIALNUMBER
-}
-
-func isShakenRdn(id string) bool {
-	for _, rdn := range shakenRdn {
-		if id == rdn {
-			return true
-		}
-	}
-	return false
-}
 
 func init() {
 	lint.RegisterLint(&lint.Lint{
 		Name:          "w_shaken_sti_subject_rdn_unknown",
-		Description:   "STI certificate shall not include RDNs that are not specified",
+		Description:   subjectRdn_details,
 		Citation:      "Citation",
 		Source:        SHAKEN,
-		EffectiveDate: ATIS1000080_v004_Date,
+		EffectiveDate: ATIS1000080_v004_Leaf_Date,
 		Lint:          NewSubjectRdnUnknown,
 	})
 }
@@ -40,29 +29,35 @@ func NewSubjectRdnUnknown() lint.LintInterface {
 
 // CheckApplies implements lint.LintInterface
 func (*subjectRdnUnknown) CheckApplies(c *x509.Certificate) bool {
-	return true
+	return !c.IsCA
 }
 
 // Execute implements lint.LintInterface
 func (*subjectRdnUnknown) Execute(c *x509.Certificate) *lint.LintResult {
-	unknownRdn := []string{}
-	for _, name := range c.Subject.Names {
-		nameType := name.Type.String()
-		if isShakenRdn(nameType) {
-			continue
-		}
-
-		unknownRdn = append(unknownRdn, nameType)
-	}
-
-	if len(unknownRdn) != 0 {
-		return DowngradeATIS1000080(c, &lint.LintResult{
+	if err := assertNameUnknown(c.Subject.Names, []string{
+		"2.5.4.3",  // commonName from ATIS
+		"2.5.4.6",  // countryName from ATIS
+		"2.5.4.10", // organization from ATIS
+		"2.5.4.5",  // SERIALNUMBER from CP1.1
+	}); err != nil {
+		return &lint.LintResult{
 			Status:  lint.Warn,
-			Details: "STI certificate shall not include RDNs that are not specified",
-		})
+			Details: err.Error(),
+		}
 	}
 
 	return &lint.LintResult{
 		Status: lint.Pass,
 	}
+}
+
+func assertNameUnknown(n []pkix.AttributeTypeAndValue, knownAttrs []string) error {
+	list := newStringList(knownAttrs)
+	for _, name := range n {
+		if !list.Contains(name.Type.String()) {
+			return fmt.Errorf(subjectRdn_details)
+		}
+	}
+
+	return nil
 }

@@ -9,7 +9,11 @@ import (
 	"github.com/zmap/zlint/v3/lint"
 )
 
-func Test_subjectPublicKeyIdentifier_Execute(t *testing.T) {
+func Test_subjectKeyIdentifier_CheckApplies(t *testing.T) {
+	CheckAppliesLeafCertificate(t, "subjectKeyIdentifier", atis1000080.NewSubjectKeyIdentifier)
+}
+
+func Test_subjectKeyIdentifier_Execute(t *testing.T) {
 	type args struct {
 		c *x509.Certificate
 	}
@@ -20,7 +24,7 @@ func Test_subjectPublicKeyIdentifier_Execute(t *testing.T) {
 	}{
 		{
 			name: "extension is absent",
-			args: args{c: TEST_CERT_VERSION_INCORRECT},
+			args: args{c: CERT_LEAF},
 			want: &lint.LintResult{
 				Status:  lint.Error,
 				Details: "STI certificates shall contain a Subject Key Identifier extension",

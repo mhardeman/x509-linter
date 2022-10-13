@@ -9,6 +9,10 @@ import (
 	"github.com/zmap/zlint/v3/lint"
 )
 
+func Test_serialNumber_CheckApplies(t *testing.T) {
+	CheckAppliesLeafCertificate(t, "serialNumber", atis1000080.NewSerialNumber)
+}
+
 func Test_serialNumber_Execute(t *testing.T) {
 	type args struct {
 		c *x509.Certificate
@@ -33,7 +37,7 @@ func Test_serialNumber_Execute(t *testing.T) {
 		{
 			name: "SN is negative", // -9223372036854776000
 			args: args{
-				c: ParseCert("MIH3MIGeoAMCAQICCIAAAAAAAAABMAoGCCqGSM49BAMCMAAwHhcNMjIwOTIyMTMwNjEwWhcNMjIwOTIzMTMwNjEwWjAAMFkwEwYHKoZIzj0CAQYIKoZIzj0DAQcDQgAEHggTCbcixmrHtnAQyawuXvDnbn8ucB2/Osv0DFYcaJYIK4jA0HJY9+MGFxWtPKsk5bZdw0vEfEaaLME4PmImnaMCMAAwCgYIKoZIzj0EAwIDSAAwRQIgCopMOKXD7w4Wq9JPIAiESNKnHhj+lBjvjLpvg6jd7GACIQCvdcdnPFHMOPM9qLav5x7frLYcg00tITa7Gdf5Mq1LrA=="),
+				c: CERT_SN_NEGATIVE,
 			},
 			want: &lint.LintResult{
 				Status:  lint.Error,
@@ -43,7 +47,7 @@ func Test_serialNumber_Execute(t *testing.T) {
 		{
 			name: "SN is 64-bit with 0 first octet", // ASN(hex): 02 08 0080000000000001
 			args: args{
-				c: ParseCert("MIH3MIGeoAMCAQICCACAAAAAAAABMAoGCCqGSM49BAMCMAAwHhcNMjIwOTIyMTMxMDIxWhcNMjIwOTIzMTMxMDIxWjAAMFkwEwYHKoZIzj0CAQYIKoZIzj0DAQcDQgAE//P/CaLZm8dXmFemUOb5XOHPAlIvAPq8JuRN69i+xHa1JIMIq3fiJ9QJfIjTX3ub3ZSXc/hIp7gacU02Ab0MlaMCMAAwCgYIKoZIzj0EAwIDSAAwRQIhAPCZsDcoCQEgv31CjOIKUJkZYq5wsHL95tVcK+7xg7dUAiB8MbfqSKVkDhPZnWzy0ZSPRa8Jzxc0AXM0MSWi1xNYTg=="),
+				c: CERT_SN_INCORRECT_FIRST_BYTE,
 			},
 			want: &lint.LintResult{
 				Status:  lint.Error,
@@ -53,7 +57,7 @@ func Test_serialNumber_Execute(t *testing.T) {
 		{
 			name: "SN is less than 64-bit", // ASN(hex): 02 07 70000000000001
 			args: args{
-				c: ParseCert("MIH3MIGeoAMCAQICCACAAAAAAAABMAoGCCqGSM49BAMCMAAwHhcNMjIwOTIyMTMxMzI1WhcNMjIwOTIzMTMxMzI1WjAAMFkwEwYHKoZIzj0CAQYIKoZIzj0DAQcDQgAEohe1I0oCMJKZh6IXxNQn0jf7UTxRPLzwC+OPVYo9ZNi+hnf7JCu1TfJqyrUZcCpG6QFTJ79JToW+IloaZIqnfqMCMAAwCgYIKoZIzj0EAwIDSAAwRQIgSbOPYLTSTMln8Xu7zGAUGz66kxwLDFqjpSOI83BFd+8CIQD368TanGFzBNZPiaip1Y79vqc99Fv3bnNCTExc4vQDzQ=="),
+				c: CERT_SN_LESS_64BITS,
 			},
 			want: &lint.LintResult{
 				Status:  lint.Error,
@@ -63,7 +67,7 @@ func Test_serialNumber_Execute(t *testing.T) {
 		{
 			name: "SN is correct", // ASN(hex): 02 08 0100000000000000
 			args: args{
-				c: ParseCert("MIH3MIGeoAMCAQICCAEAAAAAAAAAMAoGCCqGSM49BAMCMAAwHhcNMjIwOTIyMTMxOTU5WhcNMjIwOTIzMTMxOTU5WjAAMFkwEwYHKoZIzj0CAQYIKoZIzj0DAQcDQgAE8yykAVGm9rSIrpKxfJdrn2C/OL4AA9uXAhfqGrSIxFOZstPglBTtBN0dS/hEAegr9c6B2V+YMg/0ZZdvYChCYKMCMAAwCgYIKoZIzj0EAwIDSAAwRQIgfpk6JLO/wZTicpsgLZM/dw5uFD87XtT5+140u0OIb6wCIQDEVKBMIEb1c11zTiZ+e/N4pyCLQWefVVxZrpXMYCmkAQ=="),
+				c: TEST_CERT_CORRECT,
 			},
 			want: &lint.LintResult{
 				Status: lint.Pass,

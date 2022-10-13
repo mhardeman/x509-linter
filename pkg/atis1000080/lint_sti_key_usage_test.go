@@ -59,3 +59,37 @@ func Test_keyUsage_Execute(t *testing.T) {
 		})
 	}
 }
+
+func Test_keyUsage_CheckApplies(t *testing.T) {
+	type args struct {
+		c *x509.Certificate
+	}
+	tests := []struct {
+		name string
+		args args
+		want bool
+	}{
+		{
+			name: "CA cert",
+			args: args{
+				c: CERT_KU_ICA_keyCertSign,
+			},
+			want: false,
+		},
+		{
+			name: "Leaf cert",
+			args: args{
+				c: TEST_CERT_CORRECT,
+			},
+			want: true,
+		},
+	}
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			k := atis1000080.NewKeyUsage()
+			if got := k.CheckApplies(tt.args.c); got != tt.want {
+				t.Errorf("keyUsage.CheckApplies() = %v, want %v", got, tt.want)
+			}
+		})
+	}
+}

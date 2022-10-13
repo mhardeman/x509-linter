@@ -9,6 +9,10 @@ import (
 	"github.com/zmap/zlint/v3/lint"
 )
 
+func Test_subjectPublicKey_CheckApplies(t *testing.T) {
+	CheckAppliesLeafCertificate(t, "subjectPublicKey", atis1000080.NewSubjectPublicKey)
+}
+
 func Test_subjectPublicKey_Execute(t *testing.T) {
 	type args struct {
 		c *x509.Certificate
@@ -39,7 +43,7 @@ func Test_subjectPublicKey_Execute(t *testing.T) {
 			},
 		},
 		{
-			name: "correct certificate version",
+			name: "correct certificate",
 			args: args{
 				c: TEST_CERT_CORRECT,
 			},

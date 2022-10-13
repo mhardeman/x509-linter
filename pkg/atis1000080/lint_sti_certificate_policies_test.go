@@ -20,7 +20,9 @@ func Test_certificatePolicies_Execute(t *testing.T) {
 	}{
 		{
 			name: "extension is absent",
-			args: args{c: ParseCert("MIIBDDCBs6ADAgECAgEBMAoGCCqGSM49BAMCMA0xCzAJBgNVBAMTAkNBMB4XDTIyMTAxMDE3MjAyMVoXDTIyMTAxMTE3MjAyMVowDzENMAsGA1UEAxMETGVhZjBZMBMGByqGSM49AgEGCCqGSM49AwEHA0IABGG0PGLskEbiBY0xDuYg8vPMzcTyLvhBPl40uARkuu4uTScK2fQL5VP7d3t3JkPEmstVQS4Cqc/fvVJRQIdKV06jAjAAMAoGCCqGSM49BAMCA0gAMEUCIQCU2PrUfAocvNNzP2du/77S+fBR4wLu7ug3XVwvTISJVwIgEOOFivZJa0MqmWkwqB9iA1KwiyfgW6k2tATHEw7aafo=")},
+			args: args{
+				c: CERT_LEAF,
+			},
 			want: &lint.LintResult{
 				Status:  lint.Error,
 				Details: "STI certificate shall include a Certificate Policies extension containing a single SHAKEN Certificate Policy",
@@ -31,7 +33,7 @@ func Test_certificatePolicies_Execute(t *testing.T) {
 			args: args{c: TEST_CERT_SHAKEN_POLICY_ABSENT},
 			want: &lint.LintResult{
 				Status:  lint.Error,
-				Details: "STI certificate shall include a Certificate Policies extension containing a single SHAKEN Certificate Policy",
+				Details: "STI certificate shall contain '2.16.840.1.114569.1.1.3' policy",
 			},
 		},
 		{
@@ -58,4 +60,8 @@ func Test_certificatePolicies_Execute(t *testing.T) {
 			}
 		})
 	}
+}
+
+func Test_certificatePolicies_CheckApplies(t *testing.T) {
+	CheckAppliesLeafCertificate(t, "certificatePolicies", atis1000080.NewCertificatePolicies)
 }

@@ -47,3 +47,7 @@ func Test_extensionUnknown_Execute(t *testing.T) {
 		})
 	}
 }
+
+func Test_extensionList_Contains(t *testing.T) {
+	CheckAppliesLeafCertificate(t, "extensionList", atis1000080.NewExtensionUnknown)
+}

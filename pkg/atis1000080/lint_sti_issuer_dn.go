@@ -5,30 +5,30 @@ import (
 	"github.com/zmap/zlint/v3/lint"
 )
 
-type issuer struct{}
+type issuerDn struct{}
 
 func init() {
 	lint.RegisterLint(&lint.Lint{
-		Name:          "e_shaken_sti_issuer",
+		Name:          "e_shaken_sti_issuer_dn",
 		Description:   subject_details,
 		Citation:      ATIS1000080_STI_Citation,
 		Source:        SHAKEN,
-		EffectiveDate: ATIS1000080_v004_Date,
-		Lint:          NewIssuer,
+		EffectiveDate: ATIS1000080_v004_Leaf_Date,
+		Lint:          NewIssuerDn,
 	})
 }
 
-func NewIssuer() lint.LintInterface {
-	return &issuer{}
+func NewIssuerDn() lint.LintInterface {
+	return &issuerDn{}
 }
 
 // CheckApplies implements lint.LintInterface
-func (*issuer) CheckApplies(c *x509.Certificate) bool {
+func (*issuerDn) CheckApplies(c *x509.Certificate) bool {
 	return !c.IsCA
 }
 
 // Execute implements lint.LintInterface
-func (*issuer) Execute(c *x509.Certificate) *lint.LintResult {
+func (*issuerDn) Execute(c *x509.Certificate) *lint.LintResult {
 	missedAttrs := make([]string, 0)
 
 	// check names
@@ -43,10 +43,10 @@ func (*issuer) Execute(c *x509.Certificate) *lint.LintResult {
 	}
 
 	if len(missedAttrs) != 0 {
-		return DowngradeATIS1000080(c, &lint.LintResult{
+		return &lint.LintResult{
 			Status:  lint.Error,
 			Details: "The DN shall contain a Country (C=) attribute, a Common Name (CN=) attribute and an Organization (O=) attribute",
-		})
+		}
 	}
 
 	return &lint.LintResult{

@@ -13,7 +13,7 @@ func init() {
 		Description:   "STI certificates should contain a CertificatePolicies extension marked uncritical",
 		Citation:      ATIS1000080_STI_Citation,
 		Source:        SHAKEN,
-		EffectiveDate: ATIS1000080_v004_Date,
+		EffectiveDate: ATIS1000080_v004_Leaf_Date,
 		Lint:          NewCertificatePolicyCritical,
 	})
 }
@@ -24,12 +24,12 @@ func NewCertificatePolicyCritical() lint.LintInterface {
 
 // CheckApplies implements lint.LintInterface
 func (*certificatePolicyCritical) CheckApplies(c *x509.Certificate) bool {
-	return FindExtension(c, "2.5.29.32") != nil
+	return !c.IsCA && FindExtension(c, id_CertificatePolicies) != nil
 }
 
 // Execute implements lint.LintInterface
 func (*certificatePolicyCritical) Execute(c *x509.Certificate) *lint.LintResult {
-	certPoliciesExt := FindExtension(c, "2.5.29.32")
+	certPoliciesExt := FindExtension(c, id_CertificatePolicies)
 	if certPoliciesExt != nil && certPoliciesExt.Critical {
 		return &lint.LintResult{
 			Status:  lint.Notice,

@@ -1,6 +1,7 @@
 package atis1000080
 
 import (
+	"fmt"
 	"net/http"
 
 	"github.com/zmap/zcrypto/x509"
@@ -12,15 +13,15 @@ type crlDistribution struct{}
 func init() {
 	lint.RegisterLint(&lint.Lint{
 		Name:          "e_shaken_sti_crl_distribution",
-		Description:   "STI intermediate and End-Entity certificates shall contain a CRL Distribution Points extension containing a single DistributionPoint entry",
+		Description:   "STI End-Entity certificates shall contain a CRL Distribution Points extension containing a single DistributionPoint entry",
 		Citation:      ATIS1000080_STI_Citation,
 		Source:        SHAKEN,
-		EffectiveDate: ATIS1000080_v004_Date,
-		Lint:          NewCRLDistribution,
+		EffectiveDate: ATIS1000080_v004_Leaf_Date,
+		Lint:          NewCrlDistribution,
 	})
 }
 
-func NewCRLDistribution() lint.LintInterface {
+func NewCrlDistribution() lint.LintInterface {
 	return &crlDistribution{}
 }
 
@@ -31,30 +32,31 @@ func (*crlDistribution) CheckApplies(c *x509.Certificate) bool {
 
 // Execute implements lint.LintInterface
 func (*crlDistribution) Execute(c *x509.Certificate) *lint.LintResult {
-	ext := FindExtension(c, "2.5.29.31")
-	if ext != nil {
-		if len(c.CRLDistributionPoints) == 1 {
-			_, err := http.Get(c.CRLDistributionPoints[0])
-			if err == nil {
-				return DowngradeATIS1000080(c, &lint.LintResult{
-					Status:  lint.Error,
-					Details: "CRL Distribution Point shall be reachable if the requesting IP address within the program ACLs",
-				})
-			}
-
+	if ext := FindExtension(c, id_CrlDistribution); ext != nil {
+		if err := assertCrlDistributionPoint(c); err != nil {
 			return &lint.LintResult{
-				Status: lint.Pass,
+				Status:  lint.Error,
+				Details: err.Error(),
 			}
 		}
 
-		return DowngradeATIS1000080(c, &lint.LintResult{
-			Status:  lint.Error,
-			Details: "CRL Distribution Points extension should contain a single DistributionPoint entry",
-		})
+		return &lint.LintResult{
+			Status: lint.Pass,
+		}
 	}
 
-	return DowngradeATIS1000080(c, &lint.LintResult{
+	return &lint.LintResult{
 		Status:  lint.Error,
-		Details: "STI intermediate and End-Entity certificates shall contain a CRL Distribution Points extension",
-	})
+		Details: "STI End-Entity certificates shall contain a CRL Distribution Points extension",
+	}
+}
+
+func assertCrlDistributionPoint(c *x509.Certificate) error {
+	if len(c.CRLDistributionPoints) != 1 {
+		return fmt.Errorf("CRL Distribution Points extension should contain a single DistributionPoint entry")
+	}
+	if _, err := http.Get(c.CRLDistributionPoints[0]); err == nil {
+		return fmt.Errorf("CRL Distribution Point shall be reachable if the requesting IP address within the program ACLs")
+	}
+	return nil
 }

@@ -16,7 +16,7 @@ func init() {
 		Description:   "The Common Name attribute of an End-Entity certificate shall contain the text string “SHAKEN”, followed by a single space, followed by the SPC value identified in the TNAuthList of the End-Entity certificate",
 		Citation:      ATIS1000080_STI_Citation,
 		Source:        SHAKEN,
-		EffectiveDate: ATIS1000080_v004_Date,
+		EffectiveDate: ATIS1000080_v004_Leaf_Date,
 		Lint:          NewSubjectCN,
 	})
 }
@@ -34,18 +34,18 @@ func (*subjectCN) CheckApplies(c *x509.Certificate) bool {
 func (*subjectCN) Execute(c *x509.Certificate) *lint.LintResult {
 	spc, err := GetTNEntrySPC(c)
 	if err != nil {
-		return DowngradeATIS1000080(c, &lint.LintResult{
+		return &lint.LintResult{
 			Status:  lint.Error,
 			Details: fmt.Sprintf("Cannot get SPC value from the TNAuthList extension, %s", err.Error()),
-		})
+		}
 	}
 
 	match := fmt.Sprintf("SHAKEN %s", spc)
 	if !strings.Contains(c.Subject.CommonName, match) {
-		return DowngradeATIS1000080(c, &lint.LintResult{
+		return &lint.LintResult{
 			Status:  lint.Error,
 			Details: fmt.Sprintf("Common name shall contain the text string '%s'", match),
-		})
+		}
 	}
 
 	return &lint.LintResult{

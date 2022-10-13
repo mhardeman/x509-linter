@@ -9,6 +9,10 @@ import (
 	"github.com/zmap/zlint/v3/lint"
 )
 
+func Test_signatureAlgorithm_CheckApplies(t *testing.T) {
+	CheckAppliesLeafCertificate(t, "signatureAlgorithm", atis1000080.NewSignatureAlgorithm)
+}
+
 func Test_signatureAlgorithm_Execute(t *testing.T) {
 	type args struct {
 		c *x509.Certificate

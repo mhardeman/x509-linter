@@ -6,6 +6,8 @@
     "**/CVS": true,
     "**/.DS_Store": true,
     "**/Thumbs.db": true,
-    "certs": true
+    "certs": true,
+    "x_certs": true,
+    // "x_report": true
   }
 }

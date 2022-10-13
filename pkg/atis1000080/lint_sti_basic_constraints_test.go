@@ -51,3 +51,7 @@ func Test_basicConstraints_Execute(t *testing.T) {
 		})
 	}
 }
+
+func Test_basicConstraints_CheckApplies(t *testing.T) {
+	CheckAppliesAllCertificates(t, "basicConstraints", atis1000080.NewBasicConstraints)
+}

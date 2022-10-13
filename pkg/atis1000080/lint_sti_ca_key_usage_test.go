@@ -9,38 +9,10 @@ import (
 	"github.com/zmap/zlint/v3/lint"
 )
 
+var CERT_KU_ICA_keyCertSign = ParseCert("MIIBETCBuKADAgECAgEBMAoGCCqGSM49BAMCMAAwHhcNMjIxMDAzMTUwNjUzWhcNMjIxMDA0MTUwNjUzWjAAMFkwEwYHKoZIzj0CAQYIKoZIzj0DAQcDQgAEZE4tMNzgxSiOD58aQHC4Kk2SSUpTCpqbCgaMJPeYBZMNNn2lAvaX+E/1ZWZmb+ElbieLSEgrY9nuUC//5BephqMjMCEwDwYDVR0TAQH/BAUwAwEB/zAOBgNVHQ8BAf8EBAMCAgQwCgYIKoZIzj0EAwIDSAAwRQIgQsoxlZWBhveYlvW3JA0Q6sQqY2jT2ijUjhBj8kfS39ACIQC5+oaKj538OFCxqhdyK85hUCTh2TYW9WDl+gXJHARFTw==")
+
 func Test_caKeyUsage_CheckApplies(t *testing.T) {
-	type args struct {
-		c *x509.Certificate
-	}
-	tests := []struct {
-		name string
-		args args
-		want bool
-	}{
-		{
-			name: "CA cert",
-			args: args{
-				c: ParseCert("MIIBETCBuKADAgECAgEBMAoGCCqGSM49BAMCMAAwHhcNMjIxMDAzMTUwNjUzWhcNMjIxMDA0MTUwNjUzWjAAMFkwEwYHKoZIzj0CAQYIKoZIzj0DAQcDQgAEZE4tMNzgxSiOD58aQHC4Kk2SSUpTCpqbCgaMJPeYBZMNNn2lAvaX+E/1ZWZmb+ElbieLSEgrY9nuUC//5BephqMjMCEwDwYDVR0TAQH/BAUwAwEB/zAOBgNVHQ8BAf8EBAMCAgQwCgYIKoZIzj0EAwIDSAAwRQIgQsoxlZWBhveYlvW3JA0Q6sQqY2jT2ijUjhBj8kfS39ACIQC5+oaKj538OFCxqhdyK85hUCTh2TYW9WDl+gXJHARFTw=="),
-			},
-			want: true,
-		},
-		{
-			name: "Leaf cert",
-			args: args{
-				c: TEST_CERT_CORRECT,
-			},
-			want: false,
-		},
-	}
-	for _, tt := range tests {
-		t.Run(tt.name, func(t *testing.T) {
-			c := atis1000080.NewCaKeyUsage()
-			if got := c.CheckApplies(tt.args.c); got != tt.want {
-				t.Errorf("caKeyUsage.CheckApplies() = %v, want %v", got, tt.want)
-			}
-		})
-	}
+	CheckAppliesRootOrIntermediateCertificate(t, "caKeyUsage", atis1000080.NewCaKeyUsage)
 }
 
 func Test_caKeyUsage_Execute(t *testing.T) {
@@ -55,7 +27,7 @@ func Test_caKeyUsage_Execute(t *testing.T) {
 		{
 			name: "KeyUsage with keyCertSign flag",
 			args: args{
-				c: ParseCert("MIIBETCBuKADAgECAgEBMAoGCCqGSM49BAMCMAAwHhcNMjIxMDAzMTUwNjUzWhcNMjIxMDA0MTUwNjUzWjAAMFkwEwYHKoZIzj0CAQYIKoZIzj0DAQcDQgAEZE4tMNzgxSiOD58aQHC4Kk2SSUpTCpqbCgaMJPeYBZMNNn2lAvaX+E/1ZWZmb+ElbieLSEgrY9nuUC//5BephqMjMCEwDwYDVR0TAQH/BAUwAwEB/zAOBgNVHQ8BAf8EBAMCAgQwCgYIKoZIzj0EAwIDSAAwRQIgQsoxlZWBhveYlvW3JA0Q6sQqY2jT2ijUjhBj8kfS39ACIQC5+oaKj538OFCxqhdyK85hUCTh2TYW9WDl+gXJHARFTw=="),
+				c: CERT_KU_ICA_keyCertSign,
 			},
 			want: &lint.LintResult{
 				Status: lint.Pass,

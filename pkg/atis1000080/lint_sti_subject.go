@@ -15,7 +15,7 @@ func init() {
 		Description:   subject_details,
 		Citation:      ATIS1000080_STI_Citation,
 		Source:        SHAKEN,
-		EffectiveDate: ATIS1000080_v004_Date,
+		EffectiveDate: ATIS1000080_v004_Leaf_Date,
 		Lint:          NewSubject,
 	})
 }
@@ -26,7 +26,7 @@ func NewSubject() lint.LintInterface {
 
 // CheckApplies implements lint.LintInterface
 func (*subject) CheckApplies(c *x509.Certificate) bool {
-	return true
+	return !c.IsCA
 }
 
 // Execute implements lint.LintInterface

@@ -9,6 +9,10 @@ import (
 	"github.com/zmap/zlint/v3/lint"
 )
 
+func Test_version_CheckApplies(t *testing.T) {
+	CheckAppliesLeafCertificate(t, "version", atis1000080.NewVersion)
+}
+
 func Test_version_Execute(t *testing.T) {
 	type args struct {
 		c *x509.Certificate

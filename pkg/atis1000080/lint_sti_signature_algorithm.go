@@ -1,6 +1,8 @@
 package atis1000080
 
 import (
+	"fmt"
+
 	"github.com/zmap/zcrypto/x509"
 	"github.com/zmap/zlint/v3/lint"
 )
@@ -15,7 +17,7 @@ func init() {
 		Description:   signatureAlgorithm_details,
 		Citation:      ATIS1000080_STI_Citation,
 		Source:        SHAKEN,
-		EffectiveDate: ATIS1000080_v004_Date,
+		EffectiveDate: ATIS1000080_v004_Leaf_Date,
 		Lint:          NewSignatureAlgorithm,
 	})
 }
@@ -26,19 +28,26 @@ func NewSignatureAlgorithm() lint.LintInterface {
 
 // CheckApplies implements lint.LintInterface
 func (*signatureAlgorithm) CheckApplies(c *x509.Certificate) bool {
-	return true
+	return !c.IsCA
 }
 
 // Execute implements lint.LintInterface
 func (*signatureAlgorithm) Execute(c *x509.Certificate) *lint.LintResult {
-	if c.SignatureAlgorithmOID.String() != "1.2.840.10045.4.3.2" {
-		return DowngradeATIS1000080(c, &lint.LintResult{
+	if err := assertSignatureAlgorithm(c); err != nil {
+		return &lint.LintResult{
 			Status:  lint.Error,
-			Details: signatureAlgorithm_details,
-		})
+			Details: err.Error(),
+		}
 	}
 
 	return &lint.LintResult{
 		Status: lint.Pass,
 	}
+}
+
+func assertSignatureAlgorithm(c *x509.Certificate) error {
+	if c.SignatureAlgorithmOID.String() != "1.2.840.10045.4.3.2" {
+		return fmt.Errorf(signatureAlgorithm_details)
+	}
+	return nil
 }

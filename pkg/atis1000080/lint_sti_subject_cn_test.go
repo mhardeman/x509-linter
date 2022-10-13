@@ -9,6 +9,10 @@ import (
 	"github.com/zmap/zlint/v3/lint"
 )
 
+func Test_subjectCN_CheckApplies(t *testing.T) {
+	CheckAppliesLeafCertificate(t, "subjectCN", atis1000080.NewSubjectCN)
+}
+
 func Test_subjectCN_Execute(t *testing.T) {
 	type args struct {
 		c *x509.Certificate
@@ -21,7 +25,7 @@ func Test_subjectCN_Execute(t *testing.T) {
 		{
 			name: "incorrect certificate subject",
 			args: args{
-				c: TEST_CERT_VERSION_INCORRECT,
+				c: CERT_LEAF,
 			},
 			want: &lint.LintResult{
 				Status:  lint.Error,

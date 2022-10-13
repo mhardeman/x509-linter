@@ -10,6 +10,7 @@ import (
 )
 
 const id_TNAuthList = "1.3.6.1.5.5.7.1.26"
+const id_AuthorityKeyIdentifier = "2.5.29.35"
 
 // FindTNAuthListExtension returns TNAuthList pkix.Extension from the certificate, otherwise returns nil
 func FindTNAuthListExtension(c *x509.Certificate) *pkix.Extension {

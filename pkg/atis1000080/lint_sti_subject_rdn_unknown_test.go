@@ -9,6 +9,10 @@ import (
 	"github.com/zmap/zlint/v3/lint"
 )
 
+func Test_subjectRdnUnknown_CheckApplies(t *testing.T) {
+	CheckAppliesLeafCertificate(t, "subjectRdnUnknown", atis1000080.NewSubjectRdnUnknown)
+}
+
 func Test_subjectRdnUnknown_Execute(t *testing.T) {
 	type args struct {
 		c *x509.Certificate

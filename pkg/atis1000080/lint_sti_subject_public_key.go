@@ -1,6 +1,8 @@
 package atis1000080
 
 import (
+	"fmt"
+
 	"github.com/zmap/zcrypto/x509"
 	"github.com/zmap/zlint/v3/lint"
 )
@@ -15,7 +17,7 @@ func init() {
 		Description:   subjectPublicKey_details,
 		Citation:      ATIS1000080_STI_Citation,
 		Source:        SHAKEN,
-		EffectiveDate: ATIS1000080_v004_Date,
+		EffectiveDate: ATIS1000080_v004_Leaf_Date,
 		Lint:          NewSubjectPublicKey,
 	})
 }
@@ -26,22 +28,32 @@ func NewSubjectPublicKey() lint.LintInterface {
 
 // CheckApplies implements lint.LintInterface
 func (*subjectPublicKey) CheckApplies(c *x509.Certificate) bool {
-	return true
+	return !c.IsCA
 }
 
 // Execute implements lint.LintInterface
 func (*subjectPublicKey) Execute(c *x509.Certificate) *lint.LintResult {
-	if c.PublicKeyAlgorithmOID.String() == "1.2.840.10045.2.1" {
-		ecKey := c.PublicKey.(*x509.AugmentedECDSA)
-		if ecKey.Pub.Curve.Params().Name == "P-256" {
-			return &lint.LintResult{
-				Status: lint.Pass,
-			}
+	if err := assertSubjectPublicKey(c); err != nil {
+		return &lint.LintResult{
+			Status:  lint.Error,
+			Details: err.Error(),
 		}
 	}
 
-	return DowngradeATIS1000080(c, &lint.LintResult{
-		Status:  lint.Error,
-		Details: subjectPublicKey_details,
-	})
+	return &lint.LintResult{
+		Status: lint.Pass,
+	}
+}
+
+func assertSubjectPublicKey(c *x509.Certificate) error {
+	if c.PublicKeyAlgorithmOID.String() != "1.2.840.10045.2.1" {
+		return fmt.Errorf(subjectPublicKey_details)
+	}
+
+	ecKey := c.PublicKey.(*x509.AugmentedECDSA)
+	if ecKey == nil || ecKey.Pub.Curve.Params().Name != "P-256" {
+		return fmt.Errorf(subjectPublicKey_details)
+	}
+
+	return nil
 }

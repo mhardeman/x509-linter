@@ -10,33 +10,36 @@ import (
 )
 
 func Test_certificatePolicyCritical_CheckApplies(t *testing.T) {
-	type args struct {
-		c *x509.Certificate
-	}
-	tests := []struct {
-		name string
-		args args
-		want bool
-	}{
+	CheckApplies(t, "certificatePolicyCritical", atis1000080.NewCertificatePolicyCritical, []CheckAppliesVector{
 		{
-			name: "extension is absent",
-			args: args{c: TEST_CERT_VERSION_INCORRECT},
+			name: "Leaf certificate with CP ext",
+			args: CheckAppliesArgs{
+				c: TEST_CERT_CORRECT,
+			},
+			want: true,
+		},
+		{
+			name: "Leaf certificate without CP ext",
+			args: CheckAppliesArgs{
+				c: CERT_LEAF,
+			},
 			want: false,
 		},
 		{
-			name: "extension presents",
-			args: args{c: TEST_CERT_CORRECT},
-			want: true,
+			name: "Intermediate certificate",
+			args: CheckAppliesArgs{
+				c: CERT_CA,
+			},
+			want: false,
 		},
-	}
-	for _, tt := range tests {
-		t.Run(tt.name, func(t *testing.T) {
-			c := atis1000080.NewCertificatePolicyCritical()
-			if got := c.CheckApplies(tt.args.c); got != tt.want {
-				t.Errorf("certificatePolicyCritical.CheckApplies() = %v, want %v", got, tt.want)
-			}
-		})
-	}
+		{
+			name: "Root certificate",
+			args: CheckAppliesArgs{
+				c: CERT_ROOT,
+			},
+			want: false,
+		},
+	})
 }
 
 func Test_certificatePolicyCritical_Execute(t *testing.T) {

@@ -35,7 +35,7 @@ func Test_crlDistribution_Execute(t *testing.T) {
 			},
 		},
 		{
-			name: "CRL is reachable",
+			name: "CRL is not reachable",
 			args: args{c: TEST_CERT_CRL_REACHABLE},
 			want: &lint.LintResult{
 				Status:  lint.Error,
@@ -52,10 +52,14 @@ func Test_crlDistribution_Execute(t *testing.T) {
 	}
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
-			c := atis1000080.NewCRLDistribution()
+			c := atis1000080.NewCrlDistribution()
 			if got := c.Execute(tt.args.c); !reflect.DeepEqual(got, tt.want) {
 				t.Errorf("crlDistribution.Execute() = %v, want %v", got, tt.want)
 			}
 		})
 	}
+}
+
+func Test_crlDistribution_CheckApplies(t *testing.T) {
+	CheckAppliesLeafCertificate(t, "crlDistribution", atis1000080.NewCrlDistribution)
 }
