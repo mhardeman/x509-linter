@@ -379,16 +379,16 @@ func (t *LintTotalResult) AppendCertificate(r *LintCertificateResult) {
 func (t *LintTotalResult) GetOrganizationsNames() []string {
 	nameMap := map[string]bool{}
 	// read all names for Leaf certs
-	for n, _ := range t.LeafCertificates.Issuers {
+	for n := range t.LeafCertificates.Issuers {
 		nameMap[n] = true
 	}
 	// read all names for CA certs
-	for n, _ := range t.CaCertificates.Issuers {
+	for n := range t.CaCertificates.Issuers {
 		nameMap[n] = true
 	}
 
 	res := []string{}
-	for n, _ := range nameMap {
+	for n := range nameMap {
 		res = append(res, n)
 	}
 
@@ -576,11 +576,16 @@ func PrintOrganizationReport(w io.Writer, name string, r *LintTotalResult) {
 	fmt.Fprintln(w, "")
 	fmt.Fprintf(w, "## %s\n", name)
 
-	issuers := map[string]*LintOrganizationResult{
-		"Leaf Certificates": r.LeafCertificates.Issuers[name],
-		"CA Certificates":   r.CaCertificates.Issuers[name],
+	issuersKeys := []string{
+		"Leaf Certificates",
+		"CA Certificates",
 	}
-	for issuerType, issuer := range issuers {
+	issuers := map[string]*LintOrganizationResult{
+		issuersKeys[0]: r.LeafCertificates.Issuers[name],
+		issuersKeys[1]: r.CaCertificates.Issuers[name],
+	}
+	for _, issuerType := range issuersKeys {
+		issuer := issuers[issuerType]
 		if issuer == nil {
 			continue
 		}
