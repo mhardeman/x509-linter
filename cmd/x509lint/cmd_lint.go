@@ -539,7 +539,7 @@ func PrintTotalReport(w io.Writer, r *LintTotalResult) {
 		fmt.Fprintln(w, "### Leaf Certificates")
 		fmt.Fprintln(w, "")
 		PrintFindingList(w, r.LeafCertificates.Findings)
-		PrintOrganizationsTable(w, r.LeafCertificates)
+		PrintOrganizationsTable(w, r.LeafCertificates, "leaf-certificates")
 		fmt.Fprintln(w, "")
 		fmt.Fprintln(w, "\\* The percent of certificates per issuer is calculated against total certificates from all issuers\\")
 		fmt.Fprintln(w, "\\*\\* The percent of errors, warnings and notices is calculated against total observed certificates from the specified issuer\\")
@@ -549,7 +549,7 @@ func PrintTotalReport(w io.Writer, r *LintTotalResult) {
 		fmt.Fprintln(w, "")
 		fmt.Fprintln(w, "### CA Certificates")
 		fmt.Fprintln(w, "")
-		PrintOrganizationsTable(w, r.CaCertificates)
+		PrintOrganizationsTable(w, r.CaCertificates, "ca-certificates")
 		fmt.Fprintln(w, "")
 		fmt.Fprintln(w, "\\* The percent of certificates per issuer is calculated against total certificates from all issuers\\")
 		fmt.Fprintln(w, "\\*\\* The percent of errors, warnings and notices is calculated against total observed certificates from the specified issuer")
@@ -689,7 +689,7 @@ func PrintCertificateReportForIssuer(w io.Writer, issuerName string, r *LintCert
 	PrintFooter(w)
 }
 
-func PrintOrganizationsTable(w io.Writer, r *LintCertificatesResult) {
+func PrintOrganizationsTable(w io.Writer, r *LintCertificatesResult, anchor string) {
 	fmt.Fprintln(w, "")
 	fmt.Fprintln(w, "| Issuers | Certificates | Errors | Warnings | Notices | Not Effective |")
 	fmt.Fprintln(w, "|---------|--------------|--------|----------|---------|---------------|")
@@ -705,7 +705,7 @@ func PrintOrganizationsTable(w io.Writer, r *LintCertificatesResult) {
 
 	for _, key := range keys {
 		issuer := r.Issuers[key]
-		issuerNameLink := fmt.Sprintf("[%s](%s)", key, url.PathEscape(path.Join(key, "README.md")))
+		issuerNameLink := fmt.Sprintf("[%s](%s)", key, fmt.Sprintf("%s#%s", url.PathEscape(path.Join(key, "README.md")), anchor))
 		fmt.Fprintf(w, "| %s | %d (%0.2f%%) | %d (%0.2f%%) | %d (%0.2f%%) | %d (%0.2f%%) | %d (%0.2f%%) |\n", issuerNameLink, issuer.Amount, percent(issuer.Amount, r.Amount), issuer.Errors, percent(issuer.Errors, issuer.Amount), issuer.Warnings, percent(issuer.Warnings, issuer.Amount), issuer.Notices, percent(issuer.Notices, issuer.Amount), issuer.NE, percent(issuer.NE, issuer.Amount))
 	}
 	fmt.Fprintf(w, "| **Total** | %d (100%%) | %d (%0.2f%%) | %d (%0.2f%%) | %d (%0.2f%%) | %d (%0.2f%%) |\n", r.Amount, r.Errors, percent(r.Errors, r.Amount), r.Warnings, percent(r.Warnings, r.Amount), r.Notices, percent(r.Notices, r.Amount), r.NE, percent(r.NE, r.Amount))
