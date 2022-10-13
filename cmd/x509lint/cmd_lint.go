@@ -552,7 +552,7 @@ func PrintTotalReport(w io.Writer, r *LintTotalResult) {
 		PrintOrganizationsTable(w, r.CaCertificates)
 		fmt.Fprintln(w, "")
 		fmt.Fprintln(w, "\\* The percent of certificates per issuer is calculated against total certificates from all issuers\\")
-		fmt.Fprintln(w, "\\*\\* The percent of errors, warnings and notices is calculated against total observed certificates from the specified issuer\\")
+		fmt.Fprintln(w, "\\*\\* The percent of errors, warnings and notices is calculated against total observed certificates from the specified issuer")
 	}
 
 	fmt.Fprintln(w, "")
