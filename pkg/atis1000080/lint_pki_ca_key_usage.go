@@ -10,8 +10,8 @@ type pkiCaKeyUsage struct{}
 
 func init() {
 	lint.RegisterLint(&lint.Lint{
-		Name:          "e_shaken_pki_ca_key_usage",
-		Description:   "For CA certificates, the Key Usage extension shall contain a single key usage value of keyCertSign",
+		Name:          "n_shaken_pki_ca_key_usage",
+		Description:   "For CA certificates, the Key Usage extension should contain a single key usage value of keyCertSign",
 		Citation:      PKI_Citation,
 		Source:        SHAKEN,
 		EffectiveDate: util.ZeroDate,
@@ -32,8 +32,8 @@ func (*pkiCaKeyUsage) CheckApplies(c *x509.Certificate) bool {
 func (*pkiCaKeyUsage) Execute(c *x509.Certificate) *lint.LintResult {
 	if c.KeyUsage != x509.KeyUsageCertSign {
 		return &lint.LintResult{
-			Status:  lint.Error,
-			Details: "For CA certificates, the Key Usage extension shall contain a single key usage value of keyCertSign",
+			Status:  lint.Notice,
+			Details: "For CA certificates, the Key Usage extension should contain a single key usage value of keyCertSign",
 		}
 	}
 
