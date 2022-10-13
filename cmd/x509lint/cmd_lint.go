@@ -596,7 +596,7 @@ func PrintOrganizationReport(w io.Writer, name string, r *LintTotalResult) {
 		fmt.Fprintf(w, "- Certificates with Errors: %d\n", issuer.Errors)
 		fmt.Fprintf(w, "- Certificates with Warnings: %d\n", issuer.Warnings)
 		fmt.Fprintf(w, "- Certificates with Notices: %d\n", issuer.Notices)
-		fmt.Fprintf(w, "- * Certificates with tests not executed as the requirements were Not Effective at issuance time: %d\n", issuer.NE)
+		fmt.Fprintf(w, "- Certificates with tests not executed as the requirements were Not Effective at issuance time: %d\n", issuer.NE)
 		fmt.Fprintln(w, "")
 		fmt.Fprintln(w, "| Status | Code | Instances |")
 		fmt.Fprintln(w, "|--------|------|-----------|")
