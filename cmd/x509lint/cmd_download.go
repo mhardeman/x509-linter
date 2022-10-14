@@ -97,7 +97,16 @@ func RunDownloadCommand(listPath string, outDir string, includeCa bool) error {
 		}
 	}
 
-	file, err := os.Create("x_download.md")
+	reportDir := "x_report"
+	if err := Mkdir(reportDir); err != nil {
+		return fmt.Errorf("cannot create directory %s, %s", reportDir, err.Error())
+	}
+	urlDir := path.Join(reportDir, "url")
+	if err := Mkdir(urlDir); err != nil {
+		return fmt.Errorf("cannot create directory %s, %s", urlDir, err.Error())
+	}
+
+	file, err := os.Create(path.Join(urlDir, "README.md"))
 	if err != nil {
 		panic(err.Error())
 	}
@@ -150,4 +159,14 @@ func PrintUrlSummary(w io.Writer, r []*url.LintUrlResultSet) {
 			fmt.Fprintln(w, "")
 		}
 	}
+}
+
+func Mkdir(name string) error {
+	if _, err := os.Stat(name); os.IsNotExist(err) {
+		if err := os.Mkdir(name, os.ModePerm); err != nil {
+			return fmt.Errorf("cannot create directory %s, %s", name, err.Error())
+		}
+	}
+
+	return nil
 }

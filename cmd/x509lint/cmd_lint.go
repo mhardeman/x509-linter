@@ -81,7 +81,7 @@ func RunLintCommand(certPath string, summary bool) error {
 		})
 
 		reportDir := "x_report"
-		if err := os.Mkdir(reportDir, os.ModePerm); err != nil {
+		if err := Mkdir(reportDir); err != nil {
 			return fmt.Errorf("cannot create directory %s, %s", reportDir, err.Error())
 		}
 
@@ -448,7 +448,7 @@ func SaveOrganizationReport(r *LintTotalResult, outDir string) error {
 	for _, name := range names {
 		// create folder
 		orgDir := path.Join(outDir, name)
-		if err := os.Mkdir(orgDir, os.ModePerm); err != nil {
+		if err := Mkdir(orgDir); err != nil {
 			return fmt.Errorf("cannot create directory %s, %s", name, err.Error())
 		}
 
@@ -500,7 +500,7 @@ func SaveCertificatesReport(r *LintTotalResult, outDir string) error {
 			for _, cert := range issuer.Certificates {
 				// create folder
 				certDir := path.Join(outDir, name, cert.Thumbprint)
-				if err := os.Mkdir(certDir, os.ModePerm); err != nil {
+				if err := Mkdir(certDir); err != nil {
 					return fmt.Errorf("cannot create directory %s, %s", certDir, err.Error())
 				}
 
