@@ -155,7 +155,7 @@ func PrintUrlSummary(w io.Writer, r []*url.LintUrlResultSet) {
 		}
 		fmt.Fprintln(w, "")
 		if counter == 0 {
-			fmt.Fprintf(w, "%d tests were ran and non warning or error level issues were found\n", len(v.Results))
+			fmt.Fprintf(w, "%d tests were ran and no warning or error level issues were found\n", len(v.Results))
 			fmt.Fprintln(w, "")
 		}
 	}

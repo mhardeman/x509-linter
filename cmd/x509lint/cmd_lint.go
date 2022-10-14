@@ -663,7 +663,7 @@ func PrintCertificateReport(w io.Writer, r *LintCertificateResult) {
 
 	if !r.Result.ErrorsPresent && !r.Result.WarningsPresent {
 		fmt.Fprintln(w, "")
-		fmt.Fprintf(w, "%d tests were ran and non warning or error level issues were found\n", len(r.Result.Results))
+		fmt.Fprintf(w, "%d tests were ran and no warning or error level issues were found\n", len(r.Result.Results))
 	}
 
 	neHeader := false
