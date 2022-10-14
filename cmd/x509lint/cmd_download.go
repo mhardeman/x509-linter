@@ -124,17 +124,30 @@ func PrintUrlSummary(w io.Writer, r []*url.LintUrlResultSet) {
 	fmt.Fprintln(w, "# STIR/SHAKEN Certificate Repository Compliance")
 	fmt.Fprintln(w, "")
 
+	fmt.Fprintln(w, "Participants in the STIR/SHAKEN ecosystem are required to publish the certificates they use for signing calls so that other participants can retrieve these certificates and use them for validating signatures.")
+	fmt.Fprintln(w, "")
+	fmt.Fprintln(w, "To ease meeting this requirement many of the certificate authorities publish the certificates for their customers and the majority of the STIR/SHAKEN deployments use these CA-provided repositories. There are still some cases where customers choose to host the certificate on their own.")
+	fmt.Fprintln(w, "")
+	fmt.Fprintln(w, "This report looks at what errors and compliance issues relying parties may experience when trying to use these certificate repositories.")
+	fmt.Fprintln(w, "")
+
 	for _, v := range r {
 		fmt.Fprintf(w, "%s\n", v.Url)
 		fmt.Fprintln(w, "")
 		fmt.Fprintln(w, "| Code | Status | Source | Details |")
 		fmt.Fprintln(w, "|------|--------|--------|---------|")
+		counter := 0
 		for code, l := range v.Results {
 			if l.Status != url.Pass {
+				counter += 1
 				ruleInfo := url.GetRuleByName(code)
 				fmt.Fprintf(w, "| %s | %s | %s | %s |\n", code, GetStatusText(l.Status), ruleInfo.Source, l.Details)
 			}
 		}
 		fmt.Fprintln(w, "")
+		if counter == 0 {
+			fmt.Fprintf(w, "%d tests were ran and non warning or error level issues were found\n", len(v.Results))
+			fmt.Fprintln(w, "")
+		}
 	}
 }
