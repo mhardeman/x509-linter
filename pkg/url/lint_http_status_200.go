@@ -21,7 +21,7 @@ func NewHttpStatus200() LintUrlRuleInterface {
 
 // CheckApplies implements LintUrlRuleInterface
 func (*httpStatus200) CheckApplies(data *LintUrlTestData) bool {
-	return data.HasResponse()
+	return true
 }
 
 // Execute implements lint.LintUrlRuleInterface

@@ -8,42 +8,6 @@ import (
 	"github.com/peculiarventures/x509-linter/pkg/url"
 )
 
-func Test_httpStatus200_CheckApplies(t *testing.T) {
-	type args struct {
-		data *url.LintUrlTestData
-	}
-	tests := []struct {
-		name string
-		args args
-		want bool
-	}{
-		{
-			name: "response exists",
-			args: args{
-				&url.LintUrlTestData{
-					Response: &http.Response{},
-				},
-			},
-			want: true,
-		},
-		{
-			name: "response is empty",
-			args: args{
-				&url.LintUrlTestData{},
-			},
-			want: false,
-		},
-	}
-	for _, tt := range tests {
-		t.Run(tt.name, func(t *testing.T) {
-			h := url.NewHttpStatus200()
-			if got := h.CheckApplies(tt.args.data); got != tt.want {
-				t.Errorf("httpStatus200.CheckApplies() = %v, want %v", got, tt.want)
-			}
-		})
-	}
-}
-
 func Test_httpStatus200_Execute(t *testing.T) {
 	type args struct {
 		data *url.LintUrlTestData

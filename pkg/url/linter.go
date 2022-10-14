@@ -1,6 +1,7 @@
 package url
 
 import (
+	"crypto/tls"
 	"fmt"
 	"io"
 	"net/http"
@@ -10,7 +11,9 @@ import (
 type LintUrlSource string
 
 var (
-	HttpSource LintUrlSource = "HTTP"
+	SystemSource      LintUrlSource = "System"
+	HttpSource        LintUrlSource = "HTTP"
+	Atis1000080Source LintUrlSource = "ATIS-1000080"
 )
 
 type LintUrlRule struct {
@@ -40,6 +43,10 @@ func RegisterRule(rule *LintUrlRule) {
 	}
 }
 
+func GetRuleByName(name string) *LintUrlRule {
+	return registry.Rules[name]
+}
+
 var registry LintUrlRegistry = LintUrlRegistry{
 	Rules: LintUrlRuleSet{},
 }
@@ -59,14 +66,29 @@ type LintUrlResult struct {
 }
 
 type LintUrlResultSet struct {
-	Timestamp time.Time
-	Url       string
-	Results   map[string]*LintUrlResult
+	Timestamp   time.Time
+	Url         string
+	StatusCode  int
+	Body        []byte
+	Results     map[string]*LintUrlResult
+	HasErrors   bool
+	HasWarnings bool
+	HasNotices  bool
 }
 
 func (t *LintUrlResultSet) Append(code string, item *LintUrlResult) {
 	if item != nil {
 		t.Results[code] = item
+
+		if item.Status == Error {
+			t.HasErrors = true
+		}
+		if item.Status == Warn {
+			t.HasWarnings = true
+		}
+		if item.Status == Notice {
+			t.HasNotices = true
+		}
 	}
 }
 
@@ -89,7 +111,22 @@ func LintUrl(url string) *LintUrlResultSet {
 	}
 
 	// send GET request
+	http.DefaultTransport.(*http.Transport).TLSClientConfig = &tls.Config{}
 	response, err := http.Get(url)
+	if err != nil {
+		// Disable SSL verification
+		http.DefaultTransport.(*http.Transport).TLSClientConfig = &tls.Config{InsecureSkipVerify: true}
+		var err2 error
+		response, err2 = http.Get(url)
+		if err2 == nil {
+			result.Append("e_tls_transport", &LintUrlResult{
+				Status:  Error,
+				Details: err.Error(),
+			})
+		} else {
+			err = err2
+		}
+	}
 	testData := &LintUrlTestData{
 		Url:      url,
 		Response: response,
@@ -97,19 +134,33 @@ func LintUrl(url string) *LintUrlResultSet {
 	}
 	if response != nil {
 		// read response body
+		result.StatusCode = response.StatusCode
 		defer response.Body.Close()
 		body, err := io.ReadAll(response.Body)
 		if err != nil {
 			testData.Error = err
 		} else {
 			testData.Body = body
+			result.Body = body
 		}
+	} else {
+		result.Append("e_bad_url", &LintUrlResult{
+			Status:  Error,
+			Details: err.Error(),
+		})
+
+		return result
 	}
 
 	for code, v := range registry.Rules {
+		if v.Source == SystemSource {
+			// skip System tests
+			continue
+		}
+
 		rule := v.Rule()
 		if rule.CheckApplies(testData) {
-			result.Results[code] = v.Rule().Execute(testData)
+			result.Append(code, v.Rule().Execute(testData))
 		}
 	}
 
