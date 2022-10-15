@@ -816,13 +816,21 @@ func PrintIssueGroupReport(w io.Writer, orgName string, issueName string, r *Lin
 func PrintIssueGroupCertificateTable(w io.Writer, issueName string, org *LintOrganizationResult) {
 	fmt.Fprintln(w, "| Status | Subject | Link | Details |")
 	fmt.Fprintln(w, "|--------|---------|------|---------|")
+	counter := 0
 	for _, cert := range org.Certificates {
 		issue := cert.Result.Results[issueName]
-		if issue == nil {
+		if issue == nil || issue.Status == lint.Pass || issue.Status == lint.Fatal || issue.Status == lint.NA || issue.Status == lint.Reserved {
 			continue
 		}
 		subject := strings.ReplaceAll(cert.Cert.Subject.String(), "\\", "\\\\")
 		link := fmt.Sprintf("[view](%s)", path.Join("..", computeCertThumbprint(cert.Cert), "README.md"))
 		fmt.Fprintf(w, "| %s | %s | %s | %s |\n", statusToString(issue.Status), subject, link, issue.Details)
+		counter += 1
+	}
+
+	fmt.Fprintln(w, "")
+	if counter == 0 {
+		fmt.Fprintln(w, "no warning, or error, or not effective level issues were found")
+		fmt.Fprintln(w, "")
 	}
 }
