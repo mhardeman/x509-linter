@@ -357,18 +357,27 @@ func (t *LintCertificatesResult) AppendCertificate(c *LintCertificateResult) {
 }
 
 type LintTotalResult struct {
+	Issues           map[string]int
 	LeafCertificates *LintCertificatesResult
 	CaCertificates   *LintCertificatesResult
 }
 
 func NewLintTotalResult() *LintTotalResult {
 	return &LintTotalResult{
+		Issues:           map[string]int{},
 		LeafCertificates: NewLintCertificatesResult(),
 		CaCertificates:   NewLintCertificatesResult(),
 	}
 }
 
 func (t *LintTotalResult) AppendCertificate(r *LintCertificateResult) {
+	// update Issues counter
+	for code, result := range r.Result.Results {
+		if result.Status != lint.Pass {
+			t.Issues[code] += 1
+		}
+	}
+
 	if r.Cert.IsCA {
 		t.CaCertificates.AppendCertificate(r)
 		return
@@ -461,7 +470,30 @@ func SaveOrganizationReport(r *LintTotalResult, outDir string) error {
 		defer file.Close()
 
 		PrintOrganizationReport(file, name, r)
+
+		for code := range r.Issues {
+			SaveIssueGroupReport(name, code, r, orgDir)
+		}
 	}
+
+	return nil
+}
+
+func SaveIssueGroupReport(orgName string, issueName string, r *LintTotalResult, orgDir string) error {
+	issuesDir := path.Join(orgDir, "ISSUES")
+	err := Mkdir(issuesDir)
+	if err != nil {
+		return fmt.Errorf("cannot save IssueGroup report, %w", err)
+	}
+
+	reportFile := path.Join(issuesDir, fmt.Sprintf("%s.md", issueName))
+	file, err := os.Create(reportFile)
+	if err != nil {
+		return fmt.Errorf("cannot save IssueGroup report, %w", err)
+	}
+	defer file.Close()
+
+	PrintIssueGroupReport(file, orgName, issueName, r)
 
 	return nil
 }
@@ -520,10 +552,10 @@ func SaveCertificatesReport(r *LintTotalResult, outDir string) error {
 	return nil
 }
 
-func PrintFooter(file io.Writer) {
+func PrintFooter(w io.Writer) {
 	now := time.Now()
-	fmt.Fprintln(file, "")
-	fmt.Fprintf(file, "Generated: %s at %s", now.Format("02/01/2006"), now.Format("15:04:05"))
+	fmt.Fprintln(w, "")
+	fmt.Fprintf(w, "Generated: %s at %s", now.Format("02/01/2006"), now.Format("15:04:05"))
 }
 
 // PrintTotalReport prints the total report
@@ -604,7 +636,8 @@ func PrintOrganizationReport(w io.Writer, name string, r *LintTotalResult) {
 		fmt.Fprintln(w, "|--------|------|--------|-----------|")
 		for code, issue := range issuer.Issues {
 			rule := lint.GlobalRegistry().ByName(code)
-			fmt.Fprintf(w, "| %s | %s | %s | %d |\n", statusToString(issue.Type), code, rule.Source, issue.Amount)
+			codeLink := fmt.Sprintf("[%s](ISSUES/%s.md#%s)", code, code, strings.ReplaceAll(strings.ToLower(issuerType), " ", "-"))
+			fmt.Fprintf(w, "| %s | %s | %s | %d |\n", statusToString(issue.Type), codeLink, rule.Source, issue.Amount)
 		}
 
 		// summery footer
@@ -721,4 +754,49 @@ func PrintOrganizationsTable(w io.Writer, r *LintCertificatesResult, anchor stri
 	// TODO add a footnote
 	// fmt.Fprintln(w, "")
 	// fmt.Fprintf(w, "* 140 tests are included in this test suite")
+}
+
+func PrintIssueGroupReport(w io.Writer, orgName string, issueName string, r *LintTotalResult) {
+	// header
+	fmt.Fprintln(w, "# STIR/SHAKEN CA Ecosystem Compliance")
+	fmt.Fprintln(w, "")
+	fmt.Fprintf(w, "## %s", orgName)
+	fmt.Fprintln(w, "")
+	issueInfo := lint.GlobalRegistry().ByName(issueName)
+	fmt.Fprintf(w, "Name: %s\\\n", issueInfo.Name)
+	fmt.Fprintf(w, "Source: %s\\\n", issueInfo.Source)
+	fmt.Fprintf(w, "Citation: %s\\\n", issueInfo.Citation)
+	fmt.Fprintf(w, "Effective Date: %s\\\n", issueInfo.EffectiveDate.Format(time.RFC822))
+	fmt.Fprintf(w, "Description: %s\n", issueInfo.Description)
+	fmt.Fprintln(w, "")
+
+	leafIssuer := r.LeafCertificates.Issuers[orgName]
+	if leafIssuer != nil {
+		fmt.Fprintln(w, "### Leaf Certificates")
+		fmt.Fprintln(w, "")
+		PrintIssueGroupCertificateTable(w, issueName, leafIssuer)
+	}
+
+	caIssuer := r.CaCertificates.Issuers[orgName]
+	if caIssuer != nil {
+		fmt.Fprintln(w, "### CA Certificates")
+		fmt.Fprintln(w, "")
+		PrintIssueGroupCertificateTable(w, issueName, caIssuer)
+	}
+
+	PrintFooter(w)
+}
+
+func PrintIssueGroupCertificateTable(w io.Writer, issueName string, org *LintOrganizationResult) {
+	fmt.Fprintln(w, "| Status | Subject | Link | Details |")
+	fmt.Fprintln(w, "|--------|---------|------|---------|")
+	for _, cert := range org.Certificates {
+		issue := cert.Result.Results[issueName]
+		if issue == nil {
+			continue
+		}
+		subject := strings.ReplaceAll(cert.Cert.Subject.String(), "\\", "\\\\")
+		link := fmt.Sprintf("[view](%s)", path.Join("..", computeCertThumbprint(cert.Cert), "README.md"))
+		fmt.Fprintf(w, "| %s | %s | %s | %s |\n", statusToString(issue.Status), subject, link, issue.Details)
+	}
 }
