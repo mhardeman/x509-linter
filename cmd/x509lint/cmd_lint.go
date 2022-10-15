@@ -373,7 +373,10 @@ func NewLintTotalResult() *LintTotalResult {
 func (t *LintTotalResult) AppendCertificate(r *LintCertificateResult) {
 	// update Issues counter
 	for code, result := range r.Result.Results {
-		if result.Status != lint.Pass {
+		if result.Status == lint.Error ||
+			result.Status == lint.Warn ||
+			result.Status == lint.Notice ||
+			result.Status == lint.NE {
 			t.Issues[code] += 1
 		}
 	}
