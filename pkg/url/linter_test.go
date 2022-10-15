@@ -23,8 +23,8 @@ func TestLintUrl_AtisContentType(t *testing.T) {
 	res := url.LintUrl("https://cr.sansay.com/548J/order/144_548J_67")
 
 	want := &url.LintUrlResult{
-		Status:  url.Error,
-		Details: "HTTP response shall have StatusCode 200, but it is 503 Service Unavailable",
+		Status:  url.Warn,
+		Details: "HTTP response should contain Content-Type header and it's value should be application/pem-certificate-chain",
 	}
 	if test := res.Results["w_atis_content_type"]; !reflect.DeepEqual(test, want) {
 		t.Errorf("url.LintUrl() = %v, want %v", test, want)

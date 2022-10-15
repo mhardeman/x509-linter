@@ -59,8 +59,8 @@ func Test_pkiCaKeyUsage_Execute(t *testing.T) {
 				c: CERT_KU_CA_WITHOUT_keyCertSign,
 			},
 			want: &lint.LintResult{
-				Status:  lint.Error,
-				Details: "For CA certificates, the Key Usage extension shall contain a single key usage value of keyCertSign",
+				Status:  lint.Notice,
+				Details: "For CA certificates, the Key Usage extension should contain a single key usage value of keyCertSign",
 			},
 		},
 		{
@@ -69,8 +69,8 @@ func Test_pkiCaKeyUsage_Execute(t *testing.T) {
 				c: CERT_KU_CA_keyCertSign_digitalSignature,
 			},
 			want: &lint.LintResult{
-				Status:  lint.Error,
-				Details: "For CA certificates, the Key Usage extension shall contain a single key usage value of keyCertSign",
+				Status:  lint.Notice,
+				Details: "For CA certificates, the Key Usage extension should contain a single key usage value of keyCertSign",
 			},
 		},
 	}
