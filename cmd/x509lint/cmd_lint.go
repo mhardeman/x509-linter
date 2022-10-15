@@ -475,14 +475,37 @@ func SaveOrganizationReport(r *LintTotalResult, outDir string) error {
 		PrintOrganizationReport(file, name, r)
 
 		for code := range r.Issues {
-			SaveIssueGroupReport(name, code, r, orgDir)
+			if HasIssue(name, code, r) {
+				SaveIssueGroupReport(name, code, r, orgDir)
+			}
 		}
 	}
 
 	return nil
 }
 
+// HasIssue returns true if LeafCertificates or CaCertificates for selected orgName contains issueName and it has problems
+func HasIssue(orgName string, issueName string, r *LintTotalResult) bool {
+	certsSet := []*LintCertificatesResult{
+		r.LeafCertificates,
+		r.CaCertificates,
+	}
+	for _, certs := range certsSet {
+		issuer := certs.Issuers[orgName]
+		if issuer != nil {
+			issue := issuer.Issues[issueName]
+			if issue != nil {
+				return true
+			}
+		}
+	}
+
+	return false
+}
+
 func SaveIssueGroupReport(orgName string, issueName string, r *LintTotalResult, orgDir string) error {
+	// check if Leaf and CA has this issue
+
 	issuesDir := path.Join(orgDir, "ISSUES")
 	err := Mkdir(issuesDir)
 	if err != nil {
