@@ -830,7 +830,7 @@ func PrintIssueGroupCertificateTable(w io.Writer, issueName string, org *LintOrg
 
 	fmt.Fprintln(w, "")
 	if counter == 0 {
-		fmt.Fprintln(w, "no warning, or error, or not effective level issues were found")
+		fmt.Fprintln(w, "no warning, or error, or not effective date level issues were found")
 		fmt.Fprintln(w, "")
 	}
 }
