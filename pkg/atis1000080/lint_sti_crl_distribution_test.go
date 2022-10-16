@@ -23,7 +23,7 @@ func Test_crlDistribution_Execute(t *testing.T) {
 			args: args{c: TEST_CERT_VERSION_INCORRECT},
 			want: &lint.LintResult{
 				Status:  lint.Error,
-				Details: "STI intermediate and End-Entity certificates shall contain a CRL Distribution Points extension",
+				Details: "STI End-Entity certificates shall contain a CRL Distribution Points extension",
 			},
 		},
 		{
