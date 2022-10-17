@@ -604,6 +604,7 @@ func PrintTotalReport(w io.Writer, r *LintTotalResult) {
 		fmt.Fprintln(w, "\\* The percent of certificates per issuer is calculated against total certificates from all issuers\\")
 		fmt.Fprintln(w, "\\*\\* The percent of errors, warnings and notices is calculated against total observed certificates from the specified issuer\\")
 		fmt.Fprintln(w, "\\*\\*\\* Tests use the ATIS 1000080 and Certificate Policy versions release dates to determine if tests are ran. Certificates issued before these dates are not executed as the rules may not have been enforce at the time")
+		fmt.Fprintln(w, "\\*\\*\\*\\* For information on failed certificate repository retrievals see this [report](url/README.md)")
 	}
 	if r.CaCertificates.Amount > 0 {
 		fmt.Fprintln(w, "")
