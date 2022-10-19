@@ -48,6 +48,7 @@ func RunLintCommand(certPath string, summary bool) error {
 			rootCerts := internal.ParseCertificates(rootPem)
 			for _, cert := range rootCerts {
 				rootPool.AddCert(cert.Certificate)
+				checkCerts = append(checkCerts, cert)
 			}
 		}
 
