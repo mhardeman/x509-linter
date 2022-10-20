@@ -143,6 +143,32 @@ var wellknownIssueNames = map[string]string{
 	"TransNexus, Inc.":                 "TransNexus",
 }
 
+// getOrganizationName returns organization name
+func getOrganizationName(c *x509.Certificate, options *x509.VerifyOptions) string {
+	name := internal.GetOrganizationName(c)
+	if options != nil {
+		current, expired, never, err := c.Verify(*options)
+		if err != nil {
+			if len(current) > 0 {
+				chain := current[0]
+				name = internal.GetOrganizationName(chain[len(chain)-1])
+			} else if len(expired) > 0 {
+				chain := expired[0]
+				name = internal.GetOrganizationName(chain[len(chain)-1])
+			} else if len(never) > 0 {
+				chain := never[0]
+				name = internal.GetOrganizationName(chain[len(chain)-1])
+			}
+		}
+	}
+
+	if len(wellknownIssueNames[name]) != 0 {
+		name = wellknownIssueNames[name]
+	}
+
+	return name
+}
+
 func LintCertificate(cert *internal.PemCertificate, options *x509.VerifyOptions) (*LintCertificateResult, error) {
 	// Initialize lint registry
 	registry, err := lint.GlobalRegistry().Filter(lint.FilterOptions{
@@ -166,27 +192,7 @@ func LintCertificate(cert *internal.PemCertificate, options *x509.VerifyOptions)
 		link = ""
 	}
 
-	// get organization name
-	organization := internal.GetOrganizationName(cert.Certificate)
-	if options != nil {
-		current, expired, never, err := cert.Certificate.Verify(*options)
-		if err != nil {
-			if len(current) > 0 {
-				chain := current[0]
-				organization = internal.GetOrganizationName(chain[len(chain)-1])
-			} else if len(expired) > 0 {
-				chain := expired[0]
-				organization = internal.GetOrganizationName(chain[len(chain)-1])
-			} else if len(never) > 0 {
-				chain := never[0]
-				organization = internal.GetOrganizationName(chain[len(chain)-1])
-			}
-		}
-	}
-
-	if len(wellknownIssueNames[organization]) != 0 {
-		organization = wellknownIssueNames[organization]
-	}
+	organization := getOrganizationName(cert.Certificate, options)
 
 	thumbprint := computeCertThumbprint(cert.Certificate)
 	fmt.Printf("Lint certificate %s issued by '%s' (%s)\n", thumbprint, organization, link)
