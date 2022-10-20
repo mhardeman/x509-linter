@@ -170,10 +170,13 @@ func RunDownloadCommand(listPath string, outDir string, includeCa bool) error {
 			files = append(files, fmt.Sprintf("write  %s", filePath))
 		}
 
-		orgName := getOrganizationName(leafCert, &x509.VerifyOptions{
-			Intermediates: intermediatePool,
-			Roots:         rootPool,
-		})
+		orgName := "Unknown"
+		if leafCert != nil {
+			orgName = getOrganizationName(leafCert, &x509.VerifyOptions{
+				Intermediates: intermediatePool,
+				Roots:         rootPool,
+			})
+		}
 		lintResults.AppendLink(orgName, lintResult)
 
 		fmt.Printf("%-7s%s\n", "OK", link)

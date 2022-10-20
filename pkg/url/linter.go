@@ -2,6 +2,7 @@ package url
 
 import (
 	"crypto/tls"
+	"errors"
 	"fmt"
 	"io"
 	"net/http"
@@ -14,6 +15,7 @@ var (
 	SystemSource      LintUrlSource = "System"
 	HttpSource        LintUrlSource = "HTTP"
 	Atis1000080Source LintUrlSource = "ATIS-1000080"
+	Atis1000074Source LintUrlSource = "ATIS-1000074"
 )
 
 type LintUrlRule struct {
@@ -132,7 +134,25 @@ func LintUrl(url string) *LintUrlResultSet {
 		Response: response,
 		Error:    err,
 	}
+
 	if response != nil {
+		// test redirect
+		if response.StatusCode == 200 {
+			req, _ := http.NewRequest("GET", url, nil)
+			if req != nil {
+				client := new(http.Client)
+				client.CheckRedirect = func(req *http.Request, via []*http.Request) error {
+					result.Append("e_atis_redirect", &LintUrlResult{
+						Status:  Error,
+						Details: "The STI-VS shall not follow HTTP redirections",
+					})
+
+					return errors.New("the STI-VS shall not follow HTTP redirections")
+				}
+				client.Do(req)
+			}
+		}
+
 		// read response body
 		result.StatusCode = response.StatusCode
 		defer response.Body.Close()
