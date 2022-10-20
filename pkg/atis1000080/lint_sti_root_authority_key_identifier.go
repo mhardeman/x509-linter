@@ -19,7 +19,7 @@ type rootAuthorityKeyIdentifier struct{}
 
 func init() {
 	lint.RegisterLint(&lint.Lint{
-		Name: "lint_shaken_sti_root_authority_key_identifier",
+		Name: "e_shaken_sti_root_authority_key_identifier",
 		Description: "For root certificates that contain an Authority Key Identifier extension, " +
 			"the Authority Key Identifier shall contain a keyIdentifier field with a value that matches " +
 			"the Subject Key Identifier value of the same root certificate",
