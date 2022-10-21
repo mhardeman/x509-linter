@@ -78,6 +78,7 @@ func (*atisCacheHeader) Execute(data *LintUrlTestData) *LintUrlResult {
 		}
 	}
 
+	// TODO: Determine if RFC 7234 has language about ignoring Expires header if it conflicts with Cache-Control.
 	if cacheControl == nil {
 		return &LintUrlResult{
 			Status:  Error,
