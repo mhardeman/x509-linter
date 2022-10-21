@@ -696,6 +696,10 @@ func PrintOrganizationReport(w io.Writer, name string, r *LintTotalResult) {
 				fmt.Sprintf("[view](%s)", url.PathEscape(path.Join(certReport.Thumbprint, "README.md"))), // link
 			)
 		}
+		if issuerType == "Leaf Certificates" {
+			fmt.Fprintln(w, "")
+			fmt.Fprintln(w, "\\* For issues relating to this CAs certificate repositories see this [report](URL.md).")
+		}
 	}
 
 	PrintFooter(w)
