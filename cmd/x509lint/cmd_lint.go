@@ -608,10 +608,10 @@ func PrintTotalReport(w io.Writer, r *LintTotalResult) {
 		PrintFindingList(w, r.LeafCertificates.Findings)
 		PrintOrganizationsTable(w, r.LeafCertificates, "leaf-certificates")
 		fmt.Fprintln(w, "")
-		fmt.Fprintln(w, "\\* The percent of certificates per issuer is calculated against total certificates from all issuers\\")
-		fmt.Fprintln(w, "\\*\\* The percent of errors, warnings and notices is calculated against total observed certificates from the specified issuer\\")
-		fmt.Fprintln(w, "\\*\\*\\* Tests use the ATIS 1000080 and Certificate Policy versions release dates to determine if tests are ran. Certificates issued before these dates are not executed as the rules may not have been enforce at the time\\")
-		fmt.Fprintln(w, "\\*\\*\\*\\* For information on failed certificate repository retrievals see this [report](URL.md)")
+		fmt.Fprintln(w, "\\* The percent of certificates per issuer is calculated against total certificates from all issuers.\\")
+		fmt.Fprintln(w, "\\*\\* The percent of errors, warnings and notices is calculated against total observed certificates from the specified issuer.\\")
+		fmt.Fprintln(w, "\\*\\*\\* Tests use the ATIS 1000080 and Certificate Policy versions release dates to determine if tests are ran. Certificates issued before these dates are not executed as the rules may not have been enforce at the time.\\")
+		fmt.Fprintln(w, "\\*\\*\\*\\* For information on failed certificate repository retrievals see this [report](URL.md).")
 	}
 	if r.CaCertificates.Amount > 0 {
 		fmt.Fprintln(w, "")
@@ -619,8 +619,8 @@ func PrintTotalReport(w io.Writer, r *LintTotalResult) {
 		fmt.Fprintln(w, "")
 		PrintOrganizationsTable(w, r.CaCertificates, "ca-certificates")
 		fmt.Fprintln(w, "")
-		fmt.Fprintln(w, "\\* The percent of certificates per issuer is calculated against total certificates from all issuers\\")
-		fmt.Fprintln(w, "\\*\\* The percent of errors, warnings and notices is calculated against total observed certificates from the specified issuer")
+		fmt.Fprintln(w, "\\* The percent of certificates per issuer is calculated against total certificates from all issuers.\\")
+		fmt.Fprintln(w, "\\*\\* The percent of errors, warnings and notices is calculated against total observed certificates from the specified issuer.")
 	}
 
 	fmt.Fprintln(w, "")
@@ -677,7 +677,7 @@ func PrintOrganizationReport(w io.Writer, name string, r *LintTotalResult) {
 		// summery footer
 		// TODO don't show for CA
 		fmt.Fprintln(w, "")
-		fmt.Fprintln(w, "\\* Tests use the ATIS 1000080 and Certificate Policy versions release dates to determine if tests are ran. Certificates issued before these dates are not executed as the rules may not have been enforce at the time")
+		fmt.Fprintln(w, "\\* Tests use the ATIS 1000080 and Certificate Policy versions release dates to determine if tests are ran. Certificates issued before these dates are not executed as the rules may not have been enforce at the time.")
 
 		// certificates
 		fmt.Fprintln(w, "")
@@ -751,7 +751,7 @@ func PrintCertificateReport(w io.Writer, r *LintCertificateResult) {
 	if neHeader {
 		// Issue footer
 		fmt.Fprintln(w, "")
-		fmt.Fprintln(w, "\\* Tests use the ATIS 1000080 and Certificate Policy versions release dates to determine if tests are ran. Certificates issued before these dates are not executed as the rules may not have been enforce at the time")
+		fmt.Fprintln(w, "\\* Tests use the ATIS 1000080 and Certificate Policy versions release dates to determine if tests are ran. Certificates issued before these dates are not executed as the rules may not have been enforce at the time.")
 	}
 }
 
