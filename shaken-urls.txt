@@ -613,4 +613,3 @@ https://www.mypbxmanager.net/local/PubShakenCert.crt
 https://www.talkasiavoip.com/198K.pem
 https://www.voipessential.com/shaken/DFE323WW43Q656QWLMD
 https://zultys-pem-cert-2022.s3.amazonaws.com/89179fa533bbaf0aea20a9f31aa06f20.pem
-
