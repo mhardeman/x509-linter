@@ -94,6 +94,16 @@ func (t *LintUrlResultSet) Append(code string, item *LintUrlResult) {
 	}
 }
 
+func (t *LintUrlResultSet) HasProblem(code string) bool {
+	for c, r := range t.Results {
+		if c == code && r.Status != Pass {
+			return true
+		}
+	}
+
+	return false
+}
+
 type LintUrlTestData struct {
 	Url      string
 	Response *http.Response

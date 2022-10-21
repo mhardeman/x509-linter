@@ -206,7 +206,7 @@ func RunDownloadCommand(listPath string, outDir string, includeCa bool) error {
 			return fmt.Errorf("cannot create organization directory %s, %s", orgDir, err.Error())
 		}
 
-		// create report file
+		// create org report file
 		orgFile, err := os.Create(path.Join(orgDir, "URL.md"))
 		if err != nil {
 			return fmt.Errorf("cannot create organization report, %s", err.Error())
@@ -214,6 +214,21 @@ func RunDownloadCommand(listPath string, outDir string, includeCa bool) error {
 		defer orgFile.Close()
 
 		PrintUrlOrg(orgFile, lintOrg)
+
+		// create issue report file
+		issuesDir := path.Join(orgDir, "ISSUES")
+		err = Mkdir(issuesDir)
+		if err != nil {
+			return fmt.Errorf("cannot create issues report, %s", err.Error())
+		}
+		for code := range lintOrg.Problems {
+			issueFile, err := os.Create(path.Join(issuesDir, fmt.Sprintf("%s.md", code)))
+			if err != nil {
+				return fmt.Errorf("cannot create issues report, %s", err.Error())
+			}
+			defer issueFile.Close()
+			PrintUrlIssue(issueFile, code, lintOrg)
+		}
 	}
 
 	return nil
@@ -241,7 +256,8 @@ func PrintUrlOrg(w io.Writer, r *LintUrlOrgResult) {
 	fmt.Fprintln(w, "|------|--------|-----------|")
 	for code, instances := range r.Problems {
 		rule := lintUrl.GetRuleByName(code)
-		fmt.Fprintf(w, "| %s | %s | %d |\n", code, rule.Source, instances)
+		codeLink := fmt.Sprintf("[%s](ISSUES/%s.md)", code, code)
+		fmt.Fprintf(w, "| %s | %s | %d |\n", codeLink, rule.Source, instances)
 	}
 	fmt.Fprintln(w, "")
 
@@ -299,26 +315,6 @@ func PrintUrlSummary(w io.Writer, r *LintUrlSummaryResult) {
 	}
 	fmt.Fprintf(w, "| **Total** | %d (100%%) | %d (%0.2f%%) | %d (%0.2f%%) | %d (%0.2f%%) |\n", r.Amount, r.Errors, percent(r.Errors, r.Amount), r.Warnings, percent(r.Warnings, r.Amount), r.Notices, percent(r.Notices, r.Amount))
 
-	// for _, v := range r {
-	// 	fmt.Fprintf(w, "%s\n", v.lintUrl)
-	// 	fmt.Fprintln(w, "")
-	// 	fmt.Fprintln(w, "| Code | Status | Source | Details |")
-	// 	fmt.Fprintln(w, "|------|--------|--------|---------|")
-	// 	counter := 0
-	// 	for code, l := range v.Results {
-	// 		if l.Status != lintUrl.Pass {
-	// 			counter += 1
-	// 			ruleInfo := lintUrl.GetRuleByName(code)
-	// 			fmt.Fprintf(w, "| %s | %s | %s | %s |\n", code, GetStatusText(l.Status), ruleInfo.Source, l.Details)
-	// 		}
-	// 	}
-	// 	fmt.Fprintln(w, "")
-	// 	if counter == 0 {
-	// 		fmt.Fprintf(w, "%d tests were ran and no warning or error level issues were found\n", len(v.Results))
-	// 		fmt.Fprintln(w, "")
-	// 	}
-	// }
-
 	PrintFooter(w)
 }
 
@@ -345,4 +341,44 @@ func ReadRootCertificates(path string) (*x509.CertPool, error) {
 	}
 
 	return p, nil
+}
+
+func PrintUrlIssue(w io.Writer, code string, r *LintUrlOrgResult) {
+	fmt.Fprintln(w, "# STIR/SHAKEN Certificate Repository Compliance")
+	fmt.Fprintln(w, "")
+
+	fmt.Fprintf(w, "## %s\n", r.Name)
+	fmt.Fprintln(w, "")
+	fmt.Fprintf(w, "Code: %s\\\n", code)
+	rule := lintUrl.GetRuleByName(code)
+	if rule != nil {
+		fmt.Fprintf(w, "Source: %s\\\n", rule.Source)
+		fmt.Fprintf(w, "Description: %s\n", rule.Description)
+	}
+
+	for _, link := range r.Links {
+		if !link.HasProblem(code) {
+			continue
+		}
+
+		fmt.Fprintf(w, "### %s\n", link.Url)
+		fmt.Fprintln(w, "")
+		fmt.Fprintln(w, "| Code | Status | Source | Details |")
+		fmt.Fprintln(w, "|------|--------|--------|---------|")
+		counter := 0
+		for code, l := range link.Results {
+			if l.Status != lintUrl.Pass {
+				counter += 1
+				ruleInfo := lintUrl.GetRuleByName(code)
+				fmt.Fprintf(w, "| %s | %s | %s | %s |\n", code, GetStatusText(l.Status), ruleInfo.Source, l.Details)
+			}
+		}
+		fmt.Fprintln(w, "")
+		if counter == 0 {
+			fmt.Fprintf(w, "%d tests were ran and no warning or error level issues were found\n", len(link.Results))
+			fmt.Fprintln(w, "")
+		}
+	}
+
+	PrintFooter(w)
 }
