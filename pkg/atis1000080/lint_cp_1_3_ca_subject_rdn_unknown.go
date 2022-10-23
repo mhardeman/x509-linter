@@ -9,7 +9,7 @@ type caSubjectRdnUnknown struct{}
 
 func init() {
 	lint.RegisterLint(&lint.Lint{
-		Name:          "w_shaken_sti_ca_subject_rdn_unknown",
+		Name:          "w_shaken_cp1_3_ca_subject_rdn_unknown",
 		Description:   subjectRdn_details,
 		Citation:      "Citation",
 		Source:        ATIS_Source,

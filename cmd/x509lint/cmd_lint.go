@@ -116,6 +116,17 @@ func RunLintCommand(certPath string, summary bool) error {
 			return fmt.Errorf("cannot lint the certificate, %w", err)
 		}
 
+		counter := map[lint.LintSource]int{}
+		for code, result := range result.Result.Results {
+			if result.Status == lint.Pass || result.Status == lint.Error || result.Status == lint.Warn || result.Status == lint.Notice || result.Status == lint.NE {
+				rule := lint.GlobalRegistry().ByName(code)
+				counter[rule.Source] += 1
+			}
+		}
+		for source, v := range counter {
+			fmt.Printf("%s: %d\n", source, v)
+		}
+
 		PrintCertificateReport(os.Stdout, result)
 	}
 

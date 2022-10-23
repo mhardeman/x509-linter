@@ -8,13 +8,13 @@ import (
 	"github.com/zmap/zlint/v3/lint"
 )
 
-const subjectRdn_details = "STI certificate shall not include RDNs that are not specified"
+const subjectRdn_details = "Names used in the STI certificates shall represent an unambiguous identifier for the SP Subject. However, the names should be meaningful meaningful enough to represent the SP to whom the certificate is being issued, in a manner similar to that used to identify SP’s equipment in the network."
 
 type subjectRdnUnknown struct{}
 
 func init() {
 	lint.RegisterLint(&lint.Lint{
-		Name:          "w_shaken_sti_subject_rdn_unknown",
+		Name:          "w_shaken_cp1_3_subject_rdn_unknown",
 		Description:   subjectRdn_details,
 		Citation:      "Citation",
 		Source:        ATIS_Source,
@@ -55,7 +55,7 @@ func assertNameUnknown(n []pkix.AttributeTypeAndValue, knownAttrs []string) erro
 	list := newStringList(knownAttrs)
 	for _, name := range n {
 		if !list.Contains(name.Type.String()) {
-			return fmt.Errorf(subjectRdn_details)
+			return fmt.Errorf("No unknown RDNs are allowed as they may introduce ambiguity")
 		}
 	}
 
