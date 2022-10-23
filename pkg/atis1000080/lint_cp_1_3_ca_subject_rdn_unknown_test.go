@@ -38,7 +38,7 @@ func Test_caSubjectRdnUnknown_Execute(t *testing.T) {
 			},
 			want: &lint.LintResult{
 				Status:  lint.Warn,
-				Details: "STI certificate shall not include RDNs that are not specified",
+				Details: "No unknown RDNs are allowed as they may introduce ambiguity",
 			},
 		},
 	}

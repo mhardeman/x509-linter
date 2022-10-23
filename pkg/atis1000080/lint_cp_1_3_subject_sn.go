@@ -17,7 +17,7 @@ func init() {
 		Description:   "The ‘serialNumber’ attribute shall be included along with the CN",
 		Citation:      CPv1_3_Citation,
 		Source:        CPv1_3_Source,
-		EffectiveDate: CPv1_3_Date,
+		EffectiveDate: CPv1_3_Leaf_Date,
 		Lint:          NewSubjectSN,
 	})
 }
