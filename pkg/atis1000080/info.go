@@ -17,12 +17,13 @@ var (
 	// changes this means any changes would be required for certificates issued on or after Sunday, January 16, 2022.
 	ATIS1000080_v004_Leaf_Date = time.Date(2022, time.January, 16, 0, 0, 0, 0, time.UTC)
 	ATIS1000080_STI_Citation   = "ATIS-1000080.v004 / 6.4.1 STI Certificate Requirements"
+	CPv1_3_Date                = time.Date(2022, time.August, 18, 0, 0, 0, 0, time.UTC)
 	// CPS 1.3 was approved on August 18, 2021.
 	// If we assume that CAs CPSs were submitted for approval on the 45th day, the CPS was approved within 10 days
 	// and the CA has 90 days to become conformant then certificates issued on or after "Monday, January 10, 2022"
 	// should be evaluated against the new rules.
 	// January 10, 2022
-	CPv1_3_Date     = time.Date(2022, time.January, 10, 0, 0, 0, 0, time.UTC)
-	CPv1_3_Citation = "ToKENs (SHAKEN) Certificate Policy / "
-	PKI_Citation    = "PKI Best Practice"
+	CPv1_3_Leaf_Date = time.Date(2022, time.January, 10, 0, 0, 0, 0, time.UTC)
+	CPv1_3_Citation  = "ToKENs (SHAKEN) Certificate Policy / "
+	PKI_Citation     = "PKI Best Practice"
 )

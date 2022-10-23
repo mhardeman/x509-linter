@@ -16,9 +16,9 @@ func init() {
 	lint.RegisterLint(&lint.Lint{
 		Name:          "w_shaken_cp1_3_subject_rdn_unknown",
 		Description:   subjectRdn_details,
-		Citation:      "Citation",
-		Source:        ATIS_Source,
-		EffectiveDate: ATIS1000080_v004_Leaf_Date,
+		Citation:      CPv1_3_Citation,
+		Source:        CPv1_3_Source,
+		EffectiveDate: CPv1_3_Leaf_Date,
 		Lint:          NewSubjectRdnUnknown,
 	})
 }

@@ -15,7 +15,7 @@ func init() {
 		Description:   "Names used in the STI certificates shall represent an unambiguous identifier for the SP Subject",
 		Citation:      CPv1_3_Citation,
 		Source:        CPv1_3_Source,
-		EffectiveDate: CPv1_3_Date,
+		EffectiveDate: CPv1_3_Leaf_Date,
 		Lint:          NewAmbiguousIdentifiers,
 	})
 }
