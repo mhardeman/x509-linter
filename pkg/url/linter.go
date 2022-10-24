@@ -176,7 +176,7 @@ func LintUrl(url string) *LintUrlResultSet {
 	} else {
 		result.Append("e_bad_url", &LintUrlResult{
 			Status:  Error,
-			Details: "It would be fair to argue IP allow listing is not allowed from this also but I don't know how to test that from CI pipeline",
+			Details: err.Error(),
 		})
 
 		return result
