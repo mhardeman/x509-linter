@@ -9,7 +9,7 @@ import (
 var (
 	ATIS_Source   = lint.LintSource("ATIS1000080")
 	CPv1_3_Source = lint.LintSource("CP 1.3")
-	PKI_Source    = lint.LintSource("PKI Best Practice")
+	PKI_Source    = lint.LintSource("SHAKEN PKI Best Practice")
 
 	ATIS1000080_v004_Date = time.Date(2021, time.October, 18, 0, 0, 0, 0, time.UTC)
 	// ATIS-1000080.v004 was published on Monday, 18 October 2021.
@@ -27,5 +27,5 @@ var (
 	CPv1_3_Leaf_Date    = time.Date(2021, time.June, 12, 0, 0, 0, 0, time.UTC)
 	CPv1_3_Citation     = "ToKENs (SHAKEN) Certificate Policy / "
 	CPv1_3_Citation_4_9 = "ToKENs (SHAKEN) Certificate Policy / 4.9 Certificate Revocation and Suspension"
-	PKI_Citation        = "PKI Best Practice"
+	PKI_Citation        = "SHAKEN PKI Best Practice"
 )
