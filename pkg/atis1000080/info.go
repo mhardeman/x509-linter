@@ -23,7 +23,8 @@ var (
 	// and the CA has 90 days to become conformant then certificates issued on or after "Monday, January 10, 2022"
 	// should be evaluated against the new rules.
 	// January 10, 2022
-	CPv1_3_Leaf_Date = time.Date(2022, time.January, 10, 0, 0, 0, 0, time.UTC)
-	CPv1_3_Citation  = "ToKENs (SHAKEN) Certificate Policy / "
-	PKI_Citation     = "PKI Best Practice"
+	CPv1_3_Leaf_Date    = time.Date(2022, time.January, 10, 0, 0, 0, 0, time.UTC)
+	CPv1_3_Citation     = "ToKENs (SHAKEN) Certificate Policy / "
+	CPv1_3_Citation_4_9 = "ToKENs (SHAKEN) Certificate Policy / 4.9 Certificate Revocation and Suspension"
+	PKI_Citation        = "PKI Best Practice"
 )
