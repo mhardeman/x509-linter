@@ -38,7 +38,7 @@ func Test_subjectRdnUnknown_Execute(t *testing.T) {
 			},
 			want: &lint.LintResult{
 				Status:  lint.Warn,
-				Details: "No unknown RDNs are allowed as they may introduce ambiguity",
+				Details: "Only CN, C, O, and SERIALNUMBER can be included. Additional RNDs may introduce ambiguity and may not be verifiable",
 			},
 		},
 	}

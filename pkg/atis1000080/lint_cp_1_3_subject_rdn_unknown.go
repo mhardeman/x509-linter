@@ -55,7 +55,7 @@ func assertNameUnknown(n []pkix.AttributeTypeAndValue, knownAttrs []string) erro
 	list := newStringList(knownAttrs)
 	for _, name := range n {
 		if !list.Contains(name.Type.String()) {
-			return fmt.Errorf("No unknown RDNs are allowed as they may introduce ambiguity")
+			return fmt.Errorf("Only CN, C, O, and SERIALNUMBER can be included. Additional RNDs may introduce ambiguity and may not be verifiable")
 		}
 	}
 
