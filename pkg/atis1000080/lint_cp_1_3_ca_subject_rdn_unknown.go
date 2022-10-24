@@ -29,14 +29,17 @@ func (*caSubjectRdnUnknown) CheckApplies(c *x509.Certificate) bool {
 
 // Execute implements lint.LintInterface
 func (*caSubjectRdnUnknown) Execute(c *x509.Certificate) *lint.LintResult {
-	if err := assertNameUnknown(c.Subject.Names, []string{
+	list := newStringList([]string{
 		"2.5.4.3",  // commonName
 		"2.5.4.6",  // countryName
 		"2.5.4.10", // organization
-	}); err != nil {
-		return &lint.LintResult{
-			Status:  lint.Warn,
-			Details: err.Error(),
+	})
+	for _, name := range c.Subject.Names {
+		if !list.Contains(name.Type.String()) {
+			return &lint.LintResult{
+				Status:  lint.Warn,
+				Details: "Only CN, C, and O can be included. Additional RNDs may introduce ambiguity and may not be verifiable",
+			}
 		}
 	}
 
