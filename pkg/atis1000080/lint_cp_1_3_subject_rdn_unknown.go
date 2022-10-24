@@ -1,10 +1,7 @@
 package atis1000080
 
 import (
-	"fmt"
-
 	"github.com/zmap/zcrypto/x509"
-	"github.com/zmap/zcrypto/x509/pkix"
 	"github.com/zmap/zlint/v3/lint"
 )
 
@@ -34,30 +31,22 @@ func (*subjectRdnUnknown) CheckApplies(c *x509.Certificate) bool {
 
 // Execute implements lint.LintInterface
 func (*subjectRdnUnknown) Execute(c *x509.Certificate) *lint.LintResult {
-	if err := assertNameUnknown(c.Subject.Names, []string{
+	list := newStringList([]string{
 		"2.5.4.3",  // commonName from ATIS
 		"2.5.4.6",  // countryName from ATIS
 		"2.5.4.10", // organization from ATIS
 		"2.5.4.5",  // SERIALNUMBER from CP1.1
-	}); err != nil {
-		return &lint.LintResult{
-			Status:  lint.Warn,
-			Details: err.Error(),
+	})
+	for _, name := range c.Subject.Names {
+		if !list.Contains(name.Type.String()) {
+			return &lint.LintResult{
+				Status:  lint.Warn,
+				Details: "Only CN, C, O, and SERIALNUMBER can be included. Additional RNDs may introduce ambiguity and may not be verifiable",
+			}
 		}
 	}
 
 	return &lint.LintResult{
 		Status: lint.Pass,
 	}
-}
-
-func assertNameUnknown(n []pkix.AttributeTypeAndValue, knownAttrs []string) error {
-	list := newStringList(knownAttrs)
-	for _, name := range n {
-		if !list.Contains(name.Type.String()) {
-			return fmt.Errorf("No unknown RDNs are allowed as they may introduce ambiguity")
-		}
-	}
-
-	return nil
 }
