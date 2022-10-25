@@ -15,7 +15,6 @@ import (
 	"time"
 
 	"github.com/peculiarventures/x509-linter/cmd/internal"
-	"github.com/peculiarventures/x509-linter/pkg/atis1000080"
 	"github.com/zmap/zcrypto/x509"
 	"github.com/zmap/zlint/v3"
 	"github.com/zmap/zlint/v3/lint"
@@ -186,9 +185,9 @@ func LintCertificate(cert *internal.PemCertificate, options *x509.VerifyOptions)
 		// IncludeSources: lint.SourceList{shaken.ShakenPolicy},
 		IncludeSources: lint.SourceList{
 			lint.RFC5280,
-			atis1000080.ATIS_Source,
-			atis1000080.CPv1_3_Source,
-			atis1000080.PKI_Source,
+			lint.ATIS1000080,
+			lint.CPv1_3,
+			lint.ShakenPKI,
 		},
 		ExcludeNames: []string{
 			"w_distribution_point_missing_ldap_or_uri",
